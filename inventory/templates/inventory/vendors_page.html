@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Vendors</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Registered Vendors</h1>
+        <li><a href="{% url 'register_vendor' %}">Register Vendor</a></li>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Vendor ID</th>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vendor in vendors %}
+                    <tr>
+                        <td>{{ vendor.id }}</td>
+                        <td>{{ vendor.name }}</td>
+                        <td>{{ vendor.contact }}</td>
+                        <td>{{ vendor.location }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
