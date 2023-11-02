@@ -1,0 +1,21 @@
+# Ignore editor/IDE-specific files and directories
+.vscode/
+.idea/
+
+# Ignore compiled code or build artifacts
+*.pyc
+__pycache/
+node_modules/
+build/
+dist/
+*.log
+*.pyc
+
+# Ignore environment-specific or configuration files
+.env
+*.env
+
+# Ignore database files
+*.sqlite3
+inventory/__pycache__/views.cpython-310.pyc
+
