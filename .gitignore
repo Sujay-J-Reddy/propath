@@ -6,6 +6,7 @@
 *.pyc
 __pycache/
 node_modules/
+__pycache__/
 build/
 dist/
 *.log
@@ -17,5 +18,4 @@ dist/
 
 # Ignore database files
 *.sqlite3
-inventory/__pycache__/views.cpython-310.pyc
 
