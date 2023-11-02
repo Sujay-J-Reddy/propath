@@ -12,6 +12,16 @@ class Vendor(models.Model):
 class Item(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
+    qty = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name
+    
+class Quantity(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0)
+
+class Logs(models.Model):
+    vendor = models.CharField(max_length=100)
+    items = models.JSONField()
+    date = models.DateField()

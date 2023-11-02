@@ -7,5 +7,10 @@ class VendorForm(forms.ModelForm):
         model = Vendor
         fields = ['name', 'contact', 'location']
 
+class LogEntryForm(forms.Form):
+    vendor = forms.IntegerField()
+    date = forms.DateField()
+    items = forms.JSONField()
+
 
 

@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Order Logs</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Order Logs</h1>
+      <h1>Order Logs</h1>
     </header>
     <main>
-        <div class="options">
-            <h2>Options</h2>
-            <ul>
-                <li><a href="{% url 'order_history' %}">History</a></li>
-
-            </ul>
-        </div>
+      <div class="options">
+        <h2>Options</h2>
+        <ul>
+          <li><a href="{% url 'order_history' %}">History</a></li>
+          <li><a href="{% url 'log_order' %}"> Log order</a></li>
+        </ul>
+      </div>
     </main>
-</body>
+  </body>
 </html>
