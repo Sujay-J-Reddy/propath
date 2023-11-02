@@ -5,6 +5,7 @@
 # Ignore compiled code or build artifacts
 *.pyc
 __pycache/
+__pycache__/
 node_modules/
 build/
 dist/
@@ -17,5 +18,5 @@ dist/
 
 # Ignore database files
 *.sqlite3
-inventory/__pycache__/views.cpython-310.pyc
+
 
