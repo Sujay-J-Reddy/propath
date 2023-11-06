@@ -3,18 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Supply</title>
+    <title>Orders</title>
   </head>
   <body>
     <header>
-      <h1>Supply</h1>
+      <h1>Orders</h1>
     </header>
     <main>
       <nav>
         <ul>
-          <li><a href="{% url 'vendors_page' %}">Vendors</a></li>
-          <li><a href="{% url 'items_page' %}">Items</a></li>
-          <li><a href="{% url 'order_log' %}">Order Log</a></li>
+          <li><a href="{% url 'pending_orders' %}">Pending Orders</a></li>
+          <li><a href="{% url 'completed_orders' %}">Orders Delivered</a></li>
         </ul>
       </nav>
     </main>

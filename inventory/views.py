@@ -1,7 +1,7 @@
 import json
 from django.http import JsonResponse
 from django.shortcuts import render,redirect
-from .forms import VendorForm, LogEntryForm
+from .forms import VendorForm, ItemForm
 from .models import Vendor, Item, Quantity, Logs
 
 # Create your views here.
@@ -24,6 +24,9 @@ def save_logs(request):
                     # Query the Item model to get the name based on the item_id
                     item = Item.objects.get(id=item_id)
                     items.append({"item_name": item.name, "quantity": quantity})
+                    new_qty = item.qty + int(quantity) #update item quantity
+                    item.qty = new_qty
+                    item.save()
 
             # Create a Logs object with the collected data
             logs = Logs(vendor=vendor, items=json.dumps(items), date=date)
@@ -57,9 +60,22 @@ def inventory_base(request):
 def supply_page(request):
     return render(request, 'inventory/supply_page.html')
 
+def orders_page(request):
+    return render(request, 'inventory/orders_page.html')
+
+def pending_orders(request):
+    return render(request, 'inventory/pending_orders.html')
+
+def completed_orders(request):
+    return render(request, 'inventory/completed_orders.html')
+
 def vendors_page(request):
     vendors = Vendor.objects.all()
     return render(request, 'inventory/vendors_page.html', {'vendors': vendors})
+
+def items_page(request):
+    items = Item.objects.all()
+    return render(request, 'inventory/items_page.html', {'items': items})
 
 
 def register_vendor(request):
@@ -71,6 +87,16 @@ def register_vendor(request):
     else:
         form = VendorForm()
     return render(request, 'inventory/register_vendor.html', {'form': form})
+
+def register_item(request):
+    if request.method == 'POST':
+        form = ItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('supply_page')
+    else:
+        form = ItemForm()
+    return render(request, 'inventory/register_item.html', {'form': form})
 
 
 def order_logs_page(request):
