@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import formset_factory
 from .models import Vendor, Item
 
 class VendorForm(forms.ModelForm):

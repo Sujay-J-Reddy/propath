@@ -1,6 +1,13 @@
 from django.db import models
 
 # Create your models here.
+class Orders(models.Model):
+    franchise = models.CharField(max_length=100)
+    items = models.JSONField()
+    order_date = models.DateField(auto_now_add=True)
+    delivery_date = models.DateField(null=True, blank=True, default=None)
+    completed = models.BooleanField(default=False)
+
 class Vendor(models.Model):
     name = models.CharField(max_length=100)
     contact = models.CharField(max_length=100)

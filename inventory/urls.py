@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     path('', views.inventory_base, name='inventory_base'),
     path('supply/', views.supply_page, name='supply_page'),
@@ -13,8 +14,10 @@ urlpatterns = [
     path('items/',views.items_page, name='items_page'),
     path('register-item/',views.register_item, name='register_item'),
     path('order-log/save-log/',views.save_logs,name='save_logs'),
+    path('orders/pending-orders/update-orders/', views.update_orders, name='update_orders'),
     path('orders/pending-orders/',views.pending_orders,name='pending_orders'),
     path('orders/completed-orders',views.completed_orders,name='completed_orders'),
+    path('orders/log-pending/',views.log_pending, name='log_pending'),
 
     # Define other URL patterns for the inventory app here
 ]

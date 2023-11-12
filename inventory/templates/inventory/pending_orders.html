@@ -1,8 +1,108 @@
 <!DOCTYPE html>
-<html lang="eng">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pending orders</title>
-  </head>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Orders</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Pending Orders</h1>
+  </header>
+  <main>
+    <form id="orderForm">
+      <table>
+        <thead>
+          <tr>
+            <th>DC no.</th>
+            <th>Franchisee</th>
+            <th>Items</th>
+            <th>Date</th>
+            <th>Mark as Delivered</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>{{order.id}}</td>
+            <td>{{ order.franchise }}</td>
+            <td>{{ order.items }}</td>
+            <td>{{ order.order_date }}</td>
+            <td><input type="checkbox" name="delivered[]" value="{{ order.id }}"></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button type="button" onclick="saveDelivered()">Save</button>
+    </form>
+
+    <script>
+      function saveDelivered() {
+        var checkboxes = document.querySelectorAll('input[name="delivered[]"]:checked');
+        var orderIds = Array.from(checkboxes).map(function (checkbox) {
+          return checkbox.value;
+        });
+
+        // Get the CSRF token from the cookie
+        var csrftoken = getCookie('csrftoken');
+
+        // Use AJAX to send the data to the server
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'update-orders/', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        // Include the CSRF token in the request headers
+        xhr.setRequestHeader('X-CSRFToken', csrftoken);
+
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            console.log('Orders marked as delivered successfully');
+            location.reload();
+          } else {
+            console.error('Failed to mark orders as delivered');
+          }
+        };
+
+        xhr.send(JSON.stringify({ orderIds: orderIds }));
+      }
+
+      // Function to get the CSRF token from the cookie
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    </script>
+
+  </main>
+</body>
+
 </html>

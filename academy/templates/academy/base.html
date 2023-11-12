@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Propath Academy{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'academy_base' %}">Home</a></li>
+                <li><a href="/inventory/">Inventory</a></li>
+                <li><a href="{% url 'register_user' %}">Register user</a></li>
+                <li><a href="{% url 'logout_user' %}">Logout</a>
+                <li>
+                    <!-- Add more navbar links here as needed -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="content">
+            {% block content %}
+            <!-- This is where the content for specific pages will be inserted -->
+            {% endblock %}
+        </div>
+    </main>
+    <!-- Add your JavaScript or other scripts here -->
+</body>
+
+</html>
