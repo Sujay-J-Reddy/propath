@@ -3,7 +3,7 @@
 .idea/
 
 # Ignore compiled code or build artifacts
-*.pyc
+**.pyc
 __pycache/
 node_modules/
 __pycache__/
