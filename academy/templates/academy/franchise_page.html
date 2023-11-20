@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registered Vendors</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Franchisees</title>
     <style>
         table {
             border-collapse: collapse;
@@ -21,23 +21,19 @@
         th {
             background-color: #f2f2f2;
         }
-
-        .button-column {
-            text-align: center;
-        }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>Registered Vendors</h1>
-        <li><a href="{% url 'register_vendor' %}">Register Vendor</a></li>
+        <h1>Franchisees</h1>
+        <li><a href="{% url 'register_franchisee' %}">Register Franchisee</a></li>
     </header>
     <main>
         <table>
             <thead>
                 <tr>
-                    <th>Vendor ID</th>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Contact</th>
                     <th>Location</th>
@@ -46,14 +42,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% for vendor in vendors %}
+                {% for franchise in franchises %}
                 <tr>
-                    <td>{{ vendor.id }}</td>
-                    <td>{{ vendor.name }}</td>
-                    <td>{{ vendor.contact }}</td>
-                    <td>{{ vendor.location }}</td>
-                    <td class="button-column"><a href="{% url 'edit_vendor' vendor.id %}">Edit</a></td>
-                    <td class="button-column"><a href="{% url 'delete_vendor' vendor.id %}">Delete</a></td>
+                    <td>{{ franchise.id }}</td>
+                    <td>{{ franchise.username }}</td>
+                    <td>{{ franchise.contact }}</td>
+                    <td>{{ franchise.location }}</td>
+                    <td class="button-column"><a href="{% url 'edit_franchisee' franchise.id %}">Edit</a></td>
+                    <td class="button-column"><a href="{% url 'delete_franchisee' franchise.id %}">Delete</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

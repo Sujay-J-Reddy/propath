@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Vendor</title>
+</head>
+
+<body>
+    <h2>Delete Vendor</h2>
+    <p>Are you sure you want to delete {{ vendor.name }}?</p>
+    <form method="post" action="">
+        {% csrf_token %}
+        <input type="submit" value="Delete">
+    </form>
+    <a href="{% url 'vendors_page' %}">Cancel</a>
+
+</body>
+
+</html>

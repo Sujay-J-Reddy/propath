@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha384-UG8ao2jwOWB7/oDdObZc6ItJmwUkR/PfMyt9Qs5AwX7PsnYn1CRKCTWyncPTWvaS"
+        crossorigin="anonymous"></script>
+
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<body>
+    <header>
+        <h1>Students </h1>
+    </header>
+    <main>
+        <div>
+            <label for="franchiseSelect">Select Franchise:</label>
+            <select id="franchiseSelect">
+                <option value="">All</option>
+                {% for franchise in franchises %}
+                <option value="{{ franchise }}">{{ franchise }}</option>
+                {% endfor %}
+            </select>
+            <button onclick="filterStudents()">Filter</button>
+        </div>
+
+        <div id="studentsTables">
+            <!-- Display students in separate tables based on franchise -->
+            {% for franchise, students_in_franchise in students_by_franchise.items %}
+            <div class="franchise-table" data-franchise="{{ franchise }}">
+                <h2>{{ franchise }}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>DOB</th>
+                            <th>Level</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students_in_franchise %}
+                        <tr>
+                            <td>{{ student.id }}</td>
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.dob }}</td>
+                            <td>{{ student.level }}</td>
+                            <td>{{ student.contact }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script>
+        function filterStudents() {
+            var selectedFranchise = $('#franchiseSelect').val();
+
+            // Show/hide tables based on the selected franchise
+            if (selectedFranchise) {
+                $('.franchise-table').hide();
+                $('.franchise-table[data-franchise="' + selectedFranchise + '"]').show();
+            } else {
+                $('.franchise-table').show();
+            }
+        }
+    </script>
+</body>
+
+</html>

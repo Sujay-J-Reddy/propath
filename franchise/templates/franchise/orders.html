@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orders</title>
+</head>
+
+<body>
+    <header>
+        <h1>Orders</h1>
+    </header>
+    <main>
+        <nav>
+            <ul>
+                <li><a href="{% url 'new_order' %}">New order</a></li>
+                <li><a href="{% url 'orders_pending' %}">Pending Orders</a></li>
+                <li><a href="{% url 'orders_completed' %}">Orders Delivered</a></li>
+            </ul>
+        </nav>
+    </main>
+</body>
+
+</html>

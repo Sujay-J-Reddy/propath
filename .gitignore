@@ -3,10 +3,10 @@
 .idea/
 
 # Ignore compiled code or build artifacts
-*.pyc
+**.pyc
 __pycache/
-__pycache__/
 node_modules/
+__pycache__/
 build/
 dist/
 *.log
@@ -19,4 +19,5 @@ dist/
 # Ignore database files
 *.sqlite3
 
-
+**/migrations/
+**/__init__.py
