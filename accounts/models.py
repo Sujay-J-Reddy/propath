@@ -7,6 +7,8 @@ from django.db.models.signals import post_save, post_delete
 class Franchisee(models.Model):
     username = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
+    contact = models.CharField(max_length=100,null=True)
+    location = models.CharField(max_length=100,null=True)
 
     def __str__(self):
         return self.username
