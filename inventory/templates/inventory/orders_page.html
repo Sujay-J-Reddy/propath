@@ -1,62 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Orders</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand text-light" href="#">Orders</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a
-                class="nav-link active text-light"
-                aria-current="page"
-                href="{% url 'pending_orders' %}"
-                >Pending Orders</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-light" href="{% url 'completed_orders' %}"
-                >Orders Delivered</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- <main>
-      <nav class="navbar bg-dark">
-        <ul>
-          <li><a href="{% url 'pending_orders' %}">Pending Orders</a></li>
-          <li><a href="{% url 'completed_orders' %}">Orders Delivered</a></li>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orders</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/supply_page.css' %}" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand text-light" href="#">Orders</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="{% url 'completed_orders' %}">Delivery History</a>
+          </li>
         </ul>
-      </nav>
-    </main> -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <h2>Pending Orders</h2>
+    <div class="container">
+
+      <table class="table table-hover my-5">
+        <thead>
+          <tr>
+            <th class="bg-dark text-light">DC no.</th>
+            <th class="bg-dark text-light">Franchise</th>
+            <th class="bg-dark text-light">Items</th>
+            <th class="bg-dark text-light">Date</th>
+            <th class="bg-dark text-light">Mark as Delivered</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>{{order.id}}</td>
+            <td>{{ order.franchise }}</td>
+            <td>{{ order.items }}</td>
+            <td>{{ order.order_date }}</td>
+            <td><input type="checkbox" name="delivered[]" value="{{ order.id }}"></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button type="button" onclick="saveDelivered()">Save</button>
+    </div>
+
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+      function saveDelivered() {
+        var checkboxes = document.querySelectorAll('input[name="delivered[]"]:checked');
+        var orderIds = Array.from(checkboxes).map(function (checkbox) {
+          return checkbox.value;
+        });
+
+        // Get the CSRF token from the cookie
+        var csrftoken = getCookie('csrftoken');
+
+        // Use AJAX to send the data to the server
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'update-orders/', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        // Include the CSRF token in the request headers
+        xhr.setRequestHeader('X-CSRFToken', csrftoken);
+
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            console.log('Orders marked as delivered successfully');
+            location.reload();
+          } else {
+            console.error('Failed to mark orders as delivered');
+          }
+        };
+
+        xhr.send(JSON.stringify({ orderIds: orderIds }));
+      }
+
+      // Function to get the CSRF token from the cookie
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    </script>
+</body>
+
 </html>
