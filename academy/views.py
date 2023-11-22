@@ -1,10 +1,15 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
 from .forms import FranchiseeForm, AdminForm
 from franchise.models import Students
 from accounts.models import Franchisee
+# from .tasks import check_and_add_birthdays
 
-# Create your views here.
+# def schedule_birthday_check(request):
+#     check_and_add_birthdays(repeat=60*60*24)  # Schedule the task to repeat every 6 hours
+#     return HttpResponse("Birthday check scheduled.")
+
 def academy_base(request):
     return render(request, 'academy/base.html')
 
