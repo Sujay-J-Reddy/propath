@@ -1,60 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Franchisees</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
 
-        th,
-        td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
 
-        th {
-            background-color: #f2f2f2;
-        }
+      th {
+        background-color: #f2f2f2;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <h1>Franchisees</h1>
-        <li><a href="{% url 'register_franchisee' %}">Register Franchisee</a></li>
+      <h1>Franchisees</h1>
+      <li><a href="{% url 'register_franchisee' %}">Register Franchisee</a></li>
     </header>
     <main>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Contact</th>
-                    <th>Location</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for franchise in franchises %}
-                <tr>
-                    <td>{{ franchise.id }}</td>
-                    <td>{{ franchise.username }}</td>
-                    <td>{{ franchise.contact }}</td>
-                    <td>{{ franchise.location }}</td>
-                    <td class="button-column"><a href="{% url 'edit_franchisee' franchise.id %}">Edit</a></td>
-                    <td class="button-column"><a href="{% url 'delete_franchisee' franchise.id %}">Delete</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Location</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for franchise in franchises %}
+          <tr>
+            <td>{{ franchise.id }}</td>
+            <td>{{ franchise.username }}</td>
+            <td>{{ franchise.contact }}</td>
+            <td>{{ franchise.location }}</td>
+            <td class="button-column">
+              <a href="{% url 'edit_franchisee' franchise.id %}">Edit</a>
+            </td>
+            <td class="button-column">
+              <a href="{% url 'delete_franchisee' franchise.id %}">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </main>
-</body>
-
+    <script>
+      window.addEventListener("beforeunload", () => {
+        window.location.href = "/academy";
+      });
+    </script>
+  </body>
 </html>

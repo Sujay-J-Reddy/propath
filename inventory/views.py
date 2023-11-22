@@ -60,10 +60,11 @@ def log_order(request):
     return render(request, 'inventory/log_order.html', {'items': items, 'quantities': quantities,'vendors': vendors})
 
 def inventory_base(request):
-    return render(request, 'inventory/base.html') 
+    items = Item.objects.all()
+    return render(request, 'inventory/base.html',{'items': items}) 
 
 def supply_page(request):
-    return render(request, 'inventory/supply_page.html')
+    return render(request, 'inventory/supply_page.html', )
 
 def orders_page(request):
     return render(request, 'inventory/orders_page.html')

@@ -1,35 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Propath Academy{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
-</head>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/styles.css' %}"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
 
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'academy_base' %}">Home</a></li>
-                <li><a href="{% url 'students' %}">Students</a></li>
-                <li><a href="{% url 'orders' %}">Orders</a></li>
-                <li><a href="{% url 'logout_user' %}">Logout</a>
-                <li>
-
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <div class="content">
-            {% block content %}
-            <!-- This is where the content for specific pages will be inserted -->
-            {% endblock %}
+  <body>
+    <nav class="navbar navbar-expand-lg bg-dark">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a
+              class="nav-link active text-light"
+              aria-current="page"
+              href="{% url 'franchise_base' %}"
+              >Home</a
+            >
+            <a class="nav-link text-light" href="{% url 'students' %}"
+              >Students</a
+            >
+            <a class="nav-link text-light" href="{% url 'orders' %}">Orders</a>
+          </div>
+          <a class="nav-link text-light ms-auto" href="{% url 'logout_user' %}"
+            >Logout</a
+          >
         </div>
-    </main>
-    <!-- Add your JavaScript or other scripts here -->
-</body>
+      </div>
+    </nav>
 
+    <main>
+      <div class="content">
+        {% block content %}
+        <!-- This is where the content for specific pages will be inserted -->
+        {% endblock %}
+      </div>
+    </main>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Add your JavaScript or other scripts here -->
+  </body>
 </html>
