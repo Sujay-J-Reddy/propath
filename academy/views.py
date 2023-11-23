@@ -6,6 +6,7 @@ from .forms import UserForm, FranchiseDetailsForm, EditUserForm
 from accounts.models import CustomUser, FranchiseDetails
 from django.contrib.auth.hashers import make_password
 
+from accounts.models import Franchisee
 # from .tasks import check_and_add_birthdays
 
 # def schedule_birthday_check(request):

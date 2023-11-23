@@ -20,3 +20,4 @@ class SchoolStudents(models.Model):
     dob = models.DateField()
     contact = models.CharField(max_length=20)
 
+    birthday = models.DateField()
