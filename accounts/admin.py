@@ -1,6 +1,8 @@
-from django.contrib import admin
-from .models import Franchisee, Admin
+# admin.py
 
-# Register your models here.
-admin.site.register(Franchisee)
-admin.site.register(Admin)
+from django.contrib import admin
+from .models import CustomUser, FranchiseDetails
+
+admin.site.register(CustomUser)
+admin.site.register(FranchiseDetails)
+
