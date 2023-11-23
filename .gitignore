@@ -19,5 +19,6 @@ dist/
 # Ignore database files
 *.sqlite3
 
-**/migrations/
+**/migrations/*.py
+**/migrations/*.pyc
 **/__init__.py
