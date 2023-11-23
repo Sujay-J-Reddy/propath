@@ -1,12 +1,13 @@
+from datetime import date
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
 from franchise.models import Students
-from .forms import UserForm, FranchiseDetailsForm, EditUserForm
-from accounts.models import CustomUser, FranchiseDetails
+from .forms import UserForm, FranchiseDetailsForm, EditUserForm, TeacherDetailsForm, TeacherLevelForm
+from accounts.models import CustomUser, FranchiseDetails, TeacherDetails, TeacherLevel
 from django.contrib.auth.hashers import make_password
 
-from accounts.models import Franchisee
+
 # from .tasks import check_and_add_birthdays
 
 # def schedule_birthday_check(request):
@@ -26,6 +27,8 @@ def register_user(request):
             user.save()
             if form.cleaned_data['account_type'] == 'franchisee':
                 return redirect('franchise_details',user_id=user.id)
+            elif form.cleaned_data['account_type'] == 'teacher':
+                return redirect('teacher_details',user_id = user.id)
             return redirect('academy_base')
     else:
         form = UserForm()
@@ -34,6 +37,33 @@ def register_user(request):
 def franchise_page(request):
     franchises =  FranchiseDetails.objects.all()
     return render(request, 'academy/franchise_page.html',{'franchises':franchises})
+
+
+
+def teachers_page(request):
+    teachers = TeacherDetails.objects.all()
+
+    teacher_data = []
+    for teacher in teachers:
+        try:
+            teacher_level = TeacherLevel.objects.get(user=teacher.user)
+            previous_level_trained = teacher_level.prev_level
+            training_date = teacher_level.prev_level_date
+            training_due_date = teacher_level.due_date
+        except TeacherLevel.DoesNotExist:
+            previous_level_trained = "N/A"
+            training_date = "N/A"
+            training_due_date = "N/A"
+
+        teacher_data.append({
+            'teacher': teacher,
+            'previous_level_trained': previous_level_trained,
+            'training_date': training_date,
+            'training_due_date': training_due_date,
+        })
+
+    return render(request, 'academy/teachers_page.html', {'teacher_data': teacher_data})
+
 
 def franchise_details(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
@@ -77,6 +107,52 @@ def edit_login(request, user_id):
 
 
     return render(request, 'academy/edit_login.html', {'form': form, 'user': user})
+
+def teacher_details(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    teacher_details_instance = TeacherDetails.objects.filter(user=user).first()
+
+    if request.method == 'POST':
+        form = TeacherDetailsForm(request.POST, instance=teacher_details_instance)
+        if form.is_valid():
+            print("valid")
+            teacher_details_instance = form.save(commit=False)
+            teacher_details_instance.user = user
+            teacher_details_instance.save()
+            print("saved")
+            return redirect('academy_base')  # Redirect to some other view after saving
+    else:
+        form = TeacherDetailsForm(instance=teacher_details_instance)
+    return render(request, 'academy/teacher_details.html', {'form': form, 'user': user})
+
+def delete_teacher(request, user_id):
+    teacher = get_object_or_404(CustomUser, id=user_id)
+    if request.method == 'POST':
+        teacher.delete()
+        return redirect('teachers_page')
+    return render(request, 'academy/delete_teacher.html', {'teacher': teacher})
+
+def teacher_level_form(request, user_id):
+    teacher = get_object_or_404(TeacherDetails, user__id=user_id)
+    
+    try:
+        teacher_level = TeacherLevel.objects.get(user=teacher.user)
+    except TeacherLevel.DoesNotExist:
+        teacher_level = None
+
+    if request.method == 'POST':
+        # Handle form submission
+        form = TeacherLevelForm(request.POST, instance=teacher_level)
+        if form.is_valid():
+            form.instance.user = teacher.user
+            form.save()
+            return redirect('teachers_page')
+    else:
+        # Display the form
+        form = TeacherLevelForm(instance=teacher_level)
+
+    return render(request, 'academy/teacher_level_form.html', {'form': form, 'teacher': teacher})
+
 
 def logout_user(request):
     logout(request)

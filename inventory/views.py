@@ -102,7 +102,7 @@ def register_item(request):
         form = ItemForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('items_page')
+            return redirect('inventory_base')
     else:
         form = ItemForm()
     return render(request, 'inventory/register_item.html', {'form': form})

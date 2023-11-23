@@ -31,6 +31,8 @@ class LoginView(View):
             elif user.account_type == 'franchisee':
                 print(user)
                 return redirect('franchise_base')
+            elif user.account_type == 'teacher':
+                return redirect('teacher_base')
             else:
                 return redirect('login')
 

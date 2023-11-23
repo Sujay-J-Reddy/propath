@@ -43,6 +43,8 @@
           <tr>
             <th class="bg-dark text-light">Item</th>
             <th class="bg-dark text-light">Quantity</th>
+            <th class="bg-dark text-light">Last Purchase Price (₹)</th>
+            <th class="bg-dark text-light">Description</th>
             <th class="bg-dark text-light">Edit</th>
             <th class="bg-dark text-light">Delete</th>
 
@@ -53,6 +55,8 @@
           <tr>
             <td>{{ item.name }}</td>
             <td>{{ item.qty }}</td>
+            <td>{{ item.last_purchase_price }}</td>
+            <td>{{ item.description }}</td>
             <td class="button-column"><a href="{% url 'edit_item' item.id %}">Edit</a></td>
             <td class="button-column"><a href="{% url 'delete_item' item.id %}">Delete</a></td>
           </tr>

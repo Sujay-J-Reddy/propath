@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'academy',
     'inventory',
     'franchise',
+    'teacher',
 ]
 
 MIDDLEWARE = [

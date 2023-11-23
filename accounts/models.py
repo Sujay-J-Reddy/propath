@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
@@ -74,9 +75,62 @@ class FranchiseDetails(models.Model):
     annual_income = models.DecimalField(max_digits=10, decimal_places=2)
     experience_in_franchisee_model = models.PositiveIntegerField()
     find_about_us = models.CharField(max_length=20, choices=FIND_US_CHOICES)
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='franchise_details')
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE,limit_choices_to={'account_type': 'franchisee'}, related_name='franchise_details')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.program_name} Franchisee"
 
     
+
+class TeacherDetails(models.Model):
+    PROGRAM_CHOICES = [
+        ('abacus', 'Abacus'),
+        ('vedic_maths', 'Vedic Maths'),
+        ('handwriting', 'Handwriting'),
+        ('calligraphy', 'Calligraphy'),
+    ]
+
+    SOURCE_CHOICES = [
+        ('existing', 'Existing'),
+        ('franchise', 'Franchise'),
+        ('google', 'Google'),
+        ('other', 'Other'),
+    ]
+
+    name = models.CharField(max_length=255)
+    centre_name = models.CharField(max_length=255)
+    franchise = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        limit_choices_to={'account_type': 'franchisee'}
+    )
+    program_name = models.CharField(max_length=20, choices=PROGRAM_CHOICES)
+    dob = models.DateField()
+    blood_group = models.CharField(max_length=5)
+    address = models.TextField()
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    contact_no = models.CharField(max_length=15)
+    email = models.EmailField()
+    qualification = models.CharField(max_length=255)
+    present_occupation = models.CharField(max_length=255)
+    annual_income = models.DecimalField(max_digits=10, decimal_places=2)
+    how_did_you_come_to_know_us = models.CharField(max_length=20, choices=SOURCE_CHOICES)
+    date = models.DateField(auto_now_add=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, limit_choices_to={'account_type': 'teacher'}, related_name='teacher_details')
+
+
+    def __str__(self):
+        return f"{self.name} - {self.centre_name}"
+    
+class TeacherLevel(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, limit_choices_to={'account_type': 'teacher'}, related_name='teacher_level')
+    prev_level = models.PositiveIntegerField(null=True)
+    prev_level_date = models.DateField(null=True)
+    due_date = models.DateField(null=True)
+
+    def save(self, *args, **kwargs):
+        # Calculate due_date based on prev_level_date
+        if self.prev_level_date:
+            self.due_date = self.prev_level_date + timedelta(days=2*30)  # assuming 30 days per month
+        super().save(*args, **kwargs)

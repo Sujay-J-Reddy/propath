@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Profile</title>
+
+    <!-- Add Bootstrap CDN link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body class="container mt-5">
+
+    <h2 class="mb-4">Teacher Profile</h2>
+
+    <!-- Display the user's data from TeacherDetails model -->
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text"><strong>Name:</strong> {{ user.teacher_details.name }}</p>
+            <p class="card-text"><strong>Centre Name:</strong> {{ user.teacher_details.centre_name }}</p>
+            <p class="card-text"><strong>Franchise:</strong> {{ user.teacher_details.franchise }}</p>
+            <p class="card-text"><strong>Program Name:</strong> {{ user.teacher_details.get_program_name_display }}</p>
+            <p class="card-text"><strong>Date of Birth:</strong> {{ user.teacher_details.dob }}</p>
+            <p class="card-text"><strong>Blood Group:</strong> {{ user.teacher_details.blood_group }}</p>
+            <p class="card-text"><strong>Address:</strong> {{ user.teacher_details.address }}</p>
+            <p class="card-text"><strong>City:</strong> {{ user.teacher_details.city }}</p>
+            <p class="card-text"><strong>State:</strong> {{ user.teacher_details.state }}</p>
+            <p class="card-text"><strong>Contact Number:</strong> {{ user.teacher_details.contact_no }}</p>
+            <p class="card-text"><strong>Email:</strong> {{ user.teacher_details.email }}</p>
+            <p class="card-text"><strong>Qualification:</strong> {{ user.teacher_details.qualification }}</p>
+            <p class="card-text"><strong>Registration Date:</strong> {{ user.teacher_details.date }}</p>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js CDN links -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

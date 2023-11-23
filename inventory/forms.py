@@ -17,7 +17,7 @@ class VendorForm(forms.ModelForm):
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['name', 'qty']
+        fields = ['name', 'qty', 'last_purchase_price', 'description']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
