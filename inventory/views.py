@@ -64,10 +64,12 @@ def inventory_base(request):
     return render(request, 'inventory/base.html',{'items': items}) 
 
 def supply_page(request):
-    return render(request, 'inventory/supply_page.html', )
+    logs = Logs.objects.all()
+    return render(request, 'inventory/supply_page.html',{'logs': logs} )
 
 def orders_page(request):
-    return render(request, 'inventory/orders_page.html')
+    orders = Orders.objects.filter(completed=False)
+    return render(request, 'inventory/orders_page.html',{'orders':orders})
 
 def pending_orders(request):
     orders = Orders.objects.filter(completed=False)
