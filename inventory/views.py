@@ -3,8 +3,8 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import F
 from django.views.decorators.http import require_POST
-from .forms import VendorForm, ItemForm
-from .models import Vendor, Item, Quantity, Logs, Orders
+from .forms import VendorForm, ItemForm, KitForm
+from .models import Vendor, Item, Quantity, Logs, Orders, Kit
 from datetime import date
 
 def save_logs(request):
@@ -47,9 +47,10 @@ def log_pending(request):
                     items.append({"item_name": item.name, "quantity": quantity})
             orders = Orders(franchise=franchise, items=json.dumps(items))
             orders.save()
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+            return JsonResponse({'success': True})
         except json.JSONDecodeError as e:
             return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+
     success_message = request.GET.get('success_message', None)
     return render(request, 'inventory/log_order.html', {'items': items, 'success_message': success_message})
 
@@ -87,6 +88,10 @@ def items_page(request):
     items = Item.objects.all()
     return render(request, 'inventory/items_page.html', {'items': items})
 
+def kits_page(request):
+    kits = Kit.objects.all()
+    return render(request, 'inventory/kits_page.html', {'kits': kits})
+
 def register_vendor(request):
     if request.method == 'POST':
         form = VendorForm(request.POST)
@@ -96,6 +101,16 @@ def register_vendor(request):
     else:
         form = VendorForm()
     return render(request, 'inventory/register_vendor.html', {'form': form})
+
+def register_kit(request):
+    if request.method == 'POST':
+        form = KitForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('kits_page')
+    else:
+        form = KitForm()
+    return render(request, 'inventory/register_kit.html', {'form': form})
 
 def register_item(request):
     if request.method == 'POST':
@@ -148,6 +163,24 @@ def edit_vendor(request, vendor_id):
     else:
         form = VendorForm(instance=vendor)
     return render(request, 'inventory/edit_vendor.html', {'form': form, 'vendor': vendor})
+
+def delete_kit(request, kit_id):
+    kit = get_object_or_404(Kit, id=kit_id)
+    if request.method == 'POST':
+        kit.delete()
+        return redirect('kits_page')
+    return render(request, 'inventory/delete_kit.html', {'kit': kit})
+
+def edit_kit(request, kit_id):
+    kit = get_object_or_404(Kit, id=kit_id)
+    if request.method == 'POST':
+        form = KitForm(request.POST, instance=kit)
+        if form.is_valid():
+            form.save()
+            return redirect('kits_page')
+    else:
+        form = KitForm(instance=kit)
+    return render(request, 'inventory/edit_kit.html', {'form': form, 'kit': kit})
 
 def delete_item(request, item_id):
     item = get_object_or_404(Item, id=item_id)

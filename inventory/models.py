@@ -16,11 +16,20 @@ class Vendor(models.Model):
     def __str__(self):
         return self.name
     
+
+    
+class Kit(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
 class Item(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     qty = models.PositiveIntegerField(default=0)
     last_purchase_price = models.PositiveIntegerField(default=0)
+    kit = models.ForeignKey(Kit, on_delete=models.SET_NULL, null=True, blank=True, related_name='items')
 
     def __str__(self):
         return self.name
