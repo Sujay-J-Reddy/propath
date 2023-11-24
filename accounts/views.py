@@ -9,6 +9,8 @@ from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 
+def landing_page(request):
+    return render(request, 'accounts/landing_page.html')
 class LoginView(View):
     def get(self, request):
         return render(request, 'accounts/login.html')
