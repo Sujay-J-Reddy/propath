@@ -4,17 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Item</title>
+    <title>Edit Kit</title>
 </head>
 
 <body>
-    <h2>Delete Item</h2>
-    <p>Are you sure you want to delete {{ item.name }}?</p>
+    <h2>Edit Kit</h2>
     <form method="post" action="">
         {% csrf_token %}
-        <input type="submit" value="Delete">
+        {{ form.as_p }}
+        <input type="submit" value="Save Changes">
     </form>
-    <a href="{% url 'inventory_base' %}">Cancel</a>
+    <a href="{% url 'kits_page' %}">Cancel</a>
+
 </body>
 
 </html>

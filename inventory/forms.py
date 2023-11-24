@@ -1,7 +1,7 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from .models import Vendor, Item
+from .models import Vendor, Item, Kit
 
 class VendorForm(forms.ModelForm):
     class Meta:
@@ -14,10 +14,15 @@ class VendorForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Submit'))
 
+class KitForm(forms.ModelForm):
+    class Meta:
+        model = Kit
+        fields = ['name']
+
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['name', 'qty']
+        fields = ['name', 'qty', 'last_purchase_price', 'kit' ,'description']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

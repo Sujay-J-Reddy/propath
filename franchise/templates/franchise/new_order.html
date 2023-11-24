@@ -14,7 +14,39 @@
 <body data-user="{{ request.user.username }}">
     <form method="post" id="table-form">
 
-        <!-- Table -->
+        <!-- Table for Kits -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Kit</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="expandable-row kit-row">
+                    <td>
+                        <select class="item-select select2" name="kits[0][item]">
+                            <option value="">None</option>
+                            {% for kit in kits %}
+                            {% if kit.name != 'None' %}
+                            <option value="{{ kit.id }}">{{ kit.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td>
+                        <input type="number" class="quantity-input" name="kits[0][quantity]" value="0" />
+                    </td>
+                    <td><button type="button" class="delete-row">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Add a new row button for Kits -->
+        <button type="button" id="add-kit-row">Add Kit Row</button>
+
+        <!-- Table for Items -->
         <table>
             <thead>
                 <tr>
@@ -23,14 +55,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="expandable-row">
+                <tr class="expandable-row item-row">
                     <td>
                         <select class="item-select select2" name="items[0][item]">
+                            <option value="">None</option>
                             {% for item in items %}
+                            {% if item.name != 'None' %}
                             <option value="{{ item.id }}">{{ item.name }}</option>
+                            {% endif %}
                             {% endfor %}
                         </select>
                     </td>
+
                     <td>
                         <input type="number" class="quantity-input" name="items[0][quantity]" value="0" />
                     </td>
@@ -39,8 +75,8 @@
             </tbody>
         </table>
 
-        <!-- Add a new row button -->
-        <button type="button" id="add-row">Add Row</button>
+        <!-- Add a new row button for Items -->
+        <button type="button" id="add-item-row">Add Item Row</button>
 
         <button type="submit">Submit</button>
     </form>
@@ -57,20 +93,32 @@
             window.location.href = window.location.pathname;
         }
 
-        // Handle adding a new row
-        document.querySelector("#add-row").addEventListener("click", () => {
+        // Handle adding a new row for Kits
+        document.querySelector("#add-kit-row").addEventListener("click", () => {
             const newRow = document
-                .querySelector(".expandable-row")
+                .querySelector(".kit-row")
                 .cloneNode(true);
             newRow.querySelector(".item-select").value = "";
             newRow.querySelector(".quantity-input").value = "0";
 
-            const tableBody = document.querySelector("tbody");
+            const tableBody = document.querySelector("#table-form .kit-row").parentNode;
+            tableBody.appendChild(newRow);
+        });
+
+        // Handle adding a new row for Items
+        document.querySelector("#add-item-row").addEventListener("click", () => {
+            const newRow = document
+                .querySelector(".item-row")
+                .cloneNode(true);
+            newRow.querySelector(".item-select").value = "";
+            newRow.querySelector(".quantity-input").value = "0";
+
+            const tableBody = document.querySelector("#table-form .item-row").parentNode;
             tableBody.appendChild(newRow);
         });
 
         // Handle deleting a row
-        document.querySelector("tbody").addEventListener("click", (event) => {
+        document.querySelector("#table-form").addEventListener("click", (event) => {
             if (event.target.classList.contains("delete-row")) {
                 const row = event.target.parentElement.parentElement;
                 if (document.querySelectorAll(".expandable-row").length > 1) {
@@ -82,7 +130,7 @@
         });
 
         var currentUser = document.body.getAttribute("data-user");
-        console.log(currentUser)
+        console.log(currentUser);
 
         function getCookie(name) {
             let cookieValue = null;
@@ -108,17 +156,38 @@
             .addEventListener("submit", (event) => {
                 event.preventDefault();
 
-                const tableData = [];
+                const kitsData = [];
+                const itemsData = [];
 
-                document.querySelectorAll(".expandable-row").forEach((row) => {
+                document.querySelectorAll(".expandable-row.kit-row").forEach((row) => {
                     const itemSelect = row.querySelector(".item-select");
                     const quantityInput = row.querySelector(".quantity-input");
-                    tableData.push({
-                        item: itemSelect.value,
-                        quantity: quantityInput.value,
-                    });
+                    if (itemSelect.value !== "") {
+                        kitsData.push({
+                            item: itemSelect.value,
+                            quantity: quantityInput.value,
+                        });
+                    }
                 });
-                console.log(tableData)
+
+                document.querySelectorAll(".expandable-row.item-row").forEach((row) => {
+                    const itemSelect = row.querySelector(".item-select");
+                    const quantityInput = row.querySelector(".quantity-input");
+                    if (itemSelect.value !== "") {
+                        itemsData.push({
+                            item: itemSelect.value,
+                            quantity: quantityInput.value,
+                        });
+                    }
+                });
+
+                const tableData = {
+                    kits: kitsData,
+                    items: itemsData,
+                    user: currentUser,
+                };
+
+                console.log(tableData);
 
                 // Send the data to the server
                 fetch("/inventory/orders/log-pending/", {
@@ -127,22 +196,19 @@
                         "Content-Type": "application/json",
                         "X-CSRFToken": getCookie("csrftoken"), // Include CSRF token
                     },
-                    body: JSON.stringify({
-                        tableData: tableData,
-                        user: currentUser,
-                    }),
+                    body: JSON.stringify(tableData),
                 })
                     .then((response) => response.json())
                     .then((data) => {
                         // Handle the response from the server, if needed
                         console.log(data);
-
                     });
-
-
-
             });
+
     </script>
+
+
 </body>
+
 
 </html>

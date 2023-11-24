@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from inventory.models import Item, Orders
+from inventory.models import Item, Orders, Kit
 from . models import Students
 from . forms import StudentForm
 
@@ -8,8 +8,9 @@ def base_page(request):
     return render(request, 'franchise/base.html')
 
 def new_order(request):
-    items = Item.objects.all()
-    return render(request, 'franchise/new_order.html',{'items':items})
+    items = Item.objects.filter(kit__isnull=True)
+    kits = Kit.objects.all()
+    return render(request, 'franchise/new_order.html',{'items':items, 'kits':kits})
 
 def orders(request):
     return render(request, 'franchise/orders.html')
