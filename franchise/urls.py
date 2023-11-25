@@ -10,8 +10,10 @@ urlpatterns = [
     path('orders/orders-pending', views.orders_pending, name='orders_pending'),
     path('students/', views.students, name='students'),
     path('students/register-student/', views.register_student, name='register_student'),
+    path('competitions/', views.competitions, name='competitions'),
     re_path(r'^students/edit/(?P<student_id>[\w-]+)/$', views.edit_student, name='edit_student'),
     re_path(r'^students/delete/(?P<student_id>[\w-]+)/$', views.delete_student, name='delete_student'),
+    re_path(r'^students/update-level/(?P<student_id>[\w-]+)/$', views.update_level, name='update_level'),
 ]
 
     # Define other URL patterns for the inventory app here

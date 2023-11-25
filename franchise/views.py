@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from inventory.models import Item, Orders, Kit
 from . models import Students
-from . forms import StudentForm
+from academy.models import LevelCertificates, Competition
+from . forms import StudentForm, UpdateLevelForm
 
 # Create your views here.
 def base_page(request):
@@ -14,6 +15,10 @@ def new_order(request):
 
 def orders(request):
     return render(request, 'franchise/orders.html')
+
+def competitions(request):
+    comps = Competition.objects.all()
+    return render(request, 'franchise/competitions.html', {'comps':comps})
 
 def orders_completed(request):
     user_franchise = request.user
@@ -55,7 +60,26 @@ def edit_student(request, student_id):
             return redirect('students')
     else:
         form = StudentForm(instance=student)
-    return render(request, 'franchise/edit_student.html', {'form': form, 'student': student})
+    return render(request, 'franchise/register_student.html', {'form': form, 'student': student})
+
+def update_level(request, student_id):
+    student = get_object_or_404(Students, id=student_id)
+    if request.method == 'POST':
+        form = UpdateLevelForm(request.POST, instance=student)
+        if form.is_valid():
+            LevelCertificates.objects.create(
+                student=student.name,
+                franchise=student.franchise,
+                course= student.course,
+                programme=student.programme,
+                level=student.level - 1,
+            )
+            form.save()
+
+            return redirect('students')
+    else:
+        form = UpdateLevelForm(instance=student)
+    return render(request, 'franchise/register_student.html', {'form': form, 'student': student})
 
 def delete_student(request, student_id):
     student = get_object_or_404(Students, id=student_id)

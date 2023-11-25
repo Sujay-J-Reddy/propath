@@ -25,9 +25,11 @@
 
           >
           <a class="nav-link text-light" href="{% url 'franchise_page' %}">Franchises</a>
+          <a class="nav-link text-light" href="{% url 'certificate_requests' %}">Certificates</a>
           <a class="nav-link text-light" href="{% url 'students_page' %}">Schools</a>
           <a class="nav-link text-light" href="{% url 'teachers_page' %}">Teachers</a>
-          <a class="nav-link text-light" href="/inventory/">Stores</a>
+          <a class="nav-link text-light" href="{% url 'inventory_base' %}">Stores</a>
+          <a class="nav-link text-light" href="{% url 'competitions_page' %}">Competitions</a>
           <a class="nav-link text-light" href="{% url 'orders_page' %}">Orders</a>
           <a class="nav-link text-light" href="{% url 'register_user' %}">Register user</a>
         </div>

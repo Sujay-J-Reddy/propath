@@ -17,6 +17,9 @@ urlpatterns = [
     path('teacher/delete/<int:user_id>/',views.delete_teacher, name='delete_teacher'),
     path('teacher/edit/<int:user_id>/', views.edit_login, name='edit_login'),
     path('teacher-level-form/<int:user_id>/', views.teacher_level_form, name='teacher_level_form'),
+    path('certificates/', views.certificate_requests, name='certificate_requests'),
+    path('competitions/', views.competitions_page, name='competitions_page'),
+
 
 
 

@@ -1,5 +1,15 @@
 from django import forms
 from accounts.models import CustomUser, FranchiseDetails, TeacherDetails, TeacherLevel
+from .models import Competition
+
+class CompetitionForm(forms.ModelForm):
+    class Meta:
+        model = Competition
+        fields = '__all__'
+
+    pdf_file = forms.FileField(widget=forms.ClearableFileInput())
+    level_cutoff_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
 
 class TeacherLevelForm(forms.ModelForm):
     prev_level_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))

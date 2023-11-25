@@ -54,10 +54,13 @@
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
+                            <th>Course</th>
+                            <th>Programme</th>
+                            <th>Level</th>
                             <th>DOB</th>
                             <th>Age</th>
-                            <th>Level</th>
                             <th>Contact</th>
+                            <th>Mail</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,10 +68,13 @@
                         <tr>
                             <td>{{ student.id }}</td>
                             <td>{{ student.name }}</td>
+                            <td>{{ student.course }}</td>
+                            <td>{{ student.programme }}</td>
+                            <td>{{ student.level }}</td>
                             <td>{{ student.dob }}</td>
                             <td>{{ student.age }}</td>
-                            <td>{{ student.level }}</td>
                             <td>{{ student.contact }}</td>
+                            <td>{{ student.email }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

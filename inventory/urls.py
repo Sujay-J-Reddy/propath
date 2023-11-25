@@ -27,5 +27,6 @@ urlpatterns = [
     path('orders/completed-orders',views.completed_orders,name='completed_orders'),
     path('orders/log-pending/',views.log_pending, name='log_pending'),
 
+
     # Define other URL patterns for the inventory app here
 ]
