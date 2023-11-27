@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit Franchisee</title>
-</head>
+    {% load crispy_forms_tags %}
+  </head>
 
-<body>
+  <body>
     <h2>Edit Franchisee</h2>
     <form method="post" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save Changes">
+      {% csrf_token %} {{ form.|crispy }}
+      <input type="submit" value="Save Changes" />
     </form>
     <a href="{% url 'franchise_page' %}">Cancel</a>
-</body>
-
+  </body>
 </html>
