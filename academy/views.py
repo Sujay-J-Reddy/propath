@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
 from franchise.models import Students
-from .forms import UserForm, FranchiseDetailsForm, EditUserForm, TeacherDetailsForm, TeacherLevelForm
+from .forms import UserForm, FranchiseDetailsForm, EditUserForm, TeacherDetailsForm, TeacherLevelForm, CompetitionForm
 from accounts.models import CustomUser, FranchiseDetails, TeacherDetails, TeacherLevel
+from .models import LevelCertificates
 from django.contrib.auth.hashers import make_password
 
 
@@ -38,7 +39,9 @@ def franchise_page(request):
     franchises =  FranchiseDetails.objects.all()
     return render(request, 'academy/franchise_page.html',{'franchises':franchises})
 
-
+def certificate_requests(request):
+    students =  LevelCertificates.objects.all()
+    return render(request, 'academy/certificate_requests.html',{'students':students})
 
 def teachers_page(request):
     teachers = TeacherDetails.objects.all()
@@ -156,7 +159,7 @@ def teacher_level_form(request, user_id):
 
 def logout_user(request):
     logout(request)
-    return redirect('/accounts/login')
+    return redirect('/login')
 
 def students_page(request):
     students = Students.objects.all()
@@ -170,3 +173,13 @@ def students_page(request):
 
     return render(request, 'academy/students_page.html', {'students_by_franchise': students_by_franchise, 'franchises': unique_franchises})
 
+def competitions_page(request):
+    if request.method == 'POST':
+        form = CompetitionForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('academy_base')  # Redirect to a success page or any other desired view
+    else:
+        form = CompetitionForm()
+
+    return render(request, 'academy/competitions_page.html', {'form': form})
