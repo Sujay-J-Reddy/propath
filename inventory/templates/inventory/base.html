@@ -43,32 +43,35 @@
   </nav>
 
 
-  <button id="redirectButton" class="btn btn-dark my-5 m-lg-2">Register Item</button>
+  
   <main>
     <div class="container">
-      <table class="table table-hover my-5">
-        <thead>
+      <button id="redirectButton" class="btn btn-dark my-5 m-lg-2 ">Register Item</button>
+      <table class="table table-striped my-3">
+        <thead class="bg-light">
           <tr>
-            <th class="bg-dark text-light">Item</th>
-            <th class="bg-dark text-light">Quantity</th>
-            <th class="bg-dark text-light">Last Purchase Price (₹)</th>
-            <th class="bg-dark text-light">Kit </th>
-            <th class="bg-dark text-light">Description</th>
-            <th class="bg-dark text-light">Edit</th>
-            <th class="bg-dark text-light">Delete</th>
+            <th class="bg-light text-dark">Item</th>
+            <th class="bg-light text-dark">Quantity</th>
+            <th class="bg-light text-dark">Last Purchase Price (₹)</th>
+            <th class="bg-light text-dark">Kit </th>
+            <th class="bg-light text-dark">Description</th>
+            <th class="bg-light text-dark">Edit</th>
+            <th class="bg-light text-dark">Delete</th>
 
           </tr>
         </thead>
         <tbody>
           {% for item in items %}
           <tr>
-            <td>{{ item.name }}</td>
-            <td>{{ item.qty }}</td>
-            <td>{{ item.last_purchase_price }}</td>
-            <td>{{ item.kit }}</td>
-            <td>{{ item.description }}</td>
-            <td class="button-column"><a href="{% url 'edit_item' item.id %}">Edit</a></td>
-            <td class="button-column"><a href="{% url 'delete_item' item.id %}">Delete</a></td>
+            <td class="fw-normal mb-1">{{ item.name }}</td>
+            <td class="fw-normal mb-1">{{ item.qty }}</td>
+            <td class="fw-normal mb-1">{{ item.last_purchase_price }}</td>
+            <td class="fw-normal mb-1">{{ item.kit }}</td>
+            <td class="fw-normal mb-1">{{ item.description }}</td>
+            <td class="button-column"><a class="btn btn-link btn-rounded btn-sm fw-bold"
+              data-mdb-ripple-color="dark" style="text-decoration: none;" href="{% url 'edit_item' item.id %}">Edit</a></td>
+            <td class="button-column"><a class="btn btn-link btn-rounded btn-sm fw-bold"
+              data-mdb-ripple-color="dark" style="text-decoration: none;" href="{% url 'delete_item' item.id %}">Delete</a></td>
           </tr>
           {% endfor %}
         </tbody>

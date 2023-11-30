@@ -53,13 +53,13 @@
    
     
       <div class="row d-flex justify-content-center align-items-center h-100 my-5">
-      <form method="post" class="mb-4" style="width: 22rem;">
+        <form method="post" class="mb-4" style="width: 22rem;">
+          
+          {% csrf_token %} {{ form|crispy }}
         
-        {% csrf_token %} {{ form|crispy }}
-      
-        <button type="submit" class="btn btn-dark btn-block mb-5">Register</button>
-      </form>
-    </div>
+          <button type="submit" class="btn btn-dark btn-block mb-5">Register</button>
+        </form>
+      </div>
     
 
     <script

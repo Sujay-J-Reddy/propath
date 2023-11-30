@@ -27,7 +27,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg bg-dark">
+    <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
         <button
           class="navbar-toggler"
@@ -43,35 +43,55 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a
-              class="nav-link active text-light"
+              class="current_text nav-link active text-dark"
               aria-current="page"
               href="{% url 'academy_base' %}"
               >Home</a
             >
-            <a class="nav-link text-light" href="{% url 'students_page' %}"
+            <a
+              class="current_text nav-link text-dark"
+              href="{% url 'students_page' %}"
               >Students</a
             >
-
+            <a
+              class="current_text nav-link text-dark"
+              href="{% url 'franchise_page' %}"
             >
-            <a class="nav-link text-light" href="{% url 'franchise_page' %}"
-              >Franchises</a
+              Franchises</a
             >
-            <a class="nav-link text-light" href="{% url 'students_page' %}"
+            <a
+              class="current_text nav-link text-dark"
+              href="{% url 'students_page' %}"
               >Schools</a
             >
-            <a class="nav-link text-light" href="{% url 'teachers_page' %}"
+            <a
+            class="current_text nav-link text-dark"
+            href="{% url 'competitions_page' %}"
+            >Competitions</a
+          >
+            <a
+              class="current_text nav-link text-dark"
+              href="{% url 'teachers_page' %}"
               >Teachers</a
             >
-            <a class="nav-link text-light" href="/inventory/">Stores</a>
-            <a class="nav-link text-light" href="{% url 'orders_page' %}"
+            <a class="current_text nav-link text-dark" href="/inventory/"
+              >Stores</a
+            >
+            <a
+              class="current_text nav-link text-dark"
+              href="{% url 'orders_page' %}"
               >Orders</a
             >
-            <a class="nav-link text-light" href="{% url 'register_user' %}"
+            <a
+              class="current_text nav-link text-dark"
+              href="{% url 'register_user' %}"
               >Register user</a
             >
           </div>
           <div class="logout ms-auto">
-            <a class="nav-link text-light" href="{% url 'logout_user' %}"
+            <a
+              class="current_text nav-link text-dark"
+              href="{% url 'logout_user' %}"
               >Logout</a
             >
           </div>

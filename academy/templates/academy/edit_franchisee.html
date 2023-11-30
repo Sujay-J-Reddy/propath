@@ -10,7 +10,7 @@
   <body>
     <h2>Edit Franchisee</h2>
     <form method="post" action="">
-      {% csrf_token %} {{ form.|crispy }}
+      {% csrf_token %} {{ form|crispy }}
       <input type="submit" value="Save Changes" />
     </form>
     <a href="{% url 'franchise_page' %}">Cancel</a>
