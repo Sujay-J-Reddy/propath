@@ -43,3 +43,10 @@ class Competition(models.Model):
     circular_no = models.CharField(max_length=100,primary_key=True)
     level_cutoff_date = models.DateField()
     pdf_file = models.FileField(upload_to='competition_pdfs/')
+
+class CompetitionResults(models.Model):
+    name =  models.CharField(max_length=100)
+    franchisee = models.CharField(max_length=100)
+    score = models.PositiveIntegerField()
+    max_score = models.PositiveIntegerField()
+    rank = models.PositiveIntegerField()

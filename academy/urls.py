@@ -19,6 +19,8 @@ urlpatterns = [
     path('teacher-level-form/<int:user_id>/', views.teacher_level_form, name='teacher_level_form'),
     path('certificates/', views.certificate_requests, name='certificate_requests'),
     path('competitions/', views.competitions_page, name='competitions_page'),
+    path('competitions/entries/', views.competition_entries, name='competition_entries'),
+    path('competitins/winners', views.competition_winners, name='competition_winners'),
 
 
 

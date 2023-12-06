@@ -10,7 +10,8 @@ class CustomUser(AbstractUser):
     ACCOUNT_TYPE_CHOICES = (
         ('admin', 'Admin'),
         ('franchisee', 'Franchisee'),
-        ('teacher', 'Teacher')
+        ('teacher', 'Teacher'),
+        ('student', 'Student')
     )
     account_type = models.CharField(max_length=20, choices=ACCOUNT_TYPE_CHOICES)
 
