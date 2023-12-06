@@ -232,3 +232,4 @@ def edit_item(request, item_id):
     else:
         form = ItemForm(instance=item)
     return render(request, 'inventory/edit_item.html', {'form': form, 'item': item})
+ 

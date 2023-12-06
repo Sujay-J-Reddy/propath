@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.views import View
-# from .models import Franchisee, Admin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 
@@ -28,12 +27,12 @@ class LoginView(View):
         if user is not None:
             print(user)
             login(request, user)
-            if user.account_type == 'admin':
+            if user.account_type == 'admin': # type: ignore
                 return redirect('academy_base')
-            elif user.account_type == 'franchisee':
+            elif user.account_type == 'franchisee': # type: ignore
                 print(user)
                 return redirect('franchise_base')
-            elif user.account_type == 'teacher':
+            elif user.account_type == 'teacher': # type: ignore
                 return redirect('teacher_base')
             else:
                 return redirect('login')
@@ -41,11 +40,3 @@ class LoginView(View):
         # If the user is not authenticated, render the login form again with an error message
         else:
                 return render(request, 'accounts/login.html')
-
-
-class LogoutView(View):
-    def get(self, request):
-        # Log out the user and redirect to the login page
-        logout(request)
-        return redirect('login')
-    
