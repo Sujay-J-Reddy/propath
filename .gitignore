@@ -23,3 +23,10 @@ dist/
 **/migrations/*.pyc
 **/__init__.py
 
+# Other files and directories to ignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
