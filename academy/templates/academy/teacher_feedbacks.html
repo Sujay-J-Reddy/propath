@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Teachers</title>
+    <title>Teachers Feedbacks</title>
     <style>
         table {
             border-collapse: collapse;
@@ -25,52 +25,40 @@
 </head>
 
 <body>
-    <header>
-        <h1>Teachers</h1>
-        <li><a href="{% url 'register_user' %}">Register Teacher</a></li>
-        <li><a href="{% url 'teacher_feedbacks' %}">Teacher Feedbacks</a></li>
-    </header>
     <main>
         <input type="text" id="searchInput" placeholder="Search">
         <table id="teachersTable">
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Contact</th>
-                    <th>Mail</th>
-                    <th>Center</th>
-                    <th>Previous Level Trained</th>
-                    <th>Trained Date</th>
-                    <th>Due date</th>
-                    <th>Edit</th>
-                    <th>Change Login</th>
-                    <th>Delete</th>
+                    <th>Completed Level</th>
+                    <th>Current Level</th>
+                    <th>Center Name</th>
+                    <th>Center Address</th>
+                    <th>Punctuality</th>
+                    <th>Attention to Instructor</th>
+                    <th>Problem Solving Skills</th>
+                    <th>Innovative Method</th>
+                    <th>Teaching Method</th>
+                    <th>Sharing Experiences</th>
+                    <th>Comments Suggestions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for data in teacher_data %}
                 <tr>
-                    <td>{{ data.teacher.name }}</td>
-                    <td>{{ data.teacher.contact_no }}</td>
-                    <td>{{ data.teacher.email }}</td>
-                    <td>{{ data.teacher.centre_name }}</td>
-                    <td>
-                        <a href="{% url 'teacher_level_form' data.teacher.user.id %}">
-                            {{ data.previous_level_trained|safe }}
-                        </a>
-                    </td>
-
-                    <td>{{ data.training_date }}</td>
-                    <td>{{ data.training_due_date }}</td>
-                    <td class="button-column">
-                        <a href="{% url 'teacher_details' data.teacher.user.id %}">Edit</a>
-                    </td>
-                    <td class="button-column">
-                        <a href="{% url 'edit_login' data.teacher.user.id %}">Change Login</a>
-                    </td>
-                    <td class="button-column">
-                        <a href="{% url 'delete_teacher' data.teacher.user.id %}">Delete</a>
-                    </td>
+                    <td>{{ data.user }}</td>
+                    <td>{{ data.completed_level }}</td>
+                    <td>{{ data.current_level}}</td>
+                    <td>{{ data.center_name}}</td>
+                    <td>{{ data.center_address}}</td>
+                    <td>{{ data.punctuality}}</td>
+                    <td>{{ data.attention_to_instructor}}</td>
+                    <td>{{ data.problem_solving_skills}}</td>
+                    <td>{{ data.innovative_method}}</td>
+                    <td>{{ data.teaching_method}}</td>
+                    <td>{{ data.sharing_experiences}}</td>
+                    <td>{{ data.comments_suggestions}}</td>
                 </tr>
                 {% endfor %}
             </tbody>

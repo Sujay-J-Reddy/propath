@@ -24,7 +24,8 @@ dist/
 **/__init__.py
 
 # Virtual Environment
-venv/
+propathenv/
+media/
 
 # Other files and directories to ignore
 __pycache__/

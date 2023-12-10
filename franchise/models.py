@@ -1,11 +1,14 @@
 from datetime import datetime
 from django.db import models
+from django.core.validators import FileExtensionValidator
+
 
 # Create your models here.
 class Students(models.Model):
     id = models.CharField(max_length=20, primary_key=True)
     franchise = models.CharField(max_length=100, null=True)
     name = models.CharField(max_length=100)
+    photo = models.ImageField(upload_to='student_photos/', validators=[FileExtensionValidator(['jpg', 'jpeg', 'png'])], null=True, blank=True, max_length=255)
     course = models.CharField(max_length=20, choices=[('abacus', 'Abacus'), ('vedic_maths', 'Vedic Maths'),('handwriting', 'Handwriting'),], null=True)
     programme = models.CharField(max_length=10, choices=[('junior', 'Junior'), ('senior', 'Senior')], null=True)
     level = models.IntegerField()
