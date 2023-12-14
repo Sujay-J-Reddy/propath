@@ -37,7 +37,7 @@
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="#" class="nav-link px-2">About Us</a></li>
+        <li><a href="{% url 'about_us' %}" class="nav-link px-2">About Us</a></li>
         <li><a href="#" class="nav-link px-2">Centers</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -67,8 +67,23 @@
     </header>
   </div>
 
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="{{ MEDIA_URL }}landing/Propath.jpg" class="d-block mx-lg-auto img-fluid" alt="app demo" width="700" height="500" loading="lazy">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Welcome to Propath Academy</h1>
+        <p class="lead">At Propath Academy we aim to nurture young children and enable them to succeed in a competitive society. We encourage students to participate, prosper in a constantly evolving technological environment.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+         
+        </div>
+      </div>
+    </div>
+  </div> 
+
   <!-- sliding images -->
-  <div class="container">
+  <!-- <div class="container">
     <div id="carouselExampleCaptions" class="carousel slide">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
@@ -118,7 +133,7 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-  </div>
+  </div> -->
 
   <!-- ======= About Us Section ======= -->
   <section id="about" class="about">
@@ -126,9 +141,7 @@
       <div class="section-title" data-aos="fade-up">
         <h2>About Us</h2>
         <p>
-          `Namaste Dev Club` is our own Frontend Developer community on
-          Discord. We are bringing together all the frontend developers in a
-          closed community.<br />
+          At Propath Academy, we are passionate about fostering foundational skills and unleashing the potential of young minds. Through our dedication to education, we specialize in teaching Abacus, Vedic Maths, and Handwriting.<br />
           We will organize Expert Guest Sessions, Hackathons, Coding
           Competitions & even Fun Activities for all the members.
         </p>
@@ -158,7 +171,7 @@
       <div class="row">
         <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-xl-start"
           data-aos="fade-right" data-aos-delay="150">
-          <img src="#" alt="" class="img-fluid" />
+          <img src="{% static 'Propath.jpg' %}" alt="" class="img-fluid" />
         </div>
 
         <div class="col-xl-7 d-flex align-items-stretch pt-4 pt-xl-0" data-aos="fade-left" data-aos-delay="300">

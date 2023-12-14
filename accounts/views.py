@@ -7,6 +7,12 @@ from django.contrib import messages
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
+from django.http import HttpResponse
+
+
+def about_us(request):
+    return render(request, 'accounts/about_us.html')
+
 
 def landing_page(request):
     return render(request, 'accounts/landing_page.html')

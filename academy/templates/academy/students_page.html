@@ -25,6 +25,21 @@
         font-size: 14px; /* Modify the font size */
         text-transform: uppercase;
       }
+      .txt_color {
+        color: #7b7979; /* Light black color */
+        font-family: "Times New Roman", Times, serif;
+      }
+      .txt_colors {
+        color: #4f4242; /* Light black color */
+        font-family: "Times New Roman", Times, serif;
+      }
+      .smaller-div {
+        max-width: 400px; /* Adjust the max-width as needed */
+        margin: 0 auto; /* Center horizontally */
+        padding: 20px; /* Add padding for spacing */
+        border: 1px solid #ccc; /* Optional: Add border for visual separation */
+      }
+
   </style>
 
   <body>
@@ -95,28 +110,34 @@
       </div>
     </nav>
 
-    <header>
-      <h1>Students</h1>
-    </header>
+    <div class="container text-center pt-3">
+      <h1 class="txt_color border-bottom pb-2 mb-0">Students</h1>
+    </div>
+    
     <main>
-      <div>
-        <label for="franchiseSelect">Select Franchise:</label>
-        <select id="franchiseSelect">
-          <option value="">All</option>
-          {% for franchise in franchises %}
-          <option value="{{ franchise }}">{{ franchise }}</option>
-          {% endfor %}
-        </select>
-        <button onclick="filterStudents()">Filter</button>
+      <div class="container my-5">
+        <div class="smaller-div">
+          <label for="franchiseSelect" class="form-label">Select Franchise:</label>
+          <select id="franchiseSelect" class="form-select">
+            <option value="">All</option>
+            {% for franchise in franchises %}
+            <option value="{{ franchise }}">{{ franchise }}</option>
+            {% endfor %}
+          </select>
+          <button onclick="filterStudents()" class="btn btn-dark my-3" >Filter</button>
+      </div>
       </div>
 
       <div id="studentsTables">
         <!-- Display students in separate tables based on franchise -->
         {% for franchise, students_in_franchise in students_by_franchise.items %}
-        <div class="franchise-table" data-franchise="{{ franchise }}">
-          <h2>{{ franchise }}</h2>
-          <table>
-            <thead>
+        <div class="franchise-table container" data-franchise="{{ franchise }}">
+          <div class="container text-start pt-3">
+            <h1 class="txt_colors border-bottom pb-2 mb-0">{{ franchise }}</h1>
+          </div>
+          
+          <table class="table table-striped my-3">
+            <thead class="bg-light">
               <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -129,12 +150,12 @@
             <tbody>
               {% for student in students_in_franchise %}
               <tr>
-                <td>{{ student.id }}</td>
-                <td>{{ student.name }}</td>
-                <td>{{ student.dob }}</td>
-                <td>{{ student.age }}</td>
-                <td>{{ student.level }}</td>
-                <td>{{ student.contact }}</td>
+                <td class="fw-normal mb-1">{{ student.id }}</td>
+                <td class="fw-normal mb-1">{{ student.name }}</td>
+                <td class="fw-normal mb-1">{{ student.dob }}</td>
+                <td class="fw-normal mb-1">{{ student.age }}</td>
+                <td class="fw-normal mb-1">{{ student.level }}</td>
+                <td class="fw-normal mb-1">{{ student.contact }}</td>
               </tr>
               {% endfor %}
             </tbody>

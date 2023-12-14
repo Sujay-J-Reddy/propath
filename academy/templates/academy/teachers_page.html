@@ -38,6 +38,9 @@
         font-size: 14px; /* Modify the font size */
         text-transform: uppercase;
       }
+      a.btn {
+        text-decoration: none;
+      }
     </style>
   </head>
 
@@ -149,7 +152,7 @@
             <th>Due date</th>
             <th>Edit</th>
             <th>Change Login</th>
-            <th>Delete</th>
+            <th>Delete</th> 
           </tr>
         </thead>
         <tbody>
@@ -168,17 +171,20 @@
             <td class="fw-normal mb-1">{{ data.training_date }}</td>
             <td class="fw-normal mb-1">{{ data.training_due_date }}</td>
             <td class="button-column">
-              <a href="{% url 'teacher_details' data.teacher.user.id %}"
+              <a class="btn btn-link btn-rounded btn-sm fw-bold"
+              data-mdb-ripple-color="dark" href="{% url 'teacher_details' data.teacher.user.id %}"
                 >Edit</a
               >
             </td>
             <td class="button-column fw-normal mb-1">
-              <a href="{% url 'edit_login' data.teacher.user.id %}"
+              <a class="btn btn-link btn-rounded btn-sm fw-bold"
+              data-mdb-ripple-color="dark" href="{% url 'edit_login' data.teacher.user.id %}"
                 >Change Login</a
               >
             </td>
             <td class="button-column fw-normal mb-1">
-              <a href="{% url 'delete_teacher' data.teacher.user.id %}"
+              <a class="btn btn-link btn-rounded btn-sm fw-bold"
+              data-mdb-ripple-color="dark" href="{% url 'delete_teacher' data.teacher.user.id %}"
                 >Delete</a
               >
             </td>
