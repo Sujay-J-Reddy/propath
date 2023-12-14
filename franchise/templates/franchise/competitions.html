@@ -52,6 +52,8 @@
             <p>No PDF available for this competition.</p>
             {% endif %}
             <p>Thank you for your participation!</p>
+
+            <a href="{% url 'competition_register' comp.circular_no %}">Register</a>
             <!-- Add other formality things in the message as needed -->
         </div>
         {% endfor %}

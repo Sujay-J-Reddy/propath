@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register Students</title>
+    <!-- Include your JavaScript and CSS libraries here -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+</head>
+
+<body data-user="{{ request.user.username }}">
+    <form method="post" id="table-form">
+
+
+        <!-- Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Students</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="expandable-row">
+                    <td>
+                        <select class="item-select select2" name="items[0][item]">
+                            {% for student in students %}
+                            <option value="{{ student.id }}">{{ student.id }} - {{ student.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td><button type="button" class="delete-row">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Add a new row button -->
+        <button type="button" id="add-row">Add Row</button>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get("success_message");
+
+        if (successMessage) {
+            // Display an alert with the success message
+            alert(successMessage);
+
+            // Reload the page to clear the success message from the URL
+            window.location.href = window.location.pathname;
+        }
+
+
+
+        // Handle adding a new row
+        document.querySelector("#add-row").addEventListener("click", () => {
+            const newRow = document
+                .querySelector(".expandable-row")
+                .cloneNode(true);
+            newRow.querySelector(".item-select").value = "";
+
+            const tableBody = document.querySelector("tbody");
+            tableBody.appendChild(newRow);
+        });
+
+        // Handle deleting a row
+        document.querySelector("tbody").addEventListener("click", (event) => {
+            if (event.target.classList.contains("delete-row")) {
+                const row = event.target.parentElement.parentElement;
+                if (document.querySelectorAll(".expandable-row").length > 1) {
+                    row.remove();
+                } else {
+                    alert("Cannot delete the last row");
+                }
+            }
+        });
+
+        var currentUser = document.body.getAttribute("data-user");
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === name + "=") {
+                        cookieValue = decodeURIComponent(
+                            cookie.substring(name.length + 1)
+                        );
+                        break;
+                    }
+                }
+            }
+            console.log(cookieValue);
+            return cookieValue;
+        }
+
+        document
+            .querySelector("#table-form")
+            .addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                const tableData = [];
+
+                document.querySelectorAll(".expandable-row").forEach((row) => {
+                    const itemSelect = row.querySelector(".item-select");
+                    tableData.push({
+                        item: itemSelect.value,
+                    });
+                });
+
+                console.log(tableData)
+
+
+                const compId = "{{ comp_id }}";
+                const url = window.location.href;
+
+                // Send the data to the server
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCookie("csrftoken"), // Include CSRF token
+                    },
+                    body: JSON.stringify({
+                        franchise: currentUser,
+                        tableData: tableData,
+                    }),
+                })
+
+
+                    .then((response) => response.json())
+                    .then((data) => {
+                        // Handle the response from the server, if needed
+                        console.log(data);
+                    });
+
+            });
+    </script>
+</body>
+
+</html>

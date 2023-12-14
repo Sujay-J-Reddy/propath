@@ -23,3 +23,16 @@ dist/
 **/migrations/*.pyc
 **/__init__.py
 
+# Virtual Environment
+venv/
+
+# Other files and directories to ignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Ignore files inside the lib directory
+lib/*
