@@ -58,7 +58,8 @@
       </ul>
 
       <div class="col-md-3 text-end">
-        <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+
+        <a href="{% url 'login' %}" class="btn" style="background-color: #cf6a87; color: white  ;">Login</a>
 
         <!-- <button type="button" class="btn btn-outline-primary me-2">
             Login
@@ -70,17 +71,20 @@
   <div class="container col-xxl-8 px-4 py-5">
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
       <div class="col-10 col-sm-8 col-lg-6">
-        <img src="{{ MEDIA_URL }}landing/Propath.jpg" class="d-block mx-lg-auto img-fluid" alt="app demo" width="700" height="500" loading="lazy">
+        <img src="{% static 'static/Propath.jpg' %}" class="d-block mx-lg-auto img-fluid" alt="app demo" width="700"
+          height="500" loading="lazy">
+
       </div>
       <div class="col-lg-6">
         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Welcome to Propath Academy</h1>
-        <p class="lead">At Propath Academy we aim to nurture young children and enable them to succeed in a competitive society. We encourage students to participate, prosper in a constantly evolving technological environment.</p>
+        <p class="lead">At Propath Academy we aim to nurture young children and enable them to succeed in a competitive
+          society. We encourage students to participate, prosper in a constantly evolving technological environment.</p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-         
+
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 
   <!-- sliding images -->
   <!-- <div class="container">
@@ -141,7 +145,9 @@
       <div class="section-title" data-aos="fade-up">
         <h2>About Us</h2>
         <p>
-          At Propath Academy, we are passionate about fostering foundational skills and unleashing the potential of young minds. Through our dedication to education, we specialize in teaching Abacus, Vedic Maths, and Handwriting.<br />
+          At Propath Academy, we are passionate about fostering foundational skills and unleashing the potential of
+          young minds. Through our dedication to education, we specialize in teaching Abacus, Vedic Maths, and
+          Handwriting.<br />
           We will organize Expert Guest Sessions, Hackathons, Coding
           Competitions & even Fun Activities for all the members.
         </p>
@@ -149,21 +155,88 @@
     </div>
   </section>
 
-  <!-- about the page
+  <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+        style="background-image: url('unsplash-photo-1.jpg');">
+        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+          <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Abacus</h3>
+          <ul class="d-flex list-unstyled mt-auto">
+            <li class="me-auto">
+              <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32"
+                class="rounded-circle border border-white">
+            </li>
+            <li class="d-flex align-items-center me-3">
+              <svg class="bi me-2" width="1em" height="1em">
+                <use xlink:href="#geo-fill"></use>
+              </svg>
 
-    <div class="bg-light text-secondary px-4 py-5 text-center">
-      <div class="py-5">
-        <h1 class="display-5 fw-bold text-dark">About the page</h1>
-        <div class="col-lg-6 mx-auto">
-          <p class="fs-5 mb-4">
-            Quickly design and customize responsive mobile-first sites with
-            Bootstrap, the world’s most popular front-end open source toolkit,
-            featuring Sass variables and mixins, responsive grid system,
-            extensive prebuilt components, and powerful JavaScript plugins.
-          </p>
+            </li>
+            <li class="d-flex align-items-center">
+              <svg class="bi me-2" width="1em" height="1em">
+                <use xlink:href="#calendar3"></use>
+              </svg>
+
+            </li>
+          </ul>
         </div>
       </div>
-    </div> -->
+    </div>
+
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+        style="background-image: url('unsplash-photo-2.jpg');">
+        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+          <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Vedic Maths</h3>
+          <ul class="d-flex list-unstyled mt-auto">
+            <li class="me-auto">
+              <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32"
+                class="rounded-circle border border-white">
+            </li>
+            <li class="d-flex align-items-center me-3">
+              <svg class="bi me-2" width="1em" height="1em">
+                <use xlink:href="#geo-fill"></use>
+              </svg>
+
+            </li>
+            <li class="d-flex align-items-center">
+              <svg class="bi me-2" width="1em" height="1em">
+                <use xlink:href="#calendar3"></use>
+              </svg>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+        style="background-image: url('unsplash-photo-3.jpg');">
+        <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+          <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Handwriting</h3>
+          <ul class="d-flex list-unstyled mt-auto">
+            <li class="me-auto">
+              <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32"
+                class="rounded-circle border border-white">
+            </li>
+            <li class="d-flex align-items-center me-3">
+              <svg class="bi me-2" width="1em" height="1em">
+                <use xlink:href="#geo-fill"></use>
+              </svg>
+
+            </li>
+            <li class="d-flex align-items-center">
+              <svg class="bi me-2" width="1em" height="1em">
+                <use xlink:href="#calendar3"></use>
+              </svg>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ======= Counts Section ======= -->
   <section id="counts" class="counts">
