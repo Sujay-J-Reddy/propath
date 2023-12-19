@@ -81,6 +81,9 @@ class FranchiseDetailsForm(forms.ModelForm):
         model = FranchiseDetails
         exclude = ['user']
         # fields = '__all__'
+        widgets = {
+            'programs': forms.CheckboxSelectMultiple,
+        }
     
     dob = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 

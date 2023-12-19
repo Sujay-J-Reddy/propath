@@ -11,6 +11,7 @@ urlpatterns = [
     path('students/', views.students, name='students'),
     path('students/register-student/', views.register_student, name='register_student'),
     path('competitions/', views.competitions, name='competitions'),
+    path('notifications/', views.franchise_notifications, name='franchise_notifications'),
     path('competitions/register/<str:comp_id>/', views.competition_register, name='competition_register'),
     re_path(r'^students/edit/(?P<student_id>[\w-]+)/$', views.edit_student, name='edit_student'),
     re_path(r'^students/delete/(?P<student_id>[\w-]+)/$', views.delete_student, name='delete_student'),

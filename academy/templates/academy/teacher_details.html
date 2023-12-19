@@ -26,7 +26,11 @@
         </div>
     </nav>
     <main class="container mt-4">
-        <form method="post" action="{% url 'teacher_details' user_id=user.id %}" class="row g-3">
+        <form method="post" action="{% url 'teacher_details' user_id=user.id %}" class="row g-3"
+            enctype="multipart/form-data">
+            {% if form.instance.photo %}
+            <img src="{{ form.instance.photo.url }}" alt="Franchisee Photo">
+            {% endif %}
             {% csrf_token %}
             {{ form|crispy }}
             <div class="col-12">

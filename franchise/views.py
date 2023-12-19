@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from inventory.models import Item, Orders, Kit
 from . models import Students
-from academy.models import LevelCertificates, Competition, CompetitionRegister
+from academy.models import LevelCertificates, Competition, CompetitionRegister, Birthdays
 from . forms import StudentForm, UpdateLevelForm
 from accounts.decorators import franchisee_required
 
@@ -11,6 +11,11 @@ from accounts.decorators import franchisee_required
 @franchisee_required
 def base_page(request):
     return render(request, 'franchise/base.html')
+
+@franchisee_required
+def franchise_notifications(request):
+    birthdays = Birthdays.objects.filter(franchise=request.user.username)
+    return render(request, 'franchise/franchise_notifications.html', {'birthdays': birthdays})
 
 @franchisee_required
 def new_order(request):
@@ -52,7 +57,7 @@ def students(request):
 @franchisee_required
 def register_student(request):
     if request.method == 'POST':
-        form = StudentForm(request.POST)
+        form = StudentForm(request.POST, request.FILES)
         if form.is_valid():
             form.instance.franchise = request.user.username
             form.save()
@@ -65,7 +70,7 @@ def register_student(request):
 def edit_student(request, student_id):
     student = get_object_or_404(Students, id=student_id)
     if request.method == 'POST':
-        form = StudentForm(request.POST, instance=student)
+        form = StudentForm(request.POST, request.FILES, instance=student)
         if form.is_valid():
             form.save()
             return redirect('students')

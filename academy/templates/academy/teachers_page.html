@@ -44,129 +44,41 @@
     </style>
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg bg-light">
-      <div class="container-fluid">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a
-              class="current_text nav-link active text-dark"
-              aria-current="page"
-              href="{% url 'academy_base' %}"
-              >Home</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'students_page' %}"
-              >Students</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'franchise_page' %}"
-            >
-              Franchises</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'students_page' %}"
-              >Schools</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'teachers_page' %}"
-              >Teachers</a
-            >
-            <a class="current_text nav-link text-dark" href="/inventory/"
-              >Stores</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'orders_page' %}"
-              >Orders</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'register_user' %}"
-              >Register user</a
-            >
-          </div>
-          <div class="logout ms-auto">
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'logout_user' %}"
-              >Logout</a
-            >
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <div class="container text-center pt-3">
-      <h1 class="txt_color border-bottom pb-2 mb-0">Registered Teachers</h1>
-    </div>
-
-    <div class="container">
-      <!-- Registe button and Search -->
-
-      <div class="container my-4">
-        <div class="row mt-3">
-          <div class="col-auto">
-            <a href="{% url 'register_user' %}" class="btn btn-dark"
-              >Register Teacher</a
-            >
-          </div>
-          <div class="col">
-            <div class="input-group justify-content-end">
-              <div class="form-outline">
-                <input type="text" id="searchInput" placeholder="Search" />
-              </div>
-              <button type="button" class="btn btn-dark" data-mdb-ripple-init>
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- teachers table -->
-      <table id="teachersTable" class="table table-striped my-3">
-        <thead class="bg-light">
-          <tr>
-            <th>Name</th>
-            <th>Contact</th>
-            <th>Mail</th>
-            <th>Center</th>
-            <th>Previous Level Trained</th>
-            <th>Trained Date</th>
-            <th>Due date</th>
-            <th>Edit</th>
-            <th>Change Login</th>
-            <th>Delete</th> 
-          </tr>
-        </thead>
-        <tbody>
-          {% for data in teacher_data %}
-          <tr>
-            <td class="fw-normal mb-1">{{ data.teacher.name }}</td>
-            <td class="fw-normal mb-1">{{ data.teacher.contact_no }}</td>
-            <td class="fw-normal mb-1">{{ data.teacher.email }}</td>
-            <td class="fw-normal mb-1">{{ data.teacher.centre_name }}</td>
-            <td class="fw-normal mb-1">
-              <a href="{% url 'teacher_level_form' data.teacher.user.id %}">
-                {{ data.previous_level_trained|safe }}
-              </a>
-            </td>
+<body>
+    <header>
+        <h1>Teachers</h1>
+        <li><a href="{% url 'register_user' %}">Register Teacher</a></li>
+        <li><a href="{% url 'teacher_feedbacks' %}">Teacher Feedbacks</a></li>
+    </header>
+    <main>
+        <input type="text" id="searchInput" placeholder="Search">
+        <table id="teachersTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Mail</th>
+                    <th>Center</th>
+                    <th>Previous Level Trained</th>
+                    <th>Trained Date</th>
+                    <th>Due date</th>
+                    <th>Edit</th>
+                    <th>Change Login</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in teacher_data %}
+                <tr>
+                    <td>{{ data.teacher.name }}</td>
+                    <td>{{ data.teacher.contact_no }}</td>
+                    <td>{{ data.teacher.email }}</td>
+                    <td>{{ data.teacher.centre_name }}</td>
+                    <td>
+                        <a href="{% url 'teacher_level_form' data.teacher.user.id %}">
+                            {{ data.previous_level_trained|safe }}
+                        </a>
+                    </td>
 
             <td class="fw-normal mb-1">{{ data.training_date }}</td>
             <td class="fw-normal mb-1">{{ data.training_due_date }}</td>

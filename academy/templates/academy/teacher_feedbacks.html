@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teachers Feedbacks</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <input type="text" id="searchInput" placeholder="Search">
+        <table id="teachersTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Completed Level</th>
+                    <th>Current Level</th>
+                    <th>Center Name</th>
+                    <th>Center Address</th>
+                    <th>Punctuality</th>
+                    <th>Attention to Instructor</th>
+                    <th>Problem Solving Skills</th>
+                    <th>Innovative Method</th>
+                    <th>Teaching Method</th>
+                    <th>Sharing Experiences</th>
+                    <th>Comments Suggestions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in teacher_data %}
+                <tr>
+                    <td>{{ data.user }}</td>
+                    <td>{{ data.completed_level }}</td>
+                    <td>{{ data.current_level}}</td>
+                    <td>{{ data.center_name}}</td>
+                    <td>{{ data.center_address}}</td>
+                    <td>{{ data.punctuality}}</td>
+                    <td>{{ data.attention_to_instructor}}</td>
+                    <td>{{ data.problem_solving_skills}}</td>
+                    <td>{{ data.innovative_method}}</td>
+                    <td>{{ data.teaching_method}}</td>
+                    <td>{{ data.sharing_experiences}}</td>
+                    <td>{{ data.comments_suggestions}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Your existing JavaScript code -->
+    <script>
+        // Function to filter the table rows based on user input
+        function filterTable() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("teachersTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0]; // Adjust index based on your column
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        // Attach the filterTable function to the input field
+        $(document).ready(function () {
+            $("#searchInput").on("keyup", function () {
+                filterTable();
+            });
+        });
+    </script>
+</body>
+
+</html>

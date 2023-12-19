@@ -1,20 +1,15 @@
-from datetime import date
+from datetime import datetime
+from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
 from franchise.models import Students
 from .forms import UserForm, FranchiseDetailsForm, EditUserForm, TeacherDetailsForm, TeacherLevelForm, CompetitionForm
 from accounts.models import CustomUser, FranchiseDetails, TeacherDetails, TeacherLevel
-from .models import LevelCertificates, CompetitionRegister
+from .models import LevelCertificates, CompetitionRegister, Birthdays, TrainingDate
+from teacher.models import InstructorFeedback
 from django.contrib.auth.hashers import make_password
 from accounts.decorators import admin_required
-
-
-# from .tasks import check_and_add_birthdays
-
-# def schedule_birthday_check(request):
-#     check_and_add_birthdays(repeat=60*60*24)  # Schedule the task to repeat every 6 hours
-#     return HttpResponse("Birthday check scheduled.")
 
 @admin_required
 def academy_base(request):
@@ -79,16 +74,16 @@ def franchise_details(request, user_id):
     franchise_details_instance = FranchiseDetails.objects.filter(user=user).first()
 
     if request.method == 'POST':
-        form = FranchiseDetailsForm(request.POST, instance=franchise_details_instance)
+        form = FranchiseDetailsForm(request.POST, request.FILES, instance=franchise_details_instance)
         if form.is_valid():
-            print("valid")
             franchise_details_instance = form.save(commit=False)
             franchise_details_instance.user = user
+            form.cleaned_data['program_name'] = ','.join(form.cleaned_data['program_name'])
             franchise_details_instance.save()
-            print("saved")
             return redirect('academy_base')  # Redirect to some other view after saving
     else:
         form = FranchiseDetailsForm(instance=franchise_details_instance)
+
     return render(request, 'academy/franchise_details.html', {'form': form, 'user': user})
 
 @admin_required
@@ -124,7 +119,7 @@ def teacher_details(request, user_id):
     teacher_details_instance = TeacherDetails.objects.filter(user=user).first()
 
     if request.method == 'POST':
-        form = TeacherDetailsForm(request.POST, instance=teacher_details_instance)
+        form = TeacherDetailsForm(request.POST, request.FILES, instance=teacher_details_instance)
         if form.is_valid():
             print("valid")
             teacher_details_instance = form.save(commit=False)
@@ -166,6 +161,10 @@ def teacher_level_form(request, user_id):
 
     return render(request, 'academy/teacher_level_form.html', {'form': form, 'teacher': teacher})
 
+@admin_required
+def teacher_feedbacks(request):
+    teachers = InstructorFeedback.objects.all()
+    return render(request, 'academy/teacher_feedbacks.html', {'teacher_data':teachers})
 
 def logout_user(request):
     logout(request)
@@ -204,3 +203,31 @@ def competition_entries(request):
 @admin_required
 def competition_winners(request):
     return render(request, 'academy/competition_winners')
+
+
+def check_birthdays(request):
+    today = datetime.now().date()
+
+    # Clear existing records in Birthdays model
+    Birthdays.objects.all().delete()
+
+    # Check Students
+    students_birthdays = Students.objects.filter(dob__month=today.month, dob__day=today.day)
+    for student in students_birthdays:
+        Birthdays.objects.create(name=student.name, franchise=student.franchise, birthday=student.dob)
+
+    # Check FranchiseDetails
+    franchises_birthdays = FranchiseDetails.objects.filter(dob__month=today.month, dob__day=today.day)
+    for franchise in franchises_birthdays:
+        Birthdays.objects.create(name=f"{franchise.first_name} {franchise.last_name}", franchise=franchise.user.username, birthday=franchise.dob)
+
+    # Check TeacherDetails
+    teachers_birthdays = TeacherDetails.objects.filter(dob__month=today.month, dob__day=today.day)
+    for teacher in teachers_birthdays:
+        Birthdays.objects.create(name=teacher.name, franchise=teacher.franchise.franchise_details.user.username, birthday=teacher.dob)
+
+    teacher_training_due = TeacherLevel.objects.filter(due_date = datetime.today())
+    for teacher in teacher_training_due:
+        TrainingDate.objects.create(name=teacher.user.teacher_details.name, training_level=teacher.prev_level+1, franchise=teacher.user.teacher_details.franchise.franchise_details.user.username)
+
+    return HttpResponse("Birthdays checked and updated successfully")

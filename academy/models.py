@@ -6,6 +6,9 @@ class Birthdays(models.Model):
     franchise = models.CharField(max_length=255)
     birthday = models.DateField()
 
+    def __str__(self):
+        return  f"{self.name}'s Birthday"
+
 class Schools(models.Model):
     name = models.CharField(max_length=255)
     contact = models.CharField(max_length=100)
@@ -50,3 +53,12 @@ class CompetitionResults(models.Model):
     score = models.PositiveIntegerField()
     max_score = models.PositiveIntegerField()
     rank = models.PositiveIntegerField()
+
+class TrainingDate(models.Model):
+    name = models.CharField(max_length=255)
+    training_level = models.PositiveIntegerField()
+    franchise = models.CharField(max_length=255)
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name}'s level {self.training_level} training due"

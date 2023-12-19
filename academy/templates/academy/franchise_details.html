@@ -31,16 +31,12 @@
     </div>
 
     <main class="container mt-4">
-      <div class="form-control mb-5">
-        <form
-          method="post"
-          action="{% url 'franchise_details' user_id=user.id %}"
-          class="row g-3"
-        >
-          {% csrf_token %} {{ form|crispy }}
-          <div class="col-12">
-            <button type="submit" class="btn btn-dark">Submit</button>
-          </div>
+        <form method="post" action="{% url 'franchise_details' user_id=user.id %}" class="row g-3">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
         </form>
       </div>
     </main>
