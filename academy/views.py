@@ -4,9 +4,10 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
 from franchise.models import Students
-from .forms import UserForm, FranchiseDetailsForm, EditUserForm, TeacherDetailsForm, TeacherLevelForm, CompetitionForm
+from .forms import *
 from accounts.models import CustomUser, FranchiseDetails, TeacherDetails, TeacherLevel
-from .models import LevelCertificates, CompetitionRegister, Birthdays, TrainingDate
+from .models import LevelCertificates, CompetitionRegister, Birthdays, TrainingDate, Schools
+from inventory.models import Kit, Item
 from teacher.models import InstructorFeedback
 from django.contrib.auth.hashers import make_password
 from accounts.decorators import admin_required
@@ -37,6 +38,23 @@ def register_user(request):
 def franchise_page(request):
     franchises =  FranchiseDetails.objects.all()
     return render(request, 'academy/franchise_page.html',{'franchises':franchises})
+
+@admin_required
+def schools_page(request):
+    schools = Schools.objects.all()
+    return render(request, 'academy/schools.html', {'schools':schools}) 
+
+def register_school(request):
+    if request.method == 'POST':
+        form = SchoolRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('schools_page')  # Redirect to a success page or any other desired page after successful registration
+    else:
+        form = SchoolRegistrationForm()
+
+    return render(request, 'academy/register_school.html', {'form': form})
+
 
 @admin_required
 def certificate_requests(request):
@@ -78,7 +96,6 @@ def franchise_details(request, user_id):
         if form.is_valid():
             franchise_details_instance = form.save(commit=False)
             franchise_details_instance.user = user
-            form.cleaned_data['program_name'] = ','.join(form.cleaned_data['program_name'])
             franchise_details_instance.save()
             return redirect('academy_base')  # Redirect to some other view after saving
     else:
@@ -231,3 +248,22 @@ def check_birthdays(request):
         TrainingDate.objects.create(name=teacher.user.teacher_details.name, training_level=teacher.prev_level+1, franchise=teacher.user.teacher_details.franchise.franchise_details.user.username)
 
     return HttpResponse("Birthdays checked and updated successfully")
+
+
+def enquiry(request):
+    if request.method == 'POST':
+        form = EnquiryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('landing_page')
+    else:
+        form = EnquiryForm()
+
+    return render(request, 'academy/enquiry.html', {'form': form})
+
+@admin_required
+def school_order(request):
+    items = Item.objects.filter(kit__isnull=True)
+    kits = Kit.objects.all()
+    schools = Schools.objects.all()
+    return render(request, 'academy/school_order.html',{'kits':kits, 'items':items, 'schools':schools})

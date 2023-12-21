@@ -21,13 +21,13 @@ class Vendor(models.Model):
 
     
 class Kit(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.name
 
 class Item(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     description = models.TextField()
     qty = models.PositiveIntegerField(default=0)
     last_purchase_price = models.PositiveIntegerField(default=0)
@@ -44,3 +44,10 @@ class Logs(models.Model):
     vendor = models.CharField(max_length=100)
     items = models.JSONField()
     date = models.DateField()
+
+
+class SchoolOrders(models.Model):
+    franchise = models.CharField(max_length=100)
+    kits = models.JSONField(default=list) 
+    items = models.JSONField()  
+    order_date = models.DateField(auto_now_add=True)

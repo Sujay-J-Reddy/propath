@@ -6,6 +6,8 @@ from . models import Students
 from academy.models import LevelCertificates, Competition, CompetitionRegister, Birthdays
 from . forms import StudentForm, UpdateLevelForm
 from accounts.decorators import franchisee_required
+from django.core.exceptions import ValidationError
+from django.utils.dateparse import parse_date
 
 # Create your views here.
 @franchisee_required
@@ -127,3 +129,31 @@ def competition_register(request, comp_id):
         user = request.user.username
         students = Students.objects.filter(franchise=user)
         return render(request, 'franchise/competition_register.html', {'students': students, 'comp_id':comp_id})
+
+def course_start(request):
+    user = request.user.username
+    students = Students.objects.filter(franchise=user)
+
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            course_start_date = data.get('course_start_date')
+            table_data = data.get('tableData', [])
+            if not course_start_date:
+                raise ValidationError('course_start_date cannot be empty')
+            
+            course_start_date = parse_date(course_start_date)
+
+            # Update course_start_date for each selected student
+            for item in table_data:
+                student_id = item.get('item')
+                if student_id:
+                    student = Students.objects.get(id=student_id)
+                    student.course_start_date = course_start_date
+                    student.save()
+
+            return JsonResponse({'success': True})
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+
+    return render(request, 'franchise/course_start.html', {'students': students})

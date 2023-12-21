@@ -21,4 +21,7 @@ urlpatterns = [
     path('competitions/entries/', views.competition_entries, name='competition_entries'),
     path('competitins/winners', views.competition_winners, name='competition_winners'),
     path('birthdays/', views.check_birthdays, name='check_birthdays'),
+    path('schools/', views.schools_page, name='schools_page'),
+    path('schools/regsiter/', views.register_school, name='register_school'),
+    path('schools/order/', views.school_order, name='school_order'),
 ]

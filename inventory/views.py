@@ -6,6 +6,7 @@ from django.views.decorators.http import require_POST
 from .forms import VendorForm, ItemForm, KitForm
 from .models import Vendor, Item, Quantity, Logs, Orders, Kit
 from datetime import date
+from academy.models import Schools
 
 def save_logs(request):
     vendor = "None"
@@ -42,6 +43,10 @@ def log_pending(request):
         try:
             data = json.loads(request.body.decode('utf-8'))
             franchise = data.get('user')
+            school = data.get('school')
+            print(school)
+            if school:
+                franchise = school
             
             # Separate kits and items
             kits_data = data.get('kits', [])

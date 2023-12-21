@@ -14,7 +14,7 @@ class Students(models.Model):
     level = models.IntegerField()
     dob = models.DateField()
     contact = models.CharField(max_length=20)
-    sex = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')], null=True)
+    sex = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')], null=True)
     father_name = models.CharField(max_length=100, null=True)
     father_occupation = models.CharField(max_length=100, null=True)
     mother_name = models.CharField(max_length=100, null=True)
@@ -27,6 +27,9 @@ class Students(models.Model):
     school_name = models.CharField(max_length=100, null=True)
     standard = models.CharField(max_length=50, null=True)
     num_siblings = models.IntegerField(null=True)
+    join_date = models.DateField(auto_now_add=True)
+    course_start_date = models.DateField(null=True)
+    dropped = models.BooleanField(default=False)
 
     @property
     def age(self):
