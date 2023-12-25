@@ -22,6 +22,11 @@ urlpatterns = [
     path('competitins/winners', views.competition_winners, name='competition_winners'),
     path('birthdays/', views.check_birthdays, name='check_birthdays'),
     path('schools/', views.schools_page, name='schools_page'),
+    path('schools/all-students/', views.all_students, name='all_students'),
     path('schools/regsiter/', views.register_school, name='register_school'),
     path('schools/order/', views.school_order, name='school_order'),
+    path('schools/students/<int:school_id>/', views.school_students, name='school_students'),
+    path('schools/students/<int:school_id>/register', views.register_student, name='register_student'),
+    path('enquirys/', views.enquiry_page, name='enquiry_page'),
+
 ]

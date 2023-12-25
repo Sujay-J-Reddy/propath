@@ -89,6 +89,17 @@ class TeacherDetails(models.Model):
         ('calligraphy', 'Calligraphy'),
     ]
 
+    BLOOD_GROUP_CHOICES = (
+        ('A+', 'A+'),
+        ('A-', 'A-'),
+        ('B+', 'B+'),
+        ('B-', 'B-'),
+        ('AB+', 'AB+'),
+        ('AB-', 'AB-'),
+        ('O+', 'O+'),
+        ('O-', 'O-'),
+    )
+
     SOURCE_CHOICES = [
         ('existing', 'Existing'),
         ('franchise', 'Franchise'),
@@ -106,7 +117,7 @@ class TeacherDetails(models.Model):
     )
     program_name = models.CharField(max_length=20, choices=PROGRAM_CHOICES)
     dob = models.DateField()
-    blood_group = models.CharField(max_length=5)
+    blood_group = models.CharField(max_length=3, choices=BLOOD_GROUP_CHOICES)
     address = models.TextField()
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)

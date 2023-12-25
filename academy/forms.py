@@ -1,6 +1,14 @@
 from django import forms
 from accounts.models import CustomUser, FranchiseDetails, TeacherDetails, TeacherLevel
-from .models import Competition, Schools, Enquiry
+from .models import *
+
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model = SchoolStudents
+        fields = ['name', 'level', 'dob', 'contact']
+        widgets = {
+            'dob': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 class CompetitionForm(forms.ModelForm):
     class Meta:

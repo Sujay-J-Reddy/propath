@@ -16,13 +16,12 @@ class Schools(models.Model):
     location = models.CharField(max_length=100)
 
 class SchoolStudents(models.Model):
-    id = models.CharField(max_length=20, primary_key=True)
     name = models.CharField(max_length=100)
     school = models.ForeignKey(Schools,on_delete=models.CASCADE)
     level = models.CharField(max_length=50)
     dob = models.DateField()
     contact = models.CharField(max_length=20)
-    birthday = models.DateField()
+
 
 class LevelCertificates(models.Model):
     student = models.CharField(max_length=100)

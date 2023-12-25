@@ -6,7 +6,7 @@ from django.contrib.auth import logout
 from franchise.models import Students
 from .forms import *
 from accounts.models import CustomUser, FranchiseDetails, TeacherDetails, TeacherLevel
-from .models import LevelCertificates, CompetitionRegister, Birthdays, TrainingDate, Schools
+from .models import *
 from inventory.models import Kit, Item
 from teacher.models import InstructorFeedback
 from django.contrib.auth.hashers import make_password
@@ -267,3 +267,51 @@ def school_order(request):
     kits = Kit.objects.all()
     schools = Schools.objects.all()
     return render(request, 'academy/school_order.html',{'kits':kits, 'items':items, 'schools':schools})
+
+@admin_required
+def school_students(request, school_id):
+    school = get_object_or_404(Schools, id=school_id)
+    students = SchoolStudents.objects.filter(school=school)
+    
+    context = {
+        'school': school,
+        'students': students,
+    }
+    
+    return render(request, 'academy/school_students.html', context)
+
+@admin_required
+def register_student(request, school_id):
+    school = get_object_or_404(Schools, id=school_id)
+
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            student_data = form.cleaned_data
+            SchoolStudents.objects.create(
+                name=student_data['name'],
+                level=student_data['level'],
+                dob=student_data['dob'],
+                contact=student_data['contact'],
+                school=school
+            )
+            return redirect('school_students', school_id=school_id)
+    else:
+        form = StudentForm()
+
+    context = {
+        'school': school,
+        'form': form,
+    }
+
+    return render(request, 'academy/register_school_student.html', context)
+
+@admin_required
+def all_students(request):
+    students = SchoolStudents.objects.all()
+    return render (request, 'academy/all_students.html', {'students':students})
+
+@admin_required
+def enquiry_page(request):
+    enquiries = Enquiry.objects.all()
+    return render(request, 'academy/enquiry_page.html', {'enquiries':enquiries})
