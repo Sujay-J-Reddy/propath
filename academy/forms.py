@@ -1,6 +1,14 @@
 from django import forms
 from accounts.models import CustomUser, FranchiseDetails, TeacherDetails, TeacherLevel
-from .models import Competition
+from .models import *
+
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model = SchoolStudents
+        fields = ['name', 'level', 'dob', 'contact']
+        widgets = {
+            'dob': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 class CompetitionForm(forms.ModelForm):
     class Meta:
@@ -81,9 +89,6 @@ class FranchiseDetailsForm(forms.ModelForm):
         model = FranchiseDetails
         exclude = ['user']
         # fields = '__all__'
-        widgets = {
-            'programs': forms.CheckboxSelectMultiple,
-        }
     
     dob = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 
@@ -92,6 +97,7 @@ class FranchiseDetailsForm(forms.ModelForm):
         cleaned_data = super().clean()
         # Add custom validation logic if needed
         return cleaned_data
+    
     
 class TeacherDetailsForm(forms.ModelForm):
     class Meta:
@@ -106,3 +112,13 @@ class TeacherDetailsForm(forms.ModelForm):
         cleaned_data = super().clean()
         # Add custom validation logic if needed
         return cleaned_data
+    
+class SchoolRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = Schools
+        fields = '__all__'
+
+class EnquiryForm(forms.ModelForm):
+    class Meta:
+        model = Enquiry
+        fields = '__all__'

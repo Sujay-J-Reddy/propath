@@ -4,9 +4,10 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
 from franchise.models import Students
-from .forms import UserForm, FranchiseDetailsForm, EditUserForm, TeacherDetailsForm, TeacherLevelForm, CompetitionForm
+from .forms import *
 from accounts.models import CustomUser, FranchiseDetails, TeacherDetails, TeacherLevel
-from .models import LevelCertificates, CompetitionRegister, Birthdays, TrainingDate
+from .models import *
+from inventory.models import Kit, Item
 from teacher.models import InstructorFeedback
 from django.contrib.auth.hashers import make_password
 from accounts.decorators import admin_required
@@ -39,6 +40,23 @@ def register_user(request):
 def franchise_page(request):
     franchises =  FranchiseDetails.objects.all()
     return render(request, 'academy/franchise_page.html',{'franchises':franchises})
+
+@admin_required
+def schools_page(request):
+    schools = Schools.objects.all()
+    return render(request, 'academy/schools.html', {'schools':schools}) 
+
+def register_school(request):
+    if request.method == 'POST':
+        form = SchoolRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('schools_page')  # Redirect to a success page or any other desired page after successful registration
+    else:
+        form = SchoolRegistrationForm()
+
+    return render(request, 'academy/register_school.html', {'form': form})
+
 
 @admin_required
 def certificate_requests(request):
@@ -80,7 +98,6 @@ def franchise_details(request, user_id):
         if form.is_valid():
             franchise_details_instance = form.save(commit=False)
             franchise_details_instance.user = user
-            form.cleaned_data['program_name'] = ','.join(form.cleaned_data['program_name'])
             franchise_details_instance.save()
             return redirect('academy_base')  # Redirect to some other view after saving
     else:
@@ -252,3 +269,70 @@ def display_orders(request):
 
     return render(request, 'academy/base.html', {'notification': notification})
 
+
+
+def enquiry(request):
+    if request.method == 'POST':
+        form = EnquiryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('landing_page')
+    else:
+        form = EnquiryForm()
+
+    return render(request, 'academy/enquiry.html', {'form': form})
+
+@admin_required
+def school_order(request):
+    items = Item.objects.filter(kit__isnull=True)
+    kits = Kit.objects.all()
+    schools = Schools.objects.all()
+    return render(request, 'academy/school_order.html',{'kits':kits, 'items':items, 'schools':schools})
+
+@admin_required
+def school_students(request, school_id):
+    school = get_object_or_404(Schools, id=school_id)
+    students = SchoolStudents.objects.filter(school=school)
+    
+    context = {
+        'school': school,
+        'students': students,
+    }
+    
+    return render(request, 'academy/school_students.html', context)
+
+@admin_required
+def register_student(request, school_id):
+    school = get_object_or_404(Schools, id=school_id)
+
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            student_data = form.cleaned_data
+            SchoolStudents.objects.create(
+                name=student_data['name'],
+                level=student_data['level'],
+                dob=student_data['dob'],
+                contact=student_data['contact'],
+                school=school
+            )
+            return redirect('school_students', school_id=school_id)
+    else:
+        form = StudentForm()
+
+    context = {
+        'school': school,
+        'form': form,
+    }
+
+    return render(request, 'academy/register_school_student.html', context)
+
+@admin_required
+def all_students(request):
+    students = SchoolStudents.objects.all()
+    return render (request, 'academy/all_students.html', {'students':students})
+
+@admin_required
+def enquiry_page(request):
+    enquiries = Enquiry.objects.all()
+    return render(request, 'academy/enquiry_page.html', {'enquiries':enquiries})

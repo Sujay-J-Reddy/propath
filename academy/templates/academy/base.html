@@ -44,25 +44,27 @@
 
 </head>
 
-<body id="top">
+<body>
+  <nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active text-light" aria-current="page" href="{% url 'academy_base' %}">Home</a>
+          <a class="nav-link text-light" href="{% url 'students_page' %}">Students</a>
 
-  <header class="header" data-header>
-    <div class="container">
-
-      <a href="#" class="logo">
-        <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
-      </a>
-
-      <nav class="navbar" data-navbar>
-
-        <div class="wrapper">
-          <a href="#" class="logo">
-            <img src="{% static 'images/logo.svg' %}" width="162" height="50" alt="EduWeb logo">
-          </a>
-
-          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
-          </button>
+          >
+          <a class="nav-link text-light" href="{% url 'franchise_page' %}">Franchises</a>
+          <a class="nav-link text-light" href="{% url 'certificate_requests' %}">Certificates</a>
+          <a class="nav-link text-light" href="{% url 'students_page' %}">Schools</a>
+          <a class="nav-link text-light" href="{% url 'teachers_page' %}">Teachers</a>
+          <a class="nav-link text-light" href="{% url 'inventory_base' %}">Stores</a>
+          <a class="nav-link text-light" href="{% url 'competitions_page' %}">Competitions</a>
+          <a class="nav-link text-light" href="{% url 'orders_page' %}">Orders</a>
+          <a class="nav-link text-light" href="{% url 'register_user' %}">Register user</a>
         </div>
 
         <ul class="navbar-list">

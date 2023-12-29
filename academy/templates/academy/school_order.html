@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>School Order</title>
+    <!-- Include your JavaScript and CSS libraries here -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+</head>
+
+<body data-user="{{ request.user.username }}">
+    <form method="post" id="table-form">
+        School:
+        <select name="school" id="school-select">
+            {% for school in schools %}
+            <option value="{{ school.id }}">{{ school.name }}</option>
+            {% endfor %}
+        </select>
+        <!-- Table for Kits -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Kit</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="expandable-row kit-row">
+                    <td>
+                        <select class="item-select select2" name="kits[0][item]">
+                            <option value="">None</option>
+                            {% for kit in kits %}
+                            {% if kit.name != 'None' %}
+                            <option value="{{ kit.id }}">{{ kit.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td>
+                        <input type="number" class="quantity-input" name="kits[0][quantity]" value="0" />
+                    </td>
+                    <td><button type="button" class="delete-row">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Add a new row button for Kits -->
+        <button type="button" id="add-kit-row">Add Kit Row</button>
+
+        <!-- Table for Items -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="expandable-row item-row">
+                    <td>
+                        <select class="item-select select2" name="items[0][item]">
+                            <option value="">None</option>
+                            {% for item in items %}
+                            {% if item.name != 'None' %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td>
+                        <input type="number" class="quantity-input" name="items[0][quantity]" value="0" />
+                    </td>
+                    <td><button type="button" class="delete-row">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Add a new row button for Items -->
+        <button type="button" id="add-item-row">Add Item Row</button>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get("success_message");
+
+        if (successMessage) {
+            // Display an alert with the success message
+            alert(successMessage);
+
+            // Reload the page to clear the success message from the URL
+            window.location.href = window.location.pathname;
+        }
+
+        // Handle adding a new row for Kits
+        document.querySelector("#add-kit-row").addEventListener("click", () => {
+            const newRow = document
+                .querySelector(".kit-row")
+                .cloneNode(true);
+            newRow.querySelector(".item-select").value = "";
+            newRow.querySelector(".quantity-input").value = "0";
+
+            const tableBody = document.querySelector("#table-form .kit-row").parentNode;
+            tableBody.appendChild(newRow);
+        });
+
+        // Handle adding a new row for Items
+        document.querySelector("#add-item-row").addEventListener("click", () => {
+            const newRow = document
+                .querySelector(".item-row")
+                .cloneNode(true);
+            newRow.querySelector(".item-select").value = "";
+            newRow.querySelector(".quantity-input").value = "0";
+
+            const tableBody = document.querySelector("#table-form .item-row").parentNode;
+            tableBody.appendChild(newRow);
+        });
+
+        // Handle deleting a row
+        document.querySelector("#table-form").addEventListener("click", (event) => {
+            if (event.target.classList.contains("delete-row")) {
+                const row = event.target.parentElement.parentElement;
+                if (document.querySelectorAll(".expandable-row").length > 1) {
+                    row.remove();
+                } else {
+                    alert("Cannot delete the last row");
+                }
+            }
+        });
+
+        var currentUser = document.body.getAttribute("data-user");
+        console.log(currentUser);
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === name + "=") {
+                        cookieValue = decodeURIComponent(
+                            cookie.substring(name.length + 1)
+                        );
+                        break;
+                    }
+                }
+            }
+            console.log(cookieValue);
+            return cookieValue;
+        }
+
+        document
+            .querySelector("#table-form")
+            .addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                const kitsData = [];
+                const itemsData = [];
+                const selectedSchool = document.getElementById("school-select").options[document.getElementById("school-select").selectedIndex].text;
+
+                document.querySelectorAll(".expandable-row.kit-row").forEach((row) => {
+                    const itemSelect = row.querySelector(".item-select");
+                    const quantityInput = row.querySelector(".quantity-input");
+                    if (itemSelect.value !== "") {
+                        kitsData.push({
+                            item: itemSelect.value,
+                            quantity: quantityInput.value,
+                        });
+                    }
+                });
+
+                document.querySelectorAll(".expandable-row.item-row").forEach((row) => {
+                    const itemSelect = row.querySelector(".item-select");
+                    const quantityInput = row.querySelector(".quantity-input");
+                    if (itemSelect.value !== "") {
+                        itemsData.push({
+                            item: itemSelect.value,
+                            quantity: quantityInput.value,
+                        });
+                    }
+                });
+
+                const tableData = {
+                    kits: kitsData,
+                    items: itemsData,
+                    user: currentUser,
+                    school: selectedSchool,
+                };
+
+                console.log(tableData);
+
+                // Send the data to the server
+                fetch("/inventory/orders/log-pending/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCookie("csrftoken"), // Include CSRF token
+                    },
+                    body: JSON.stringify(tableData),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        // Handle the response from the server, if needed
+                        console.log(data);
+                    });
+            });
+
+    </script>
+
+
+</body>
+
+
+</html>

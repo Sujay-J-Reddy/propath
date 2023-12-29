@@ -9,6 +9,7 @@ class StudentForm(forms.ModelForm):
 
         widgets = {
             'dob': forms.DateInput(attrs={'type': 'date'}),
+            'course_start_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
 class UpdateLevelForm(forms.ModelForm):

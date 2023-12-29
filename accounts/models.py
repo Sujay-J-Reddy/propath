@@ -34,13 +34,6 @@ class FranchiseDetails(models.Model):
         ('DCF', 'DCF - District City Franchisee')
     )
 
-    PROGRAM_NAME_CHOICES = (
-        ('abacus', 'Abacus'),
-        ('vedic_maths', 'Vedic Maths'),
-        ('handwriting', 'Handwriting'),
-        ('calligraphy', 'Calligraphy'),
-        ('robotic', 'Robotic')
-    )
 
     BLOOD_GROUP_CHOICES = (
         ('A+', 'A+'),
@@ -63,7 +56,11 @@ class FranchiseDetails(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     franchisee_type = models.CharField(max_length=3, choices=FRANCHISEE_TYPE_CHOICES)
-    program_name = models.TextField(max_length=200, choices=PROGRAM_NAME_CHOICES, blank=True) 
+    abacus = models.BooleanField(default=False)
+    vedic_maths = models.BooleanField(default=False)
+    handwriting = models.BooleanField(default=False)
+    calligraphy = models.BooleanField(default=False)
+    robotics = models.BooleanField(default=False)
     dob = models.DateField()
     blood_group = models.CharField(max_length=3, choices=BLOOD_GROUP_CHOICES)
     center_address = models.TextField()
@@ -79,14 +76,8 @@ class FranchiseDetails(models.Model):
     find_about_us = models.CharField(max_length=20, choices=FIND_US_CHOICES)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE,limit_choices_to={'account_type': 'franchisee'}, related_name='franchise_details')
 
-    def set_program_name(self, program_list):
-        self.program_name = ','.join(program_list)
-
-    def get_program_name(self):
-        return self.program_name.split(',')
-    
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.program_name} Franchisee"
+        return f"{self.first_name} {self.last_name}  Franchisee"
 
     
 
@@ -97,6 +88,17 @@ class TeacherDetails(models.Model):
         ('handwriting', 'Handwriting'),
         ('calligraphy', 'Calligraphy'),
     ]
+
+    BLOOD_GROUP_CHOICES = (
+        ('A+', 'A+'),
+        ('A-', 'A-'),
+        ('B+', 'B+'),
+        ('B-', 'B-'),
+        ('AB+', 'AB+'),
+        ('AB-', 'AB-'),
+        ('O+', 'O+'),
+        ('O-', 'O-'),
+    )
 
     SOURCE_CHOICES = [
         ('existing', 'Existing'),
@@ -115,7 +117,7 @@ class TeacherDetails(models.Model):
     )
     program_name = models.CharField(max_length=20, choices=PROGRAM_CHOICES)
     dob = models.DateField()
-    blood_group = models.CharField(max_length=5)
+    blood_group = models.CharField(max_length=3, choices=BLOOD_GROUP_CHOICES)
     address = models.TextField()
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
