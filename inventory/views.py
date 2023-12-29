@@ -88,10 +88,19 @@ def inventory_base(request):
 
 def supply_page(request):
     logs = Logs.objects.all()
+    for log in logs:
+        log.items = json.loads(log.items)
     return render(request, 'inventory/supply_page.html',{'logs': logs} )
 
 def orders_page(request):
     orders = Orders.objects.filter(completed=False)
+
+    for order in orders:
+        order.items = json.loads(order.items)
+
+    for order in orders:
+        order.kits = json.loads(order.kits)
+        
     return render(request, 'inventory/orders_page.html',{'orders':orders})
 
 def pending_orders(request):
@@ -100,6 +109,13 @@ def pending_orders(request):
 
 def completed_orders(request):
     orders = Orders.objects.filter(completed=True)
+
+    for order in orders:
+        order.items = json.loads(order.items)
+
+    for order in orders:
+        order.kits = json.loads(order.kits)
+        
     return render(request, 'inventory/completed_orders.html',{'orders':orders})
 
 def vendors_page(request):

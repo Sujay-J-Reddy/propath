@@ -6,6 +6,8 @@ from . models import Students
 from academy.models import LevelCertificates, Competition, CompetitionRegister, Birthdays
 from . forms import StudentForm, UpdateLevelForm
 from accounts.decorators import franchisee_required
+from django.shortcuts import render, redirect
+from shared.models import Notification
 
 # Create your views here.
 @franchisee_required
@@ -38,6 +40,12 @@ def orders_completed(request):
     print(user_franchise)
     orders = Orders.objects.filter(completed=True,franchise=user_franchise)
 
+    for order in orders:
+        order.items = json.loads(order.items)
+
+    for order in orders:
+        order.kits = json.loads(order.kits)
+
     return render(request, 'franchise/orders_completed.html',{'orders':orders})
 
 @franchisee_required
@@ -45,6 +53,15 @@ def orders_pending(request):
     user_franchise = request.user
     print(user_franchise)
     orders = Orders.objects.filter(completed=False,franchise=user_franchise)
+
+    for order in orders:
+        print(order.kits)
+
+    for order in orders:
+        order.items = json.loads(order.items)
+
+    for order in orders:
+        order.kits = json.loads(order.kits)
 
     return render(request, 'franchise/orders_pending.html',{'orders':orders})
 
@@ -127,3 +144,16 @@ def competition_register(request, comp_id):
         user = request.user.username
         students = Students.objects.filter(franchise=user)
         return render(request, 'franchise/competition_register.html', {'students': students, 'comp_id':comp_id})
+    
+@franchisee_required
+def new_order(request):
+    items = Item.objects.filter(kit__isnull=True)
+    kits = Kit.objects.all()
+
+    if request.method == 'GET' and 'order_submitted' in request.GET:
+        # Save the notification to the shared database
+        Notification.objects.create(message='Order submitted successfully!')
+
+        return redirect('franchise:new_order')
+
+    return render(request, 'franchise/new_order.html', {'items': items, 'kits': kits})

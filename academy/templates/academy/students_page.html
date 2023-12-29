@@ -1,189 +1,479 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Students Page</title>
-    {% load static %}
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://code.jquery.com/jquery-3.6.4.min.js"
-      integrity="sha384-UG8ao2jwOWB7/oDdObZc6ItJmwUkR/PfMyt9Qs5AwX7PsnYn1CRKCTWyncPTWvaS"
-      crossorigin="anonymous"
-    ></script>
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 
+    - primary meta tag
+  -->
+  <title>Propath Academy</title>
+  <meta name="title" content="">
+  <meta name="description" content="">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  {% load crispy_forms_tags %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'academy/academy.css' %}">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="./assets/images/hero-bg.svg">
+  <link rel="preload" as="image" href="./assets/images/hero-banner-1.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-banner-2.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
+  <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
   <style>
-   .current_text {
-        font-family: "Your Desired Font", sans-serif; /* Use the desired font */
-        font-weight: 600; /* Adjust the font weight */
-        font-size: 14px; /* Modify the font size */
-        text-transform: uppercase;
-      }
-      .txt_color {
-        color: #7b7979; /* Light black color */
-        font-family: "Times New Roman", Times, serif;
-      }
-      .txt_colors {
-        color: #4f4242; /* Light black color */
-        font-family: "Times New Roman", Times, serif;
-      }
-      .smaller-div {
-        max-width: 400px; /* Adjust the max-width as needed */
-        margin: 0 auto; /* Center horizontally */
-        padding: 20px; /* Add padding for spacing */
-        border: 1px solid #ccc; /* Optional: Add border for visual separation */
-      }
+    /* Header styles */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      /* Ensure the header stays on top */
+    }
 
+    /* Filter section styles */
+    .filter-section {
+      /* Add padding or other styles if needed */
+      padding-top: 150px;
+      /* Adjust as needed to ensure it's below the header */
+      z-index: 900;
+      /* Lower z-index than header */
+      background-color: white;
+      /* Set background color as needed */
+    }
+
+    /* Convert to Excel section styles */
+    .excel-section {
+      /* Add padding or other styles if needed */
+      z-index: 900;
+      /* Lower z-index than header */
+      background-color: white;
+      /* Set background color as needed */
+    }
+
+    /* Table section styles */
+    .table-section {
+      /* Add padding or other styles if needed */
+      margin-top: 200px;
+      /* Adjust as needed to ensure it's below the header and other content */
+      z-index: 800;
+      /* Lower z-index than header and other sections */
+      background-color: white;
+      /* Set background color as needed */
+      margin: 200px auto;
+      /* Keep the top margin and center horizontally */
+      width: 70%;
+      /* Adjust the width to take up 70% of the page */
+      background-color: white;
+    }
+
+    /* Other styles from previous code */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .content-container {
+      /* Center the content */
+      width: 80%;
+      /* Adjust the width as needed */
+      margin: 50px auto;
+      /* Adjust the top and bottom margins to center vertically */
+      /* Additional styling for the content container */
+      padding: 20px;
+      background-color: hsl(0, 0%, 100%);
+      text-align: center;
+    }
+
+    .table-container {
+      /* Style the container for the table */
+      margin-top: 20px;
+      /* Add space between heading and table */
+      display: inline-block;
+      /* Allow centering of the table */
+      text-align: left;
+      /* Align table content to the left */
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 0.9em;
+      min-width: 400px;
+      border-radius: 5px 5px 0 0;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .table-container thead tr {
+      background-color: #009879;
+      color: #ffffff;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    .table-container th,
+    .table-container td {
+      padding: 12px 15px;
+    }
+
+    .table-container tbody tr {
+      border-bottom: 1px solid #dddddd;
+    }
+
+    .table-container tbody tr:nth-of-type(even) {
+      background-color: #f3f3f3;
+    }
+
+    .table-container tbody tr:last-of-type {
+      border-bottom: 2px solid #009879;
+    }
+
+    .table-container tbody tr.active-row {
+      font-weight: bold;
+      color: #009879;
+    }
+
+    /* Adjusting the filter section and its button */
+    .form-group {
+      /* Position to below the header */
+      position: relative;
+      top: 70px;
+      /* Adjust this value to suit the header's height */
+      /* Other styles */
+    }
+
+    .btn-dark {
+      /* Define smaller size for the button */
+      font-size: 12px;
+      padding: 5px 10px;
+    }
+
+    /* Positioning the "Convert to Excel" button */
+    .col-md-6.text-right {
+      /* Position to below the header */
+      position: relative;
+      top: 70px;
+      /* Adjust this value to suit the header's height */
+      /* Other styles */
+    }
+
+    .btn-primary {
+      /* Define smaller size for the button */
+      font-size: 12px;
+      padding: 5px 10px;
+    }
   </style>
 
-  <body>
-    <nav class="navbar navbar-expand-lg bg-light">
-      <div class="container-fluid">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
+</head>
+
+
+<body id="top">
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <a href="#" class="logo">
+        <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="wrapper">
+          <a href="#" class="logo">
+            <img src="{% static 'images/logo.svg' %}" width="162" height="50" alt="EduWeb logo">
+          </a>
+
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="{% url 'academy_base' %}" class="navbar-link" data-nav-link>Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'students_page' %}" class="navbar-link" data-nav-link>Students</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'franchise_page' %}" class="navbar-link" data-nav-link>Franchises</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'students_page' %}" class="navbar-link" data-nav-link>Schools</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'competitions_page' %}" class="navbar-link" data-nav-link>Competitions</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'teachers_page' %}" class="navbar-link" data-nav-link>Teachers</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="/inventory/" class="navbar-link" data-nav-link>Stores</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'orders_page' %}" class="navbar-link" data-nav-link>Orders</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'register_user' %}" class="navbar-link" data-nav-link>Register user</a>
+          </li>
+
+        </ul>
+
+      </nav>
+
+      <div class="header-actions">
+
+        <a href="{% url 'logout_user' %}" class="btn has-before">
+          <span class="span">Logout</span>
+
+          <!-- <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon> -->
+        </a>
+
+        <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
+          <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a
-              class="current_text nav-link active text-dark"
-              aria-current="page"
-              href="{% url 'academy_base' %}"
-              >Home</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'students_page' %}"
-              >Students</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'franchise_page' %}"
-            >
-              Franchises</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'students_page' %}"
-              >Schools</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'teachers_page' %}"
-              >Teachers</a
-            >
-            <a class="current_text nav-link text-dark" href="/inventory/"
-              >Stores</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'orders_page' %}"
-              >Orders</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'register_user' %}"
-              >Register user</a
-            >
-          </div>
-          <div class="logout ms-auto">
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'logout_user' %}"
-              >Logout</a
-            >
-          </div>
+
+      </div>
+
+      <div class="overlay" data-nav-toggler data-overlay></div>
+
+    </div>
+  </header>
+
+
+  <div class="container text-center pt-3">
+    <h2 class="txt_color border-bottom pb-2 mb-0">Students</h2>
+  </div>
+
+  <!-- Filter Section -->
+  <div class="filter-section">
+    <div class="container">
+      <div class="row">
+        <!-- Filter inputs/buttons -->
+        <!-- ... (filter inputs/buttons HTML) ... -->
+        <label for="franchiseSelect" class="form-label">Select Franchise:</label>
+        <select id="franchiseSelect" class="form-select">
+          <option value="">All</option>
+          {% for franchise in franchises %}
+          <option value="{{ franchise }}">{{ franchise }}</option>
+          {% endfor %}
+        </select>
+        <button onclick="filterStudents()" class="btn btn-dark my-3">Filter</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Convert to Excel Section -->
+  <div class="excel-section">
+    <div class="container">
+      <div class="row justify-content-end"> <!-- Align to the right -->
+        <div class="col-md-6 text-right">
+          <!-- Convert to Excel Button -->
+          <!-- ... (Convert to Excel button HTML) ... -->
+          <button onclick="exportToExcel()" class="btn btn-primary my-3">Convert to Excel</button>
         </div>
       </div>
-    </nav>
-
-    <div class="container text-center pt-3">
-      <h1 class="txt_color border-bottom pb-2 mb-0">Students</h1>
     </div>
-    
-    <main>
-      <div class="container my-5">
-        <div class="smaller-div">
-          <label for="franchiseSelect" class="form-label">Select Franchise:</label>
-          <select id="franchiseSelect" class="form-select">
-            <option value="">All</option>
-            {% for franchise in franchises %}
-            <option value="{{ franchise }}">{{ franchise }}</option>
-            {% endfor %}
-          </select>
-          <button onclick="filterStudents()" class="btn btn-dark my-3" >Filter</button>
-      </div>
-      </div>
+  </div>
 
-      <div id="studentsTables">
-        <!-- Display students in separate tables based on franchise -->
-        {% for franchise, students_in_franchise in students_by_franchise.items %}
-        <div class="franchise-table container" data-franchise="{{ franchise }}">
-          <div class="container text-start pt-3">
-            <h1 class="txt_colors border-bottom pb-2 mb-0">{{ franchise }}</h1>
+  <div class="table-section container">
+    <div class="row mt-3">
+      <div class="col">
+        <!-- Table -->
+        <div id="studentsTables">
+          <!-- Display students in separate t ables based on franchise -->
+          {% for franchise, students_in_franchise in students_by_franchise.items %}
+          <div class="franchise-table container" data-franchise="{{ franchise }}">
+            <div class="container text-start pt-3">
+              <h1 class="txt_colors border-bottom pb-2 mb-0">{{ franchise }}</h1>
+            </div>
+            <table class="table table-container table-striped">
+              <!-- Table content here -->
+              <thead class="bg-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>DOB</th>
+                  <th>Age</th>
+                  <th>Level</th>
+                  <th>Contact</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for student in students_in_franchise %}
+                <tr>
+                  <td class="fw-normal mb-1">{{ student.id }}</td>
+                  <td class="fw-normal mb-1">{{ student.name }}</td>
+                  <td class="fw-normal mb-1">{{ student.dob }}</td>
+                  <td class="fw-normal mb-1">{{ student.age }}</td>
+                  <td class="fw-normal mb-1">{{ student.level }}</td>
+                  <td class="fw-normal mb-1">{{ student.contact }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
-          
-          <table class="table table-striped my-3">
-            <thead class="bg-light">
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>DOB</th>
-                <th>Age</th>
-                <th>Level</th>
-                <th>Contact</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for student in students_in_franchise %}
-              <tr>
-                <td class="fw-normal mb-1">{{ student.id }}</td>
-                <td class="fw-normal mb-1">{{ student.name }}</td>
-                <td class="fw-normal mb-1">{{ student.dob }}</td>
-                <td class="fw-normal mb-1">{{ student.age }}</td>
-                <td class="fw-normal mb-1">{{ student.level }}</td>
-                <td class="fw-normal mb-1">{{ student.contact }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
         </div>
         {% endfor %}
       </div>
-    </main>
+    </div>
+  </div>
+  </div>
 
-    <script>
-      function filterStudents() {
-        var selectedFranchise = $("#franchiseSelect").val();
 
-        // Show/hide tables based on the selected franchise
-        if (selectedFranchise) {
-          $(".franchise-table").hide();
-          $(
-            '.franchise-table[data-franchise="' + selectedFranchise + '"]'
-          ).show();
-        } else {
-          $(".franchise-table").show();
+
+  <!-- <div class="content-container">
+
+    <div id="studentsTables">
+      
+      {% for franchise, students_in_franchise in students_by_franchise.items %}
+      <div class="franchise-table container" data-franchise="{{ franchise }}">
+        <div class="container text-start pt-3">
+          <h1 class="txt_colors border-bottom pb-2 mb-0">{{ franchise }}</h1>
+        </div>
+
+        <table class="table table-container table-striped my-3">
+          
+          <thead class="bg-light">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>DOB</th>
+              <th>Age</th>
+              <th>Level</th>
+              <th>Contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for student in students_in_franchise %}
+            <tr>
+              <td class="fw-normal mb-1">{{ student.id }}</td>
+              <td class="fw-normal mb-1">{{ student.name }}</td>
+              <td class="fw-normal mb-1">{{ student.dob }}</td>
+              <td class="fw-normal mb-1">{{ student.age }}</td>
+              <td class="fw-normal mb-1">{{ student.level }}</td>
+              <td class="fw-normal mb-1">{{ student.contact }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="container my-5">
+      <div class="smaller-div">
+        <label for="franchiseSelect" class="form-label">Select Franchise:</label>
+        <select id="franchiseSelect" class="form-select">
+          <option value="">All</option>
+          {% for franchise in franchises %}
+          <option value="{{ franchise }}">{{ franchise }}</option>
+          {% endfor %}
+        </select>
+        <button onclick="filterStudents()" class="btn btn-dark my-3">Filter</button>
+      </div>
+    </div>
+    <button onclick="exportToExcel()" class="btn btn-primary my-3">Convert to Excel</button>
+  </div> -->
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script>
+    function exportToExcel() {
+      var tables = document.querySelectorAll('.franchise-table table');
+      var wb = XLSX.utils.book_new();
+
+      tables.forEach(function (table, index) {
+        var ws = XLSX.utils.table_to_sheet(table);
+
+        /* Set the width of the DOB column (assuming it's the fourth column, change the index if needed) */
+        ws['!cols'] = ws['!cols'] || [];
+        ws['!cols'][2] = { wpx: 120 };
+
+        /* Set the date format for the DOB column (assuming it's the fourth column, change the index if needed) */
+        if (ws['B']) {
+          for (var r = 1; r < ws['B'].length; r++) {
+            if (ws['B'][r]) {
+              ws['B'][r].z = 'yyyy-mm-dd'; // Change the date format as needed
+            }
+          }
         }
+
+        XLSX.utils.book_append_sheet(wb, ws, 'Franchise_' + (index + 1));
+      });
+
+      var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+      function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+        return buf;
       }
-    </script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+      saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), 'students_data.xlsx');
+    }
+
+
+  </script>
+
+
+
+
+  <script>
+    function filterStudents() {
+      var selectedFranchise = $("#franchiseSelect").val();
+
+      // Show/hide tables based on the selected franchise
+      if (selectedFranchise) {
+        $(".franchise-table").hide();
+        $(
+          '.franchise-table[data-franchise="' + selectedFranchise + '"]'
+        ).show();
+      } else {
+        $(".franchise-table").show();
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>

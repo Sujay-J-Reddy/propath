@@ -68,9 +68,17 @@
       <tbody>
         {% for order in orders %}
         <tr>
-          <td class="fw-normal mb-1">{{order.id}}</td>
-          <td class="fw-normal mb-1">{{order.Kits}}</td>
-          <td class="fw-normal mb-1">{{ order.items }}</td>
+          <td class="fw-normal mb-1">{{ order.id }}</td>
+          <td class="fw-normal mb-1">
+            {% for kit in order.kits %}
+              {{ kit.kit_name }} - Quantity: {{ kit.quantity }}<br>
+            {% endfor %}
+          </td>
+          <td class="fw-normal mb-1">
+            {% for item in order.items %}
+              {{ item.item_name }} - Quantity: {{ item.quantity }}<br>
+            {% endfor %}
+          </td>
           <td class="fw-normal mb-1">{{ order.delivery_date }}</td>
         </tr>
         {% endfor %}

@@ -44,8 +44,16 @@
         <tr>
           <td>{{order.id}}</td>
           <td>{{ order.franchise }}</td>
-          <td>{{ order.kits }} </td>
-          <td>{{ order.items }}</td>
+          <td>
+            {% for kit in order.kits %}
+            {{ kit.kit_name }} - Quantity: {{ kit.quantity }}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% for item in order.items %}
+            {{ item.item_name }} - Quantity: {{ item.quantity }}<br>
+            {% endfor %}
+          </td>
           <td>{{ order.delivery_date }}</td>
         </tr>
         {% endfor %}

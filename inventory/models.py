@@ -44,3 +44,4 @@ class Logs(models.Model):
     vendor = models.CharField(max_length=100)
     items = models.JSONField()
     date = models.DateField()
+    

@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.conf import settings
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
@@ -15,7 +16,11 @@ def about_us(request):
 
 
 def landing_page(request):
-    return render(request, 'accounts/landing_page.html')
+    context = {
+        # Other context variables
+        'MEDIA_URL': settings.MEDIA_URL,
+    }
+    return render(request, 'accounts/landing_page.html',context)
 class LoginView(View):
     def get(self, request):
         return render(request, 'accounts/login.html')

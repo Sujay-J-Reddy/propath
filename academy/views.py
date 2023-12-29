@@ -10,6 +10,8 @@ from .models import LevelCertificates, CompetitionRegister, Birthdays, TrainingD
 from teacher.models import InstructorFeedback
 from django.contrib.auth.hashers import make_password
 from accounts.decorators import admin_required
+from django.shortcuts import render
+from shared.models import Notification
 
 @admin_required
 def academy_base(request):
@@ -231,3 +233,22 @@ def check_birthdays(request):
         TrainingDate.objects.create(name=teacher.user.teacher_details.name, training_level=teacher.prev_level+1, franchise=teacher.user.teacher_details.franchise.franchise_details.user.username)
 
     return HttpResponse("Birthdays checked and updated successfully")
+
+
+from django.shortcuts import render
+from shared.models import Notification
+
+def display_orders(request):
+    # Retrieve the notification from the shared database
+    notification = Notification.objects.filter(is_read=False).first()
+
+    # Mark the notification as read once displayed
+    if notification:
+        notification.is_read = True
+        notification.save()
+    else:
+        # Fallback to a static notification message if there's no notification in the database
+        notification = {'message': "New order arrived"}  # Static notification message
+
+    return render(request, 'academy/base.html', {'notification': notification})
+
