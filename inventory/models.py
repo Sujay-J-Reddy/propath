@@ -17,9 +17,7 @@ class Vendor(models.Model):
 
     def __str__(self):
         return self.name
-    
-
-    
+       
 class Kit(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -44,7 +42,6 @@ class Logs(models.Model):
     vendor = models.CharField(max_length=100)
     items = models.JSONField()
     date = models.DateField()
-
 
 class SchoolOrders(models.Model):
     franchise = models.CharField(max_length=100)

@@ -159,6 +159,7 @@ def new_order(request):
 
     return render(request, 'franchise/new_order.html', {'items': items, 'kits': kits})
 
+@franchisee_required
 def course_start(request):
     user = request.user.username
     students = Students.objects.filter(franchise=user)
