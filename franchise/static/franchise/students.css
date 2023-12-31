@@ -1,36 +1,77 @@
+.date-search-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.date-input {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.date-input label {
+    margin-right: 10px;
+  }
+
+.date-search-container label {
+    margin-right: 10px;
+}
+
+.date-search-container input[type="date"],
+.date-search-container button {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.date-search-container button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.date-search-container button:hover {
+    background-color: #0056b3;
+}
+
 /* Style for the search container */
 .search-container {
     position: relative;
     margin-right: 10px;
-  }
-  
-  /* Style for the search input */
-  #searchInput {
+}
+
+/* Style for the search input */
+#searchInput {
     width: 250px;
     padding: 8px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
     transition: border-color 0.3s ease-in-out;
-  }
-  
-  #searchInput:focus {
+}
+
+#searchInput:focus {
     outline: none;
-    border-color: #009879; /* Highlight when focused */
-  }
-  
-  /* Placeholder style */
-  #searchInput::placeholder {
+    border-color: #009879;
+    /* Highlight when focused */
+}
+
+/* Placeholder style */
+#searchInput::placeholder {
     color: #999;
-  }
-  
+}
+
 
 .search-register-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px; /* Add margin to separate from the table */
-  }
+    margin-bottom: 10px;
+    /* Add margin to separate from the table */
+}
 
 .button-column {
     color: rgb(38, 38, 244);
@@ -44,7 +85,7 @@
     max-width: max-content;
     padding: 10px 20px;
     border-radius: 5px;
-  
+
 }
 
 .content-table {
@@ -55,43 +96,43 @@
     border-radius: 5px 5px 0 0;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .content-table thead tr {
+}
+
+.content-table thead tr {
     background-color: #009879;
     color: #ffffff;
     text-align: left;
     font-weight: bold;
-  }
-  
-  .content-table th,
-  .content-table td {
+}
+
+.content-table th,
+.content-table td {
     padding: 12px 15px;
-  }
-  
-  .content-table tbody tr {
+}
+
+.content-table tbody tr {
     border-bottom: 1px solid #dddddd;
-  }
-  
-  .content-table tbody tr:nth-of-type(even) {
+}
+
+.content-table tbody tr:nth-of-type(even) {
     background-color: #f3f3f3;
-  }
-  
-  .content-table tbody tr:last-of-type {
+}
+
+.content-table tbody tr:last-of-type {
     border-bottom: 2px solid #009879;
-  }
-  
-  .content-table tbody tr.active-row {
+}
+
+.content-table tbody tr.active-row {
     font-weight: bold;
     color: #009879;
-  }
+}
 
 .tablecontainer {
     padding-top: 60px;
     width: 80%;
     margin: 0 auto;
     position: relative;
-  }
+}
 
 li {
     list-style: none;
@@ -207,7 +248,7 @@ img {
     background-color: #1ab79d;
     color: hsl(0, 0%, 100%);
     font-family: 'League Spartan', sans-serif;
-    
+
     display: flex;
     align-items: center;
     gap: 7px;
