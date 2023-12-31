@@ -1,15 +1,45 @@
+/* New styles for search bar */
+
+  
+
+.search-container {
+    
+    position: relative;
+    margin-right: 10px; }
+  
+  .search-container input[type="text"] {
+    padding: 8px; /* Adjust padding as needed */
+    border-radius: 4px; /* Adjust border radius */
+    border: 1px solid #ccc; /* Adjust border color */
+  }
+  
+  #searchInput {
+    width: 250px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease-in-out;
+  }
+  .search-register-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Add margin to separate from the table */
+  }
 
 
 .tabcontainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 40px;
+    padding-top: 60px;
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+  
   }
 
 .content-table {
     width: 70%;
-    margin-top: 30px; /* Adjust the top margin as needed */
+    margin-top: 50px; /* Adjust the top margin as needed */
   }
 
 .button-column {
@@ -28,9 +58,10 @@
 }
 
 .content-table {
+    width: 90%;
     border-collapse: collapse;
     margin: 25px 0;
-    font-size: 1.1em;
+    font-size: 0.9em;
     min-width: 400px;
     border-radius: 5px 5px 0 0;
     overflow: hidden;
@@ -66,10 +97,11 @@
     color: #009879;
   }
 
-.tablecontainer {
+.tabcontainer {
     padding-top: 60px;
     width: 80%;
     margin: 0 auto;
+    position: relative;
   }
 
 li {
