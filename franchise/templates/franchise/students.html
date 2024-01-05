@@ -21,6 +21,7 @@
   <!-- 
     - custom css link
   -->
+  {% load crispy_forms_tags %}
   {% load static %}
   <link rel="stylesheet" href="{% static 'franchise/students.css' %}">
 
@@ -43,6 +44,11 @@
   <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
 
   <style>
+    .navbar-link {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+    }
+
     .date-search-container {
       margin-bottom: 20px;
       display: flex;
@@ -293,6 +299,44 @@
     });
 
   </script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      console.log("Script is running...");
+      const today = new Date();
+      const currentMonth = today.getMonth() + 1; // January is 0
+      const currentDate = today.getDate();
+      let notificationMessage = '';
+
+      $('table.content-table tbody tr').each(function () {
+        const rowDate = $(this).find('td:nth-child(7)').text(); // Assuming the DOB is in the 7th column
+
+        const dob = new Date(rowDate);
+        const dobMonth = dob.getMonth() + 1; // January is 0
+        const dobDate = dob.getDate();
+
+        if (currentMonth === dobMonth && currentDate === dobDate) {
+          const studentName = $(this).find('td:nth-child(2)').text(); // Assuming the name is in the 2nd column
+          console.log(`Birthday found for ${studentName}`);
+          notificationMessage += `Today it's ${studentName}'s birthday! 🎉🎂<br>`;
+          console.log(notificationMessage);
+        }
+      });
+
+      // Update the notification message in base.html
+      $('.birthday-notification').html(notificationMessage); // Use .html() to render HTML content
+      console.log("Script finished running...");
+    });
+
+
+  </script>
+
+
+
+
 
 
 

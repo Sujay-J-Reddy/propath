@@ -23,7 +23,7 @@
   -->
   {% load crispy_forms_tags %}
   {% load static %}
-  <link rel="stylesheet" href="{% static 'academy/academy.css' %}">
+  <link rel="stylesheet" href="{% static 'academy/academystudents.css' %}">
 
   <!-- 
     - google font link
@@ -46,144 +46,103 @@
 
 
   <style>
-    /* Header styles */
-    .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      /* Ensure the header stays on top */
+    .navbar-link {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
     }
 
-    /* Filter section styles */
-    .filter-section {
-      /* Add padding or other styles if needed */
-      padding-top: 150px;
-      /* Adjust as needed to ensure it's below the header */
-      z-index: 900;
-      /* Lower z-index than header */
-      background-color: white;
-      /* Set background color as needed */
+    .date-search-container {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
     }
 
-    /* Convert to Excel section styles */
-    .excel-section {
-      /* Add padding or other styles if needed */
-      z-index: 900;
-      /* Lower z-index than header */
-      background-color: white;
-      /* Set background color as needed */
+    .date-input {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
     }
 
-    /* Table section styles */
-    .table-section {
-      /* Add padding or other styles if needed */
-      margin-top: 200px;
-      /* Adjust as needed to ensure it's below the header and other content */
-      z-index: 800;
-      /* Lower z-index than header and other sections */
-      background-color: white;
-      /* Set background color as needed */
-      margin: 200px auto;
-      /* Keep the top margin and center horizontally */
-      width: 70%;
-      /* Adjust the width to take up 70% of the page */
-      background-color: white;
+    .date-input label {
+      margin-right: 10px;
     }
 
-    /* Other styles from previous code */
-    body {
-      margin: 0;
-      padding: 0;
+    .date-search-container label {
+      margin-right: 10px;
     }
 
-    .content-container {
-      /* Center the content */
-      width: 80%;
-      /* Adjust the width as needed */
-      margin: 50px auto;
-      /* Adjust the top and bottom margins to center vertically */
-      /* Additional styling for the content container */
-      padding: 20px;
-      background-color: hsl(0, 0%, 100%);
-      text-align: center;
+    .date-search-container input[type="date"],
+    .date-search-container button {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px;
     }
 
-    .table-container {
-      /* Style the container for the table */
-      margin-top: 20px;
-      /* Add space between heading and table */
-      display: inline-block;
-      /* Allow centering of the table */
-      text-align: left;
-      /* Align table content to the left */
-      border-collapse: collapse;
-      margin: 25px 0;
-      font-size: 0.9em;
-      min-width: 400px;
-      border-radius: 5px 5px 0 0;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .table-container thead tr {
+    .date-search-container button {
       background-color: #009879;
-      color: #ffffff;
-      text-align: left;
-      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      padding: 8px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      background-color: #009879;
+      color: white;
+      cursor: pointer;
     }
 
-    .table-container th,
-    .table-container td {
-      padding: 12px 15px;
+    .date-search-container button:hover {
+      background-color: #009879;
     }
 
-    .table-container tbody tr {
-      border-bottom: 1px solid #dddddd;
+    /* Style for select box */
+    .form-select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+      background-position: right 8px top 50%;
+      background-repeat: no-repeat;
+      background-size: 16px;
     }
 
-    .table-container tbody tr:nth-of-type(even) {
-      background-color: #f3f3f3;
+    /* Hover and focus styles */
+    .form-select:hover,
+    .form-select:focus {
+      border-color: #009879;
     }
 
-    .table-container tbody tr:last-of-type {
-      border-bottom: 2px solid #009879;
-    }
-
-    .table-container tbody tr.active-row {
-      font-weight: bold;
+    /* Dropdown arrow color */
+    .form-select::-ms-expand {
       color: #009879;
     }
 
-    /* Adjusting the filter section and its button */
-    .form-group {
-      /* Position to below the header */
-      position: relative;
-      top: 70px;
-      /* Adjust this value to suit the header's height */
-      /* Other styles */
+    /* Reset default styles */
+    .form-select option {
+      color: initial;
     }
 
-    .btn-dark {
-      /* Define smaller size for the button */
-      font-size: 12px;
-      padding: 5px 10px;
+    #studentsTables {
+      
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      /* Adjust the height as needed */
     }
 
-    /* Positioning the "Convert to Excel" button */
-    .col-md-6.text-right {
-      /* Position to below the header */
-      position: relative;
-      top: 70px;
-      /* Adjust this value to suit the header's height */
-      /* Other styles */
-    }
-
-    .btn-primary {
-      /* Define smaller size for the button */
-      font-size: 12px;
-      padding: 5px 10px;
+    .content-table {
+      margin-top: 20px;
+      width: 80%;
+      max-width: 1000px;
+      margin: auto;
+      /* Center the table */
     }
   </style>
 
@@ -226,7 +185,7 @@
           </li>
 
           <li class="navbar-item">
-            <a href="{% url 'students_page' %}" class="navbar-link" data-nav-link>Schools</a>
+            <a href="{% url 'schools_page' %}" class="navbar-link" data-nav-link>Schools</a>
           </li>
 
           <li class="navbar-item">
@@ -273,16 +232,10 @@
   </header>
 
 
-  <div class="container text-center pt-3">
-    <h2 class="txt_color border-bottom pb-2 mb-0">Students</h2>
-  </div>
-
-  <!-- Filter Section -->
-  <div class="filter-section">
-    <div class="container">
-      <div class="row">
+  <div class="tablecontainer">
+    <div class="search-register-container">
+      <div class="date-search-container">
         <!-- Filter inputs/buttons -->
-        <!-- ... (filter inputs/buttons HTML) ... -->
         <label for="franchiseSelect" class="form-label">Select Franchise:</label>
         <select id="franchiseSelect" class="form-select">
           <option value="">All</option>
@@ -290,126 +243,53 @@
           <option value="{{ franchise }}">{{ franchise }}</option>
           {% endfor %}
         </select>
-        <button onclick="filterStudents()" class="btn btn-dark my-3">Filter</button>
+        <button onclick="filterStudents()" class="regbtn btn btn-dark my-3">Filter</button>
+      </div>
+
+      <div class="date-search-container">
+        <!-- Convert to Excel Button -->
+        <!-- ... (Convert to Excel button HTML) ... -->
+        <button onclick="exportToExcel()" class="btn btn-primary my-3">Convert to Excel</button>
       </div>
     </div>
   </div>
 
-
-
-  <!-- Convert to Excel Section -->
-  <div class="excel-section">
-    <div class="container">
-      <div class="row justify-content-end"> <!-- Align to the right -->
-        <div class="col-md-6 text-right">
-          <!-- Convert to Excel Button -->
-          <!-- ... (Convert to Excel button HTML) ... -->
-          <button onclick="exportToExcel()" class="btn btn-primary my-3">Convert to Excel</button>
-        </div>
+  <div id="studentsTables">
+    <!-- Display students in separate t ables based on franchise -->
+    {% for franchise, students_in_franchise in students_by_franchise.items %}
+    <div class="franchise-table container" data-franchise="{{ franchise }}">
+      <div class="h1container text-start pt-3">
+        <h1 class="txt_colors border-bottom pb-2 mb-0">{{ franchise }}</h1>
       </div>
     </div>
-  </div>
-
-  <div class="table-section container">
-    <div class="row mt-3">
-      <div class="col">
-        <!-- Table -->
-        <div id="studentsTables">
-          <!-- Display students in separate t ables based on franchise -->
-          {% for franchise, students_in_franchise in students_by_franchise.items %}
-          <div class="franchise-table container" data-franchise="{{ franchise }}">
-            <div class="container text-start pt-3">
-              <h1 class="txt_colors border-bottom pb-2 mb-0">{{ franchise }}</h1>
-            </div>
-            <table class="table table-container table-striped">
-              <!-- Table content here -->
-              <thead class="bg-light">
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>DOB</th>
-                  <th>Age</th>
-                  <th>Level</th>
-                  <th>Contact</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for student in students_in_franchise %}
-                <tr>
-                  <td class="fw-normal mb-1">{{ student.id }}</td>
-                  <td class="fw-normal mb-1">{{ student.name }}</td>
-                  <td class="fw-normal mb-1">{{ student.dob }}</td>
-                  <td class="fw-normal mb-1">{{ student.age }}</td>
-                  <td class="fw-normal mb-1">{{ student.level }}</td>
-                  <td class="fw-normal mb-1">{{ student.contact }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
+    <table class="content-table" style="margin-top: 20px;">
+      <!-- Table content here -->
+      <thead class="bg-light">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>DOB</th>
+          <th>Age</th>
+          <th>Level</th>
+          <th>Contact</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students_in_franchise %}
+        <tr>
+          <td>{{ student.id }}</td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.dob }}</td>
+          <td>{{ student.age }}</td>
+          <td>{{ student.level }}</td>
+          <td>{{ student.contact }}</td>
+        </tr>
         {% endfor %}
-      </div>
-    </div>
+      </tbody>
+    </table>
   </div>
-  </div>
 
-
-
-  <!-- <div class="content-container">
-
-    <div id="studentsTables">
-      
-      {% for franchise, students_in_franchise in students_by_franchise.items %}
-      <div class="franchise-table container" data-franchise="{{ franchise }}">
-        <div class="container text-start pt-3">
-          <h1 class="txt_colors border-bottom pb-2 mb-0">{{ franchise }}</h1>
-        </div>
-
-        <table class="table table-container table-striped my-3">
-          
-          <thead class="bg-light">
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>DOB</th>
-              <th>Age</th>
-              <th>Level</th>
-              <th>Contact</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for student in students_in_franchise %}
-            <tr>
-              <td class="fw-normal mb-1">{{ student.id }}</td>
-              <td class="fw-normal mb-1">{{ student.name }}</td>
-              <td class="fw-normal mb-1">{{ student.dob }}</td>
-              <td class="fw-normal mb-1">{{ student.age }}</td>
-              <td class="fw-normal mb-1">{{ student.level }}</td>
-              <td class="fw-normal mb-1">{{ student.contact }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      {% endfor %}
-    </div>
-
-    <div class="container my-5">
-      <div class="smaller-div">
-        <label for="franchiseSelect" class="form-label">Select Franchise:</label>
-        <select id="franchiseSelect" class="form-select">
-          <option value="">All</option>
-          {% for franchise in franchises %}
-          <option value="{{ franchise }}">{{ franchise }}</option>
-          {% endfor %}
-        </select>
-        <button onclick="filterStudents()" class="btn btn-dark my-3">Filter</button>
-      </div>
-    </div>
-    <button onclick="exportToExcel()" class="btn btn-primary my-3">Convert to Excel</button>
-  </div> -->
-
+  {% endfor %}
 
 
 

@@ -2,32 +2,183 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Competitions</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <style>
-        .message {
-            margin: 20px;
-            padding: 15px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            background-color: #94bfee;
-            color: #090909;
-        }
-        .current_text {
-        font-family: "Your Desired Font", sans-serif; /* Use the desired font */
-        font-weight: 600; /* Adjust the font weight */
-        font-size: 14px; /* Modify the font size */
-        text-transform: uppercase;
-      }
-    </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 
+      - primary meta tag
+    -->
+  <title>Propath Academy</title>
+  <meta name="title" content="">
+  <meta name="description" content="">
+
+  <!-- 
+      - favicon
+    -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+      - custom css link
+    -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'franchise/placeorder.css' %}">
+
+  <!-- 
+      - google font link
+    -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
+
+  <!-- 
+      - preload images
+    -->
+  <link rel="preload" as="image" href="./assets/images/hero-bg.svg">
+  <link rel="preload" as="image" href="./assets/images/hero-banner-1.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-banner-2.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
+  <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
+
+  <style>
+    .message {
+      margin: 20px;
+      padding: 15px;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      background-color: #94bfee;
+      color: #090909;
+    }
+
+    .current_text {
+      font-family: "Your Desired Font", sans-serif;
+      /* Use the desired font */
+      font-weight: 600;
+      /* Adjust the font weight */
+      font-size: 14px;
+      /* Modify the font size */
+      text-transform: uppercase;
+    }
+
+    .navbar-link {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+    }
+
+    /* Style for the container holding all messages */
+    .compcontainer {
+      margin-top: 80px;
+      /* Adjust the margin as needed */
+      width: 80%;
+      /* Adjust width if desired */
+      margin-left: auto;
+      margin-right: auto;
+      /* Additional styles for the container if needed */
+    }
+
+    /* Style for individual competition messages */
+    .message {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .message p {
+      margin: 5px 0;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .message a {
+      display: inline-block;
+      padding: 8px 16px;
+      margin-top: 10px;
+      background-color: #009879;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .message a:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 
 <body>
+  <header class="header" data-header>
+    <div class="container">
 
-    <nav class="navbar navbar-expand-lg bg-light">
+      <a href="#" class="logo">
+        <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="wrapper">
+          <a href="#" class="logo">
+            <img src="{% static 'images/logo.svg' %}" width="162" height="50" alt="EduWeb logo">
+          </a>
+
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="{% url 'franchise_base' %}" class="navbar-link" data-nav-link>Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'students' %}" class="navbar-link" data-nav-link>Students</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'orders' %}" class="navbar-link" data-nav-link>Orders</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'competitions' %}" class="navbar-link" data-nav-link>Competitions</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'franchise_notifications' %}" class="navbar-link" data-nav-link>Notifications</a>
+          </li>
+
+        </ul>
+
+      </nav>
+
+      <div class="header-actions">
+
+        <a href="{% url 'logout_user' %}" class="btn has-before">
+          <span class="span">Logout</span>
+
+          <!-- <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon> -->
+        </a>
+
+        <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
+          <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="overlay" data-nav-toggler data-overlay></div>
+
+    </div>
+  </header>
+
+  <!-- <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
             <a class="current_text navbar-brand text-dark" href="{% url 'register_student' %}">Competitions</a>
             <button class=" navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -37,31 +188,31 @@
 
         </div>
         </div>
-    </nav>
+    </nav> -->
 
-    <div class="container">
-        {% for comp in comps %}
-        <div class="message">
-            <p>Dear Franchisee,</p>
-            <p>A new competition has been announced!</p>
-            <p>Circular No: {{ comp.circular_no }}</p>
-            <p>Level Completion Cutoff: {{ comp.level_cutoff_date }}</p>
-            {% if comp.pdf_file %}
-            <p>Look at this <a href="{{ comp.pdf_file.url }}" target="_blank">PDF</a> for more details.</p>
-            {% else %}
-            <p>No PDF available for this competition.</p>
-            {% endif %}
-            <p>Thank you for your participation!</p>
+  <div class="compcontainer">
+    {% for comp in comps %}
+    <div class="message">
+      <p>Dear Franchisee,</p>
+      <p>A new competition has been announced!</p>
+      <p>Circular No: {{ comp.circular_no }}</p>
+      <p>Level Completion Cutoff: {{ comp.level_cutoff_date }}</p>
+      {% if comp.pdf_file %}
+      <p>Look at this <a href="{{ comp.pdf_file.url }}" target="_blank">PDF</a> for more details.</p>
+      {% else %}
+      <p>No PDF available for this competition.</p>
+      {% endif %}
+      <p>Thank you for your participation!</p>
 
-            <a href="{% url 'competition_register' comp.circular_no %}">Register</a>
-            <!-- Add other formality things in the message as needed -->
-        </div>
-        {% endfor %}
+      <a href="{% url 'competition_register' comp.circular_no %}">Register</a>
+      <!-- Add other formality things in the message as needed -->
     </div>
+    {% endfor %}
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

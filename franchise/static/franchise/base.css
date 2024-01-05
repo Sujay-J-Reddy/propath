@@ -5,6 +5,7 @@ li {
 a {
     color: inherit;
     text-decoration: none;
+    font-family: 'Poppins', sans-serif;
 }
 
 input,
@@ -218,8 +219,9 @@ img {
 
 .navbar-link {
     padding-block: 8px;
-    font-weight: 800;
+    font-weight: 500;
     transition: 0.25s ease;
+    font-family: 'Poppins', sans-serif;
 }
 
 .navbar-link:is(:hover, :focus) {

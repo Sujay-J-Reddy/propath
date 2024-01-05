@@ -35,6 +35,12 @@ class UserForm(forms.ModelForm):
         model = CustomUser
         fields = ['username', 'password', 'account_type']
 
+        # widgets = {
+        #      'username': forms.TextInput(attrs={'class': 'name'}),
+        #      'password': forms.PasswordInput(attrs={'class': 'custom-class-2 form-control'}),
+        #      'account_type': forms.Select(attrs={'class': 'custom-class-3 form-select'})
+        #  }
+
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             self.helper = FormHelper(self)
@@ -43,7 +49,7 @@ class UserForm(forms.ModelForm):
             self.helper.layout = Layout(
             Div(
                 'username',
-                css_class='form-outline mb-4',
+                css_class='name form-outline mb-4',
                 data_mdb_input_init=True
             ),
             Div(
@@ -54,16 +60,7 @@ class UserForm(forms.ModelForm):
             'account_type'
         )
 
-      
-
-   
-
-        # self.fields['username'].widget.attrs.update({
-        #     'class': 'form-control',  # Add Bootstrap class
-        #     'placeholder': 'Enter your username',  # Placeholder text
-        #     'autocomplete': 'off',  # Disable autocomplete (optional)
-        #     # You can add other attributes as needed
-        # })
+    
 
 class EditUserForm(forms.ModelForm):
     class Meta:

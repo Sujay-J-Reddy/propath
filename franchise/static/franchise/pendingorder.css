@@ -237,11 +237,11 @@ img {
     left: 0;
     width: 100%;
     background-color: hsl(0, 0%, 100%);
-    padding-block: 12px;
     box-shadow: 0 6px 15px 0 hsla(0, 0%, 0%, 0.05);
     z-index: 4;
     font-size: 1.2rem;
     line-height: 1.75;
+    padding-block: none;
 }
 
 .header.active {

@@ -42,6 +42,14 @@
   <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
   <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
 
+  <style>
+    .navbar-list {
+      display: flex;
+      gap: 30px;
+      padding: 0;
+    }
+  </style>
+
 </head>
 
 <body id="top">
@@ -80,17 +88,17 @@
           </li>
 
           <li class="navbar-item">
-            <a href="{% url 'students_page' %}" class="navbar-link" data-nav-link>Schools</a>
+            <a href="{% url 'schools_page' %}" class="navbar-link" data-nav-link>Schools</a>
           </li>
 
           <li class="navbar-item">
             <a href="{% url 'competitions_page' %}" class="navbar-link" data-nav-link>Competitions</a>
           </li>
-          
+
           <li class="navbar-item">
             <a class="navbar-link" href="{% url 'certificate_requests' %}">Certificates</a>
           </li>
-          
+
           <li class="navbar-item">
             <a href="{% url 'teachers_page' %}" class="navbar-link" data-nav-link>Teachers</a>
           </li>
