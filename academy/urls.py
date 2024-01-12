@@ -28,5 +28,7 @@ urlpatterns = [
     path('schools/students/<int:school_id>/', views.school_students, name='school_students'),
     path('schools/students/<int:school_id>/register', views.register_student, name='register_student'),
     path('enquirys/', views.enquiry_page, name='enquiry_page'),
+    path('events/',views.events_page, name='events_page'),
+    path('events/add/', views.add_event, name='add_event'),
 
 ]

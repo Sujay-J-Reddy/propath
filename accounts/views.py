@@ -9,6 +9,7 @@ from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
+from academy.models import Events
 
 
 def about_us(request):
@@ -16,11 +17,15 @@ def about_us(request):
 
 
 def landing_page(request):
+    events = Events.objects.all().order_by('-date')[:3]
+
     context = {
         # Other context variables
         'MEDIA_URL': settings.MEDIA_URL,
+        'events': events,  # Pass the events to the context
     }
-    return render(request, 'accounts/landing_page.html',context)
+
+    return render(request, 'accounts/landing_page.html', context)
 class LoginView(View):
     def get(self, request):
         return render(request, 'accounts/login.html')

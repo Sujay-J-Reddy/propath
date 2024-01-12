@@ -229,6 +229,7 @@ def check_birthdays(request):
 
     # Clear existing records in Birthdays model
     Birthdays.objects.all().delete()
+    TrainingDate.objects.all().delete()
 
     # Check Students
     students_birthdays = Students.objects.filter(dob__month=today.month, dob__day=today.day)
@@ -336,3 +337,19 @@ def all_students(request):
 def enquiry_page(request):
     enquiries = Enquiry.objects.all()
     return render(request, 'academy/enquiry_page.html', {'enquiries':enquiries})
+
+@admin_required
+def events_page(request):
+    events = Events.objects.all()
+    return render(request, 'academy/events_page.html',{'events':events})
+
+@admin_required
+def add_event(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('events_page')
+    else:
+        form = EventForm()
+    return render(request, 'academy/add_event.html', {'form': form})

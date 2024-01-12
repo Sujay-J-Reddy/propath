@@ -96,10 +96,10 @@
           </li>
 
           <li class="navbar-item">
-            <a href="#" class="navbar-link" data-nav-link>Contact Us</a>
+            <a href="{% url 'enquiry' %}" class="navbar-link" data-nav-link>Contact Us</a>
           </li>
 
-      </ul>
+        </ul>
 
       </nav>
 
@@ -155,7 +155,8 @@
 
             <p class="hero-text">
               At Propath Academy we aim to nurture young children and enable them to succeed in a competitive
-              society. We encourage students to participate, prosper in a constantly evolving technological environment.            </p>
+              society. We encourage students to participate, prosper in a constantly evolving technological environment.
+            </p>
 
             <a href="#" class="btn has-before">
               <span class="span">Find courses</span>
@@ -172,12 +173,15 @@
             </div>
 
             <div class="img-holder two" style="--width: 240; --height: 370;">
-              <img src="{{ MEDIA_URL }}landing/happy-children.jpg " width="240" heght="370" alt="hero banner" class="img-cover">
+              <img src="{{ MEDIA_URL }}landing/happy-children.jpg " width="240" heght="370" alt="hero banner"
+                class="img-cover">
             </div>
 
-            <img src="{{ MEDIA_URL }}landing/hero-shape-1.svg" width="380" height="190" alt="" class="shape hero-shape-1">
+            <img src="{{ MEDIA_URL }}landing/hero-shape-1.svg" width="380" height="190" alt=""
+              class="shape hero-shape-1">
 
-            <img src="{{ MEDIA_URL }}landing/hero-shape-2.png" width="622" height="551" alt="" class="shape hero-shape-2">
+            <img src="{{ MEDIA_URL }}landing/hero-shape-2.png" width="622" height="551" alt=""
+              class="shape hero-shape-2">
 
           </figure>
 
@@ -195,17 +199,17 @@
       <section class="section category" aria-label="category">
         <div class="container ">
 
-          
+
 
           <h1 class="h2 section-title">
-             <span class="span">About</span> Us
+            <span class="span">About</span> Us
           </h1>
 
           <p class="section-text">
             At Propath Academy, we are passionate about fostering foundational skills and unleashing the potential of
             young minds. Through our dedication to education, we specialize in teaching Abacus, Vedic Maths, and
-            Handwriting.          </p>
-            <p class="section-subtitle">Categories</p>
+            Handwriting. </p>
+          <p class="section-subtitle">Categories</p>
 
           <ul class="grid-list">
 
@@ -272,7 +276,7 @@
               </div>
             </li>
 
-             <li>
+            <li>
               <div class="category-card" style="--color: 42, 94%, 55%">
 
                 <div class="card-icon">
@@ -291,7 +295,7 @@
                 <span class="card-badge">8 Courses</span>
 
               </div>
-            </li> 
+            </li>
 
           </ul>
 
@@ -306,7 +310,7 @@
         - #ABOUT
       -->
 
-       <!-- <section class="section about" id="about" aria-label="about">
+      <!-- <section class="section about" id="about" aria-label="about">
         <div class="container">
 
           <figure class="about-banner">
@@ -404,7 +408,7 @@
 
                 <div class="card-content">
 
-                  
+
 
                   <h3 class="h3">
                     <a href="#" class="card-title">Abacus</a>
@@ -463,7 +467,7 @@
 
                 <div class="card-content">
 
-                  
+
 
                   <h3 class="h3">
                     <a href="#" class="card-title">Vedic Maths</a>
@@ -522,7 +526,7 @@
 
                 <div class="card-content">
 
-                  
+
 
                   <h3 class="h3">
                     <a href="#" class="card-title">Handwriting</a>
@@ -591,8 +595,8 @@
           <div class="video-card">
 
             <div class="video-banner img-holder has-after" style="--width: ; --height: ;">
-              <img src="{% static 'images/video-banner.jpg' %}" width="970" height="550" loading="lazy" alt="video banner"
-                class="img-cover">
+              <img src="{% static 'images/video-banner.jpg' %}" width="970" height="550" loading="lazy"
+                alt="video banner" class="img-cover">
 
               <button class="play-btn" aria-label="play video">
                 <ion-icon name="play" aria-hidden="true"></ion-icon>
