@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Announce Winners</title>
+    {% load crispy_forms_tags %}
+    <!-- Include your JavaScript and CSS libraries here -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container my-5">
+        <form method="post" id="winners-form">
+            {% csrf_token %}
+            <!-- Competition Select -->
+            <label for="competition-select">Select Competition (Circular No):</label>
+            <select id="competition-select" name="competition" class="select2 form-control my-2">
+                <option value="">Select</option>
+                {% for comp in comps %}
+                <option value="{{ comp.circular_no }}">{{ comp.circular_no }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Franchise</th>
+                        <th>Student</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="expandable-row">
+                        <td>
+                            <input type="number" class="rank-input form-control my-3" name="winners[0][rank]"
+                                value="1" />
+                        </td>
+                        <td>
+                            <select class="franchise-select select2 form-control my-3" name="winners[0][franchise]">
+                                {% for franchise in franchises %}
+                                <option value="{{ franchise.id }}">{{ franchise.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="student-select select2 form-control my-3" name="winners[0][student]">
+                                <!-- Students for the selected franchise will be populated dynamically using JavaScript -->
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Add a new row button -->
+            <button type="button" id="add-row" class="btn btn-dark my-3 m-lg-2">
+                Add Row
+            </button>
+
+            <button type="submit" class="btn btn-dark my-3 m-lg-2">Announce Winners</button>
+        </form>
+    </div>
+
+    <!-- Include your modal for confirmation (similar to the order confirmation modal) -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script>
+        // Include your existing JavaScript logic for handling row addition and deletion
+
+        // Populate student dropdown based on selected franchise
+        document.querySelector("tbody").addEventListener("change", (event) => {
+            if (event.target.classList.contains("franchise-select")) {
+                const franchiseId = event.target.value;
+                const row = event.target.parentElement.parentElement;
+                const studentSelect = row.querySelector(".student-select");
+
+                // Fetch students for the selected franchise using AJAX or any suitable method
+                // Update the options of the student dropdown dynamically
+                // For example:
+                fetch(`/get-students/?franchise=${franchiseId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        studentSelect.innerHTML = ""; // Clear existing options
+                        data.forEach(student => {
+                            const option = document.createElement("option");
+                            option.value = student.id;
+                            option.textContent = student.name;
+                            studentSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching students:', error));
+            }
+        });
+
+        // Include your existing JavaScript logic for handling form submission
+    </script>
+</body>
+
+</html>

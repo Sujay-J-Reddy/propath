@@ -208,7 +208,7 @@ def competitions_page(request):
         form = CompetitionForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('academy_base')  # Redirect to a success page or any other desired view
+            return redirect('competitions_base')  # Redirect to a success page or any other desired view
     else:
         form = CompetitionForm()
 
@@ -251,26 +251,6 @@ def check_birthdays(request):
         TrainingDate.objects.create(name=teacher.user.teacher_details.name, training_level=teacher.prev_level+1, franchise=teacher.user.teacher_details.franchise.franchise_details.user.username)
 
     return HttpResponse("Birthdays checked and updated successfully")
-
-
-from django.shortcuts import render
-from shared.models import Notification
-
-def display_orders(request):
-    # Retrieve the notification from the shared database
-    notification = Notification.objects.filter(is_read=False).first()
-
-    # Mark the notification as read once displayed
-    if notification:
-        notification.is_read = True
-        notification.save()
-    else:
-        # Fallback to a static notification message if there's no notification in the database
-        notification = {'message': "New order arrived"}  # Static notification message
-
-    return render(request, 'academy/base.html', {'notification': notification})
-
-
 
 def enquiry(request):
     if request.method == 'POST':
@@ -353,3 +333,56 @@ def add_event(request):
     else:
         form = EventForm()
     return render(request, 'academy/add_event.html', {'form': form})
+
+@admin_required
+def edit_event(request, event_id):
+    event = get_object_or_404(Events, id=event_id)
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect('events_page')
+    else:
+        form = EventForm(instance=event)
+    return render(request, 'academy/edit_event.html', {'form': form, 'event': event})
+
+@admin_required
+def edit_school_student(request, student_id):
+    student = get_object_or_404(SchoolStudents, id=student_id)
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('school_students')
+    else:
+        form = StudentForm(instance=student)
+    return render(request, 'academy/edit_school_student.html', {'form': form, 'student': student})
+
+@admin_required
+def edit_school(request, school_id):
+    school = get_object_or_404(Schools, id=school_id)
+    if request.method == 'POST':
+        form = SchoolRegistrationForm(request.POST, instance=school)
+        if form.is_valid():
+            form.save()
+            return redirect('schools')
+    else:
+        form = SchoolRegistrationForm(instance=school)
+    return render(request, 'academy/edit_school_student.html', {'form': form, 'school': school})
+
+@admin_required
+def competitions_base(request):
+    comps = Competition.objects.all()
+    return render(request,'academy/competitions.html',{'comps':comps})
+
+@admin_required
+def edit_comp(request, comp_id):
+    comp = get_object_or_404(Competition, circular_no=comp_id)
+    if request.method == 'POST':
+        form = CompetitionForm(request.POST, instance=comp)
+        if form.is_valid():
+            form.save()
+            return redirect('competitions_base')
+    else:
+        form = CompetitionForm(instance=comp)
+    return render(request, 'academy/edit_comp.html', {'form': form, 'comp': comp})

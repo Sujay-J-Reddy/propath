@@ -35,7 +35,7 @@ class LevelCertificates(models.Model):
         return f"{self.student} - {self.franchise} - {self.course} - {self.programme} {self.level}"
     
 class CompetitionRegister(models.Model):
-    circular_no = models.CharField(max_length=100)
+    circular_no = models.CharField(max_length=100,unique=True)
     franchise = models.CharField(max_length=100)
     students = models.TextField()
     date = models.DateField(auto_now_add=True)
