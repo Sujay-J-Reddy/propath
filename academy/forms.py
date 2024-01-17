@@ -119,3 +119,12 @@ class EnquiryForm(forms.ModelForm):
     class Meta:
         model = Enquiry
         fields = '__all__'
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Events
+        fields = '__all__'
+
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }

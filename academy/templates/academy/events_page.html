@@ -7,27 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- 
-      - primary meta tag
-    -->
-    <title>Propath Academy</title>
+    - primary meta tag
+  -->
+    <title>Website Events</title>
     <meta name="title" content="">
     <meta name="description" content="">
 
     <!-- 
-      - favicon
-    -->
+    - favicon
+  -->
     <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
 
     <!-- 
-      - custom css link
-    -->
-    {% load crispy_forms_tags %}
+    - custom css link
+  -->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'academy/schools.css' %}">
+    <link rel="stylesheet" href="{% static 'academy/academystudents.css' %}">
 
     <!-- 
-      - google font link
-    -->
+    - google font link
+  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -35,15 +34,13 @@
         rel="stylesheet">
 
     <!-- 
-      - preload images
-    -->
+    - preload images
+  -->
     <link rel="preload" as="image" href="./assets/images/hero-bg.svg">
     <link rel="preload" as="image" href="./assets/images/hero-banner-1.jpg">
     <link rel="preload" as="image" href="./assets/images/hero-banner-2.jpg">
     <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
     <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <style>
         .navbar-link {
             font-family: 'Poppins', sans-serif;
@@ -136,16 +133,8 @@
             /* Adjust the height as needed */
         }
 
-        .search-register-container {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            margin-bottom: 30px;
-            /* Add margin to separate from the table */
-        }
-
         .content-table {
-            margin-top: 30px;
+            margin-top: 20px;
             width: 80%;
             max-width: 1000px;
             margin: auto;
@@ -156,7 +145,6 @@
 </head>
 
 <body>
-
     <header class="header" data-header>
         <div class="container">
 
@@ -199,10 +187,6 @@
                     </li>
 
                     <li class="navbar-item">
-                        <a class="navbar-link" href="{% url 'certificate_requests' %}">Certificates</a>
-                    </li>
-
-                    <li class="navbar-item">
                         <a href="{% url 'teachers_page' %}" class="navbar-link" data-nav-link>Teachers</a>
                     </li>
 
@@ -218,16 +202,20 @@
                         <a href="{% url 'register_user' %}" class="navbar-link" data-nav-link>Register user</a>
                     </li>
 
+                    <li class="navbar-item">
+                        <a href="{% url 'events_page' %}" class="navbar-link" data-nav-link>Website Events</a>
+                    </li>
+
                 </ul>
 
             </nav>
 
             <div class="header-actions">
 
+
                 <a href="{% url 'logout_user' %}" class="btn has-before">
                     <span class="span">Logout</span>
 
-                    <!-- <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon> -->
                 </a>
 
                 <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
@@ -241,44 +229,35 @@
         </div>
     </header>
 
+
+
     <div class="tablecontainer">
         <div class="search-register-container">
             <div class="col-auto my-3">
-                <a href="{% url 'register_school' %}" class="regbtn btn">Register School</a>
-            </div>
-            <div class="col-auto my-3">
-                <a href="{% url 'school_order' %}" class="regbtn btn">Order log</a>
-            </div>
-            <div class="col-auto my-3">
-                <a href="{% url 'all_students' %}" class="regbtn btn">All Students</a>
-            </div>
-            <div class="col-auto my-3">
-                <button id="convertToExcelBtn" class="regbtn btn" onclick="convertToExcel()">Convert to Excel</button>
+                <a href="{% url 'add_event' %}" class="regbtn btn">Add Event</a>
             </div>
         </div>
+
         <table class="content-table">
             <thead>
                 <tr>
+                    <th>Photo</th>
                     <th>Name</th>
-                    <th>Contact</th>
-                    <th>Mail</th>
-                    <th>Location</th>
-                    <th>Students</th>
+                    <th>Details</th>
+                    <th>Date</th>
                     <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                {% for school in schools %}
+                {% for event in events %}
                 <tr>
-                    <td>{{ school.name }}</td>
-                    <td>{{ school.contact }}</td>
-                    <td>{{ school.mail }}</td>
-                    <td>{{ school.location }}</td>
+                    <td><img src="{{ event.photo.url }}" alt="{{ event.name }}" width="50"></td>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.details }}</td>
+                    <td>{{ event.date }}</td>
                     <td>
-                        <a href="{% url 'school_students' school.id %}" class="regbtn btn">Students</a>
-                    </td>
-                    <td>
-                        <a href="{% url 'edit_school' school.id %}" class="regbtn btn">Edit</a>
+                        <a href="{% url 'edit_event' event.id %}">Edit</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -287,39 +266,10 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Function to convert table data to Excel
-            function tableToExcel() {
-                const table = document.querySelector('.content-table');
-                const rows = table.querySelectorAll('tbody tr');
-                const data = [['Name', 'Contact', 'Mail', 'Location', 'Students']];
-
-                rows.forEach(row => {
-                    const rowData = [];
-                    row.querySelectorAll('td').forEach(cell => {
-                        rowData.push(cell.innerText);
-                    });
-                    data.push(rowData);
-                });
-
-                // Create a workbook and add a worksheet
-                const workbook = XLSX.utils.book_new();
-                const worksheet = XLSX.utils.aoa_to_sheet(data);
-
-                // Add the worksheet to the workbook
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-
-                // Save the workbook to a file
-                XLSX.writeFile(workbook, 'exported_data.xlsx');
-            }
-
-            // Add click event listener to the "Convert to Excel" button
-            const exportButton = document.getElementById('exportToExcel');
-            exportButton.addEventListener('click', tableToExcel);
+        window.addEventListener("beforeunload", () => {
+            window.location.href = "/academy";
         });
     </script>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>

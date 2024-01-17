@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from inventory.models import Item, Orders, Kit
 from . models import Students
-from academy.models import LevelCertificates, Competition, CompetitionRegister, Birthdays
+from academy.models import *
 from . forms import StudentForm, UpdateLevelForm
 from accounts.decorators import franchisee_required
 from shared.models import Notification
@@ -18,7 +18,8 @@ def base_page(request):
 @franchisee_required
 def franchise_notifications(request):
     birthdays = Birthdays.objects.filter(franchise=request.user.username)
-    return render(request, 'franchise/franchise_notifications.html', {'birthdays': birthdays})
+    duedates =  TrainingDate.objects.filter(franchise=request.user.username)
+    return render(request, 'franchise/franchise_notifications.html', {'birthdays': birthdays, 'duedates' : duedates})
 
 @franchisee_required
 def new_order(request):

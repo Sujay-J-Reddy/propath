@@ -18,7 +18,8 @@
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a href="{% url 'register_student' school.id %}" class="btn btn-primary my-3">Register New Student</a>
+            <a href="{% url 'register_student' school_id=school.id %}" class="btn btn-primary my-3">Register New
+                Student</a>
         </div>
     </nav>
 
@@ -33,6 +34,8 @@
                     <th class="bg-dark text-light">Level</th>
                     <th class="bg-dark text-light">DOB</th>
                     <th class="bg-dark text-light">Contact</th>
+                    <th class="bg-dark text-light">Edit</th>
+                    <th class="bg-dark text-light">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,6 +45,9 @@
                     <td>{{ student.level }}</td>
                     <td>{{ student.dob }}</td>
                     <td>{{ student.contact }}</td>
+                    <td>
+                        <a href="{% url 'edit_school_student' student.id %}">Edit</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

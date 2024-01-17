@@ -194,6 +194,7 @@
     <table class="content-table ">
       <thead class="bg-light">
         <tr>
+          <th>Photo</th>
           <th>Student ID</th>
           <th>Name</th>
           <th>Course</th>
@@ -213,6 +214,7 @@
         {% for student in students %}
         {% if not student.dropped %}
         <tr>
+          <td><img src="{{ student.photo.url }}" alt="{{ student.name }}" width="50"></td>
           <td>{{ student.id }}</td>
           <td>{{ student.name }}</td>
           <td>{{ student.course }}</td>

@@ -9,7 +9,7 @@
     <!-- 
       - primary meta tag
     -->
-    <title>Propath Academy</title>
+    <title>Competitions</title>
     <meta name="title" content="">
     <meta name="description" content="">
 
@@ -199,10 +199,6 @@
                     </li>
 
                     <li class="navbar-item">
-                        <a class="navbar-link" href="{% url 'certificate_requests' %}">Certificates</a>
-                    </li>
-
-                    <li class="navbar-item">
                         <a href="{% url 'teachers_page' %}" class="navbar-link" data-nav-link>Teachers</a>
                     </li>
 
@@ -238,91 +234,53 @@
 
             <div class="overlay" data-nav-toggler data-overlay></div>
 
+
         </div>
+
     </header>
+    <div class="col-auto my-3">
+        <a href="{% url 'competitions_page' %}" class="regbtn btn">Announce Competition</a>
+    </div>
+
+    <div class="col-auto my-3">
+        <a href="{% url 'competition_entries' %}" class="regbtn btn">Competition Registrations</a>
+    </div>
+
+    <div class="col-auto my-3">
+        <a href="{% url 'competition_winners' %}" class="regbtn btn">Announce Winners</a>
+    </div>
 
     <div class="tablecontainer">
         <div class="search-register-container">
-            <div class="col-auto my-3">
-                <a href="{% url 'register_school' %}" class="regbtn btn">Register School</a>
-            </div>
-            <div class="col-auto my-3">
-                <a href="{% url 'school_order' %}" class="regbtn btn">Order log</a>
-            </div>
-            <div class="col-auto my-3">
-                <a href="{% url 'all_students' %}" class="regbtn btn">All Students</a>
-            </div>
-            <div class="col-auto my-3">
-                <button id="convertToExcelBtn" class="regbtn btn" onclick="convertToExcel()">Convert to Excel</button>
-            </div>
+
+
+            <table class="content-table">
+                <thead>
+                    <tr>
+                        <th>Circular No</th>
+                        <th>Level Cutoff Date</th>
+                        <th>File</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for comp in comps %}
+                    <tr>
+                        <td>{{ comp.circular_no }}</td>
+                        <td>{{ comp.level_cutoff_date }}</td>
+                        <td><a href="{{ comp.pdf_file.url }}" target="_blank">View PDF</a></td>
+                        <td>
+                            <a href="{% url 'edit_comp' comp.circular_no %}">Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-        <table class="content-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Contact</th>
-                    <th>Mail</th>
-                    <th>Location</th>
-                    <th>Students</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for school in schools %}
-                <tr>
-                    <td>{{ school.name }}</td>
-                    <td>{{ school.contact }}</td>
-                    <td>{{ school.mail }}</td>
-                    <td>{{ school.location }}</td>
-                    <td>
-                        <a href="{% url 'school_students' school.id %}" class="regbtn btn">Students</a>
-                    </td>
-                    <td>
-                        <a href="{% url 'edit_school' school.id %}" class="regbtn btn">Edit</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Function to convert table data to Excel
-            function tableToExcel() {
-                const table = document.querySelector('.content-table');
-                const rows = table.querySelectorAll('tbody tr');
-                const data = [['Name', 'Contact', 'Mail', 'Location', 'Students']];
-
-                rows.forEach(row => {
-                    const rowData = [];
-                    row.querySelectorAll('td').forEach(cell => {
-                        rowData.push(cell.innerText);
-                    });
-                    data.push(rowData);
-                });
-
-                // Create a workbook and add a worksheet
-                const workbook = XLSX.utils.book_new();
-                const worksheet = XLSX.utils.aoa_to_sheet(data);
-
-                // Add the worksheet to the workbook
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-
-                // Save the workbook to a file
-                XLSX.writeFile(workbook, 'exported_data.xlsx');
-            }
-
-            // Add click event listener to the "Convert to Excel" button
-            const exportButton = document.getElementById('exportToExcel');
-            exportButton.addEventListener('click', tableToExcel);
-        });
-    </script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>

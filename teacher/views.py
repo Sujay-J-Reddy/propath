@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from .forms import InstructorFeedbackForm
+from accounts.models import TeacherLevel
 from accounts.decorators import teacher_required
 
 # Create your views here.
 @teacher_required
 def teacher_base(request):
-    return render(request, 'teacher/base.html',{'user': request.user})
+    duedate = TeacherLevel.objects.filter(user=request.user)
+    return render(request, 'teacher/base.html',{'user': request.user, 'duedate': duedate})
 
 @teacher_required
 def teacher_profile(request):

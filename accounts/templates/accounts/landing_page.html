@@ -103,7 +103,7 @@
           </li>
 
           <li class="navbar-item">
-            <a href="#footer" class="navbar-link" data-nav-link>Contact Us</a>
+            <a href="{% url 'enquiry' %}" class="navbar-link" data-nav-link>Contact Us</a>
           </li>
 
         </ul>
@@ -600,8 +600,8 @@
           <div class="video-card">
 
             <div class="video-banner img-holder has-after" style="--width: ; --height: ;">
-              <img src="{{ MEDIA_URL }}landing/video-banner.jpg" width="970" height="550" loading="lazy"
-                alt="video banner" class="img-cover">
+              <img src="{% static 'images/video-banner.jpg' %}" width="970" height="550" loading="lazy" alt="video banner"
+                class="img-cover">
 
               <button class="play-btn" aria-label="play video">
                 <ion-icon name="play" aria-hidden="true"></ion-icon>

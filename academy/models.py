@@ -35,7 +35,7 @@ class LevelCertificates(models.Model):
         return f"{self.student} - {self.franchise} - {self.course} - {self.programme} {self.level}"
     
 class CompetitionRegister(models.Model):
-    circular_no = models.CharField(max_length=100)
+    circular_no = models.CharField(max_length=100,unique=True)
     franchise = models.CharField(max_length=100)
     students = models.TextField()
     date = models.DateField(auto_now_add=True)
@@ -100,3 +100,10 @@ class Enquiry(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class Events(models.Model):
+    name = models.CharField(max_length=255)
+    date = models.DateField()
+    photo = models.ImageField(upload_to='event_photos/')  
+    details = models.TextField()
