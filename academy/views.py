@@ -7,16 +7,41 @@ from franchise.models import Students
 from .forms import *
 from accounts.models import CustomUser, FranchiseDetails, TeacherDetails, TeacherLevel
 from .models import *
-from inventory.models import Kit, Item
+from inventory.models import Kit, Item, Orders
 from teacher.models import InstructorFeedback
 from django.contrib.auth.hashers import make_password
 from accounts.decorators import admin_required
 from django.shortcuts import render
-from shared.models import Notification
+from django.http import JsonResponse
+import json
+from inventory.models import *
 
 @admin_required
 def academy_base(request):
-    return render(request, 'academy/base.html')
+    # Assuming Orders is a queryset of Orders objects
+    orders = Orders.objects.all()
+
+    for order in orders:
+        # Extracting only the 'franchise' attribute
+        order.franchise_only = order.franchise
+
+        try:
+            # Attempt to load JSON data only if order.items is a string
+            if isinstance(order.items, str):
+                order.items = json.loads(order.items)
+            else:
+                # If order.items is not a string, handle it accordingly
+                order.items = {}  # Set a default value or handle it based on your requirements
+        except json.JSONDecodeError as e:
+            # Handle the JSON decoding error, e.g., log it or set a default value
+            order.items = {}  # Set a default value or handle it based on your requirements
+
+        # Save the modified order back to the database
+        order.save()
+
+    return render(request, 'academy/base.html', {'orders': orders})
+
+
 
 @admin_required
 def register_user(request):
@@ -250,26 +275,6 @@ def check_birthdays(request):
         TrainingDate.objects.create(name=teacher.user.teacher_details.name, training_level=teacher.prev_level+1, franchise=teacher.user.teacher_details.franchise.franchise_details.user.username)
 
     return HttpResponse("Birthdays checked and updated successfully")
-
-
-from django.shortcuts import render
-from shared.models import Notification
-
-def display_orders(request):
-    # Retrieve the notification from the shared database
-    notification = Notification.objects.filter(is_read=False).first()
-
-    # Mark the notification as read once displayed
-    if notification:
-        notification.is_read = True
-        notification.save()
-    else:
-        # Fallback to a static notification message if there's no notification in the database
-        notification = {'message': "New order arrived"}  # Static notification message
-
-    return render(request, 'academy/base.html', {'notification': notification})
-
-
 
 def enquiry(request):
     if request.method == 'POST':

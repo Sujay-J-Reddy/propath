@@ -42,10 +42,17 @@ def orders_completed(request):
     orders = Orders.objects.filter(completed=True,franchise=user_franchise)
 
     for order in orders:
-        order.items = json.loads(order.items)
+        try:
+            order.items = json.loads(order.items)
+        except (json.JSONDecodeError, TypeError) as e:
+            # Handle the JSON decoding error, e.g., log it or set a default value
+            order.items = []
 
-    for order in orders:
-        order.kits = json.loads(order.kits)
+        try:
+            order.kits = json.loads(order.kits)
+        except (json.JSONDecodeError, TypeError) as e:
+            # Handle the JSON decoding error, e.g., log it or set a default value
+            order.kits = []
 
     return render(request, 'franchise/orders_completed.html',{'orders':orders})
 
@@ -53,18 +60,25 @@ def orders_completed(request):
 def orders_pending(request):
     user_franchise = request.user
     print(user_franchise)
-    orders = Orders.objects.filter(completed=False,franchise=user_franchise)
+
+    orders = Orders.objects.filter(completed=False, franchise=user_franchise)
 
     for order in orders:
-        print(order.kits)
+        try:
+            order.items = json.loads(order.items)
+        except (json.JSONDecodeError, TypeError) as e:
+            # Handle the JSON decoding error, e.g., log it or set a default value
+            order.items = []
 
-    for order in orders:
-        order.items = json.loads(order.items)
+        try:
+            order.kits = json.loads(order.kits)
+        except (json.JSONDecodeError, TypeError) as e:
+            # Handle the JSON decoding error, e.g., log it or set a default value
+            order.kits = []
 
-    for order in orders:
-        order.kits = json.loads(order.kits)
+    return render(request, 'franchise/orders_pending.html', {'orders': orders})
 
-    return render(request, 'franchise/orders_pending.html',{'orders':orders})
+
 
 @franchisee_required
 def students(request):

@@ -21,12 +21,65 @@
         color: #5a5757; /* Light black color */
         font-family: "Times New Roman", Times, serif;
       }
+
+      body {
+      background-color: #f8f9fa;
+    }
+
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    .regbtn {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+      font-family: 'League Spartan', sans-serif;
+      max-width: max-content;
+      padding: 10px 20px;
+      border-radius: 5px;
+
+    }
+
+    .regbtn:hover {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+    }
+
+    .txt_color {
+      color: black;
+      /* Light black color */
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      text-align: center;
+      /* Center-align the text */
+      position: relative;
+    }
+
+    .txt_color::after {
+      content: '';
+      /* Add content for pseudo-element */
+      position: absolute;
+      /* Position the underline */
+      width: 50px;
+      /* Adjust the width of the underline */
+      height: 2px;
+      /* Adjust the height/thickness of the underline */
+      background-color: #009879;
+      /* Light underline color */
+      bottom: -5px;
+      /* Position the underline below the text */
+      left: 50%;
+      /* Center the underline relative to the text */
+      transform: translateX(-50%);
+      /* Center the underline */
+    }
     </style>
   </head>
 
   <body>
-    <div class="container text-center pt-3">
-      <h2 class="txt_color border-bottom pb-2 mb-0">Delete Franchisee</h2>
+    <div class="container text-center pt-3" style="justify-content: center;">
+      <h1 class="txt_color pb-2 mb-0">Delete Franchisee</h1>
     </div>
     <section class="vh-50">
       <div class="container py-5 h-100">
@@ -43,7 +96,7 @@
                     data-mdb-ripple-init
                     type="submit"
                     value="delete"
-                    class="btn btn-dark btn-block"
+                    class="btn regbtn btn-block"
                   >
                     Delete
                   </button>
@@ -51,9 +104,9 @@
                 <div class="col my-2">
                   <!-- Simple link -->
                   <a
-                    class="text-primary"
+                    
                     href="{% url 'franchise_page' %}"
-                    style="text-decoration: none"
+                    style="text-decoration: none; color: #009879;"
                     >Cancel</a
                   >
                 </div>

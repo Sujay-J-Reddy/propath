@@ -51,6 +51,12 @@
     <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
 
     <style>
+        .navbar-link {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 18px;
+        }
+
         .header {
             position: relative;
             top: 0;
@@ -202,6 +208,9 @@
                 </div>
 
                 <ul class="navbar-list">
+                    <li class="navbar-item">
+                        <a href="{% url 'franchise_base' %}" class="navbar-link" data-nav-link>Home</a>
+                      </li>
 
                     <li class="navbar-item">
                         <a href="{% url 'new_order' %}" class="navbar-link" data-nav-link>Place Order</a>
@@ -557,25 +566,33 @@
 
     </script>
 
+    <script>
+
+    </script>
+
 
 
 
 
     <script>
 
-        // Function to generate order summary
+        // Function to generate order summary with names instead of IDs
         function generateOrdersSummary(data) {
-            let summary = "Orders Summary:\n";
+            let summary = "";
             if (data.kits.length > 0) {
-                summary += "Kits:\n";
+                summary += "\n";
                 data.kits.forEach((kit) => {
-                    summary += `- Kit ID: ${kit.item}, Quantity: ${kit.quantity}\n`;
+                    // Replace kit ID with kit name
+                    const kitName = document.querySelector(`option[value="${kit.item}"]`).innerText;
+                    summary += `- Kit Name: ${kitName}, Quantity: ${kit.quantity}\n`;
                 });
             }
             if (data.items.length > 0) {
-                summary += "Items:\n";
+                summary += "\n";
                 data.items.forEach((item) => {
-                    summary += `- Item ID: ${item.item}, Quantity: ${item.quantity}\n`;
+                    // Replace item ID with item name
+                    const itemName = document.querySelector(`option[value="${item.item}"]`).innerText;
+                    summary += `- Item Name: ${itemName}, Quantity: ${item.quantity}\n`;
                 });
             }
             return summary;

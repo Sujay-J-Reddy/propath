@@ -85,6 +85,7 @@
     max-width: max-content;
     padding: 10px 20px;
     border-radius: 5px;
+    
 
 }
 
@@ -354,7 +355,7 @@ img {
 
 .navbar-link {
     padding-block: 8px;
-    font-weight: 600;
+    font-weight: 400;
     transition: 0.25s ease;
 }
 

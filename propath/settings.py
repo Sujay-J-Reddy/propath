@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'franchise',
     'teacher',
     'shared',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [

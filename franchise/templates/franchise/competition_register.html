@@ -11,169 +11,177 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 
     <style>
-   .tabcontainer {
-    padding-top: 60px;
-    width: 80%;
-    margin: 0 auto;
-    position: relative;
-  
-  }
+        .navbar-link {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 18px;
+        }
 
-.content-table {
-    width: 70%;
-    margin-top: 50px; /* Adjust the top margin as needed */
-  }
+        .tabcontainer {
+            padding-top: 60px;
+            width: 80%;
+            margin: 0 auto;
+            position: relative;
 
-.button-column {
-    color: rgb(38, 38, 244);
-    font-weight: bold;
-}
+        }
 
-.regbtn {
-    background-color: #009879;
-    color: hsl(0, 0%, 100%);
-    font-family: 'League Spartan', sans-serif;
-    max-width: max-content;
-    padding: 10px 20px;
-    border-radius: 5px;
-  
-}
+        .content-table {
+            width: 70%;
+            margin-top: 50px;
+            /* Adjust the top margin as needed */
+        }
 
-.content-table {
-    width: 90%;
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 0.9em;
-    min-width: 400px;
-    border-radius: 5px 5px 0 0;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .content-table thead tr {
-    background-color: #009879;
-    color: #ffffff;
-    text-align: left;
-    font-weight: bold;
-  }
-  
-  .content-table th,
-  .content-table td {
-    padding: 12px 15px;
-  }
-  
-  .content-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-  }
-  
-  .content-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-  }
-  
-  .content-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-  }
-  
-  .content-table tbody tr.active-row {
-    font-weight: bold;
-    color: #009879;
-  }
+        .button-column {
+            color: rgb(38, 38, 244);
+            font-weight: bold;
+        }
 
-.tabcontainer {
-    padding-top: 60px;
-    width: 80%;
-    margin: 0 auto;
-    position: relative;
-  }
-  /* Style for the select element */
-.item-select {
-  width: 100%;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #333;
-}
+        .regbtn {
+            background-color: #009879;
+            color: hsl(0, 0%, 100%);
+            font-family: 'League Spartan', sans-serif;
+            max-width: max-content;
+            padding: 10px 20px;
+            border-radius: 5px;
 
-/* Style for the options within the select element */
-.item-select option {
-  padding: 8px;
-}
+        }
 
-/* Style for the dropdown arrow if applicable */
-/* This might differ based on the styling method used for the dropdown arrow */
-/* Example for standard dropdown arrow */
-.item-select::after {
-  content: "\25BC"; /* Unicode for down arrow */
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
+        .content-table {
+            width: 90%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
 
-/* Style for the dropdown list if using select2 */
-.select2-container {
-  width: 100%;
-}
+        .content-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
 
-/* Additional styling for select2 if needed */
-/* You might need to adjust these styles based on your specific requirements */
-.select2-selection--single {
-  height: 38px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  color: #333;
-  padding: 0 10px;
-  font-size: 14px;
-  line-height: 36px;
-}
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+        }
 
-.select2-selection__arrow {
-  height: 36px;
-}
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
 
+        .content-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .content-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+
+        .tabcontainer {
+            padding-top: 60px;
+            width: 80%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Style for the select element */
+        .item-select {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* Style for the options within the select element */
+        .item-select option {
+            padding: 8px;
+        }
+
+        /* Style for the dropdown arrow if applicable */
+        /* This might differ based on the styling method used for the dropdown arrow */
+        /* Example for standard dropdown arrow */
+        .item-select::after {
+            content: "\25BC";
+            /* Unicode for down arrow */
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* Style for the dropdown list if using select2 */
+        .select2-container {
+            width: 100%;
+        }
+
+        /* Additional styling for select2 if needed */
+        /* You might need to adjust these styles based on your specific requirements */
+        .select2-selection--single {
+            height: 38px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #333;
+            padding: 0 10px;
+            font-size: 14px;
+            line-height: 36px;
+        }
+
+        .select2-selection__arrow {
+            height: 36px;
+        }
     </style>
-    
+
     <!-- Your HTML code with table and buttons -->
-    
+
 </head>
 
 <body data-user="{{ request.user.username }}">
     <div class="tabcontainer">
-    <form method="post" id="table-form">
+        <form method="post" id="table-form">
 
 
-        <!-- Table -->
-        <table class="content-table">
-            <thead>
-                <tr>
-                    <th>Students</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="expandable-row">
-                    <td>
-                        <select class="item-select select2" name="items[0][item]">
-                            {% for student in students %}
-                            <option value="{{ student.id }}">{{ student.id }} - {{ student.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </td>
-                    <td><button type="button" class="regbtn delete-row">Delete</button></td>
-                </tr>
-            </tbody>
-        </table>
+            <!-- Table -->
+            <table class="content-table">
+                <thead>
+                    <tr>
+                        <th>Students</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="expandable-row">
+                        <td>
+                            <select class="item-select select2" name="items[0][item]">
+                                {% for student in students %}
+                                <option value="{{ student.id }}">{{ student.id }} - {{ student.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td><button type="button" class="regbtn delete-row">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <!-- Add a new row button -->
-        <button type="button" id="add-row" class="regbtn">Add Row</button>
+            <!-- Add a new row button -->
+            <button type="button" id="add-row" class="regbtn">Add Row</button>
 
-        <button type="submit" class="regbtn">Submit</button>
-    </form>
-</div>
+            <button type="submit" class="regbtn">Submit</button>
+        </form>
+    </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);

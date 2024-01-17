@@ -97,16 +97,29 @@ def supply_page(request):
         log.items = json.loads(log.items)
     return render(request, 'inventory/supply_page.html',{'logs': logs} )
 
+
 def orders_page(request):
     orders = Orders.objects.filter(completed=False)
 
     for order in orders:
-        order.items = json.loads(order.items)
+        try:
+            order.items = json.loads(order.items)
+        except (json.JSONDecodeError, TypeError) as e:
+            # Handle the JSON decoding error, e.g., log it or set a default value
+            order.items = []
 
-    for order in orders:
-        order.kits = json.loads(order.kits)
-        
-    return render(request, 'inventory/orders_page.html',{'orders':orders})
+        try:
+            order.kits = json.loads(order.kits)
+        except (json.JSONDecodeError, TypeError) as e:
+            # Handle the JSON decoding error, e.g., log it or set a default value
+            order.kits = []
+
+    # Add the rest of your view logic here...
+
+    # For example, you can pass the orders to the template
+    return render(request, 'inventory/orders_page.html', {'orders': orders})
+
+
 
 def pending_orders(request):
     orders = Orders.objects.filter(completed=False)
@@ -116,10 +129,17 @@ def completed_orders(request):
     orders = Orders.objects.filter(completed=True)
 
     for order in orders:
-        order.items = json.loads(order.items)
+        try:
+            order.items = json.loads(order.items)
+        except (json.JSONDecodeError, TypeError) as e:
+            # Handle the JSON decoding error, e.g., log it or set a default value
+            order.items = []
 
-    for order in orders:
-        order.kits = json.loads(order.kits)
+        try:
+            order.kits = json.loads(order.kits)
+        except (json.JSONDecodeError, TypeError) as e:
+            # Handle the JSON decoding error, e.g., log it or set a default value
+            order.kits = []
         
     return render(request, 'inventory/completed_orders.html',{'orders':orders})
 

@@ -53,6 +53,12 @@
             font-size: 1em;
             /* Center the table */
         }
+
+        .navbar-link {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 18px;
+        }
     </style>
 </head>
 
@@ -96,6 +102,10 @@
 
                     <li class="navbar-item">
                         <a href="{% url 'competitions_page' %}" class="navbar-link" data-nav-link>Competitions</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a class="navbar-link" href="{% url 'certificate_requests' %}">Certificates</a>
                     </li>
 
                     <li class="navbar-item">

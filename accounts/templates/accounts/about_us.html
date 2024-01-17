@@ -1,65 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About us</title>
+  
+    <!-- 
+      - primary meta tag
+    -->
+    <title>Propath Academy</title>
+    <meta name="title" content="">
+    <meta name="description" content="">
+  
+    <!-- 
+      - favicon
+    -->
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
+    <!-- 
+      - custom css link
+    -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'academy/schools.css' %}">
+  
+    <!-- 
+      - google font link
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet">
+  
+    <!-- 
+      - preload images
+    -->
+    <link rel="preload" as="image" href="./assets/images/hero-bg.svg">
+    <link rel="preload" as="image" href="./assets/images/hero-banner-1.jpg">
+    <link rel="preload" as="image" href="./assets/images/hero-banner-2.jpg">
+    <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
+    <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
+  
+    <style>
+      .navbar-list {
+        display: flex;
+        gap: 30px;
+        padding: 0;
+      }
+  
+      .navbar-link {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+        font-size: 18px;
+
+      }
+  
+      .content {
+        background-color: blue;
+        margin-top: 70px;
+        
+      }
+      .txt_color {  
+      color: black;
+      /* Light black color */
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      text-align: center;
+      /* Center-align the text */
+      position: relative;
+    }
+
+    .txt_color::after {
+      content: '';
+      /* Add content for pseudo-element */
+      position: absolute;
+      /* Position the underline */
+      width: 50px;
+      /* Adjust the width of the underline */
+      height: 2px;
+      /* Adjust the height/thickness of the underline */
+      background-color: #009879;
+      /* Light underline color */
+      bottom: -5px;
+      /* Position the underline below the text */
+      left: 50%;
+      /* Center the underline relative to the text */
+      transform: translateX(-50%);
+      /* Center the underline */
+    }
+    </style>
+  
+  </head>
 <body>
+  <header class="header" data-header>
     <div class="container">
-        <header
-          class="navbar d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-          <div class="col-md-3 mb-2 mb-md-0">
-            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-amd"
-                viewBox="0 0 16 16">
-                <path
-                  d="m.334 0 4.358 4.359h7.15v7.15l4.358 4.358V0H.334ZM.2 9.72l4.487-4.488v6.281h6.28L6.48 16H.2V9.72Z" />
-              </svg>
-              <!-- <svg
-                  class="bi"
-                  width="40"
-                  height="32"
-                  role="img"
-                  aria-label="Bootstrap"
-                >
-                  <use xlink:href="#bootstrap"></use>
-                </svg> -->
-            </a>
-          </div>
-    
-          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="./about_us.html" class="nav-link px-2">About Us</a></li>
-            <li><a href="#" class="nav-link px-2">Centers</a></li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Courses
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
-    
-            <li><a href="#" class="nav-link px-2">Register</a></li>
-            <li><a href="#" class="nav-link px-2">Contact Us</a></li>
-          </ul>
-    
-          <div class="col-md-3 text-end">
-            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
-    
-            <!-- <button type="button" class="btn btn-outline-primary me-2">
-                Login
-              </button> -->
-          </div>
-        </header>
+
+      <a href="#" class="logo">
+        <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="wrapper">
+          <a href="#" class="logo">
+            <img src="{% static 'images/logo.svg' %}" width="162" height="50" alt="EduWeb logo">
+          </a>
+
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="{% url 'landing_page' %}" class="navbar-link" data-nav-link>Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'about_us' %}" class="navbar-link" data-nav-link>About</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#courses" class="navbar-link" data-nav-link>Courses</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link" data-nav-link>Contact</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link" data-nav-link>Register</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link" data-nav-link>Contact Us</a>
+          </li>
+
+        </ul>
+
+      </nav>
+
+      <div class="header-actions">
+
+        <!-- <button class="header-action-btn" aria-label="toggle search" title="Search">
+          <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+        </button>
+
+        <button class="header-action-btn" aria-label="cart" title="Cart">
+          <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>
+
+          <span class="btn-badge">0</span>
+        </button> -->
+
+        <a href="{% url 'login' %}" class="btn has-before">
+          <span class="span">Login</span>
+
+          <!-- <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon> -->
+        </a>
+
+        <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
+          <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+        </button>
+
       </div>
+
+      <div class="overlay" data-nav-toggler data-overlay></div>
+
+    </div>
+  </header>
 
       <div class="container col-xxl-8 px-4 py-5">
         <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
@@ -67,7 +181,7 @@
             <img src="Propath.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
           </div>
           <div class="col-lg-6">
-            <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Welcome to Propath Academy
+            <h1 class="txt_color display-5 fw-bold text-body-emphasis lh-1 mb-3">Welcome to Propath Academy
 
             </h1>
             <p class="lead">At Propath Academy we are passionate about fostering foundational skills and unleashing the potential of young minds. Through our dedication to education, we specialize in teaching Abacus, Vedic Maths, and Handwriting.</p>
@@ -75,7 +189,12 @@
           </div>
         </div>
       </div>
-    <h1>working</h1>
+      <div class="container text-center pt-3" style="justify-content: center;">
+        <h1 class="txt_color pb-2 mb-0">Vision</h1>
+      </div>
+      <div class="container text-center pt-3" style="justify-content: center;">
+        <h1 class="txt_color pb-2 mb-0">Mission</h1>
+      </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

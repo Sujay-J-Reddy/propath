@@ -14,6 +14,15 @@ from django.http import HttpResponse
 def about_us(request):
     return render(request, 'accounts/about_us.html')
 
+def abacus(request):
+    return render(request, 'accounts/abacus.html')
+
+def vedicmaths(request):
+    return render(request, 'accounts/vedicmaths.html')
+
+def handwriting(request):
+    return render(request, 'accounts/handwriting.html')
+
 
 def landing_page(request):
     context = {

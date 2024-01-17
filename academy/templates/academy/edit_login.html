@@ -1,65 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Login</title>
-    {% load crispy_forms_tags %}
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <style>
-      .current_text {
-        font-family: "Your Desired Font", sans-serif; /* Use the desired font */
-        font-weight: 600; /* Adjust the font weight */
-        font-size: 14px; /* Modify the font size */
-        text-transform: uppercase;
-      }
-      .txt_color {
-        color: #5a5757; /* Light black color */
-        font-family: "Times New Roman", Times, serif;
-      }
-    </style>
-  </head>
 
-  <body>
-    
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Franchisee</title>
+  {% load crispy_forms_tags %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
-    <div class="container text-center pt-3">
-      <h2 class="txt_color border-bottom pb-2 mb-0">Edit Franchisee</h2>
-    </div>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
-    <section class="vh-50">
-      <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div class="card shadow-2-strong" style="border-radius: 1rem">
-              <div class="card-body p-5 text-center">
-                <form method="post" action="">
-                  {% csrf_token %} {{ form|crispy }}
-                  
-                  <button data-mdb-ripple-init type="submit" value="Save Changes" class="btn btn-dark btn-block">Save Changes</button>
-                </form>
-                <div class="col my-2">
-                    <!-- Simple link -->
-                    <a class="text-dark" href="{% url 'academy_base' %}" style="text-decoration: none;">Cancel</a>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-          </div>
-        </div>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: #fff;
+    }
+
+    .current_text {
+      font-family: "Your Desired Font", sans-serif;
+      /* Use the desired font */
+      font-weight: 600;
+      /* Adjust the font weight */
+      font-size: 14px;
+      /* Modify the font size */
+      text-transform: uppercase;
+    }
+
+    .txt_color {
+      color: #5a5757;
+      /* Light black color */
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    .formcontainer {
+      position: relative;
+      max-width: 700px;
+      width: 100%;
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .regbtn {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+      font-family: 'League Spartan', sans-serif;
+      max-width: max-content;
+      padding: 10px 20px;
+      border-radius: 5px;
+
+    }
+
+    .regbtn:hover {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+    }
+
+    .regbtn:hover:active {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+    }
+
+    .txt_color {
+      color: black;
+      /* Light black color */
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      text-align: center;
+      /* Center-align the text */
+      position: relative;
+    }
+
+    .txt_color::after {
+      content: '';
+      /* Add content for pseudo-element */
+      position: absolute;
+      /* Position the underline */
+      width: 50px;
+      /* Adjust the width of the underline */
+      height: 2px;
+      /* Adjust the height/thickness of the underline */
+      background-color: #009879;
+      /* Light underline color */
+      bottom: -5px;
+      /* Position the underline below the text */
+      left: 50%;
+      /* Center the underline relative to the text */
+      transform: translateX(-50%);
+      /* Center the underline */
+    }
+
+    .cancel {
+      color: #009879;
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+  <div class="formcontainer py-5 h-100">
+    <form method="post" action="">
+      {% csrf_token %} {{ form|crispy }}
+
+      <button data-mdb-ripple-init type="submit" value="Save Changes" class="btn regbtn btn-block">Save Changes</button>
+      <div class="col my-2 cancel">
+        <!-- Simple link -->
+        <a  href="{% url 'academy_base' %}" style="text-decoration: none; color: #009879;">Cancel</a>
+  
       </div>
-    </section>
+    </form>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+  </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>

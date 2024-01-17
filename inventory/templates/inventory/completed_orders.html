@@ -3,33 +3,190 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Delivery History</title>
+
+  <!-- 
+    - primary meta tag
+  -->
+  <title>Propath Academy</title>
+  <meta name="title" content="">
+  <meta name="description" content="">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'academy/academystudents.css' %}">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="./assets/images/hero-bg.svg">
+  <link rel="preload" as="image" href="./assets/images/hero-banner-1.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-banner-2.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
+  <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
   <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
+    .navbar-link {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
     }
 
-    th,
-    td {
-      border: 1px solid #dddddd;
-      text-align: left;
+    .date-search-container {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .date-input {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+    }
+
+    .date-input label {
+      margin-right: 10px;
+    }
+
+    .date-search-container label {
+      margin-right: 10px;
+    }
+
+    .date-search-container input[type="date"],
+    .date-search-container button {
       padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px;
     }
 
-    th {
-      background-color: #f2f2f2;
+    .date-search-container button {
+      background-color: #009879;
+      color: white;
+      cursor: pointer;
+      padding: 8px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      background-color: #009879;
+      color: white;
+      cursor: pointer;
+    }
+
+    .date-search-container button:hover {
+      background-color: #009879;
+    }
+
+    /* Style for select box */
+    .form-select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+      background-position: right 8px top 50%;
+      background-repeat: no-repeat;
+      background-size: 16px;
+    }
+
+    /* Hover and focus styles */
+    .form-select:hover,
+    .form-select:focus {
+      border-color: #009879;
+    }
+
+    /* Dropdown arrow color */
+    .form-select::-ms-expand {
+      color: #009879;
+    }
+
+    /* Reset default styles */
+    .form-select option {
+      color: initial;
+    }
+
+    #studentsTables {
+
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      /* Adjust the height as needed */
+    }
+
+    .content-table {
+      margin-top: 20px;
+      width: 80%;
+      max-width: 1000px;
+      margin: auto;
+      font-size: 1em;
+      /* Center the table */
+    }
+
+    .txt_color {
+      color: black;
+      /* Light black color */
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      text-align: center;
+      /* Center-align the text */
+      position: relative;
+    }
+
+    .txt_color::after {
+      content: '';
+      /* Add content for pseudo-element */
+      position: absolute;
+      /* Position the underline */
+      width: 50px;
+      /* Adjust the width of the underline */
+      height: 2px;
+      /* Adjust the height/thickness of the underline */
+      background-color: #009879;
+      /* Light underline color */
+      bottom: -5px;
+      /* Position the underline below the text */
+      left: 50%;
+      /* Center the underline relative to the text */
+      transform: translateX(-50%);
+      /* Center the underline */
     }
   </style>
 </head>
 
+<div class="container text-center pt-3" style="justify-content: center; margin-top: 30px;">
+  <h1 class="txt_color  pb-2 mb-0">Completed Orders</h1>
+</div>
+
 <body>
-  <header>
-    <h1>Delivery History</h1>
-  </header>
-  <main>
-    <table>
+
+  <div class="tablecontainer">
+    <div class="search-register-container">
+      <div class="col-auto my-3">
+        <button id="convertToExcelBtn" class="regbtn btn" onclick="convertToExcel()">Convert to Excel</button>
+      </div>
+    </div>
+
+    <table class="content-table">
       <thead>
         <tr>
           <th>DC no.</th>
@@ -59,7 +216,51 @@
         {% endfor %}
       </tbody>
     </table>
-  </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+  <script>
+    function convertToExcel() {
+      // Get the table element
+      var table = document.querySelector('.content-table');
+
+      // Create a new Workbook
+      var wb = XLSX.utils.book_new();
+
+      // Add a worksheet with the table data
+      var ws = XLSX.utils.table_to_sheet(table);
+
+      // Iterate through the rows and format the date column
+      for (var r = 1; r < ws['!ref'].split(':')[1]; r++) {
+        var cellAddress = 'E' + r; // Assuming the date column is the 5th column (index 4)
+        var cell = ws[cellAddress];
+
+        // Check if the cell contains a date
+        if (cell && cell.t === 'n' && XLSX.SSF.is_date(cell.z)) {
+          // Convert the date value to a JavaScript Date object
+          var excelDateValue = new Date(XLSX.SSF.parse_date_code(cell.v));
+
+          // Format the date as 'yyyy-mm-dd' string
+          var formattedDate = excelDateValue.toISOString().split('T')[0];
+
+          // Set the formatted date value and change cell type to string
+          cell.t = 's'; // Set cell type to string
+          cell.v = formattedDate; // Set the formatted date value
+        }
+      }
+
+      // Set column width for the "Shipped on" column (5th column, index 4)
+      ws['!cols'] = [{ wch: 15 }, { wch: 20 }, { wch: 20 }, { wch: 20 }, { wch: 15 }];
+
+      // Add the worksheet to the Workbook
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+      // Save the Workbook as an Excel file
+      XLSX.writeFile(wb, 'completedorders_data.xlsx');
+    }
+
+  </script>
 </body>
 
 </html>

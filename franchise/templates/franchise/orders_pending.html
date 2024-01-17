@@ -43,6 +43,12 @@
   <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
 
   <style>
+    .navbar-link {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+    }
+
     .date-search-container {
       margin-bottom: 20px;
       display: flex;
@@ -88,12 +94,41 @@
     .date-search-container button:hover {
       background-color: #009879;
     }
+
+    .regbtn {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+      font-family: 'League Spartan', sans-serif;
+      max-width: max-content;
+      padding: 10px 20px;
+      border-radius: 5px;
+
+    }
+
+    .search-register-container {
+      display: flex;
+      justify-content: flex-start;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 10px;
+      /* Add margin to separate from the table */
+    }
+
+    .regbtn:hover {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+    }
+
+    .regbtn:hover:active {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+    }
   </style>
 
 </head>
 
 <body>
-  <header class="header"  data-header>
+  <header class="header" data-header>
     <div class="container">
 
       <a href="#" class="logo">
@@ -113,6 +148,9 @@
         </div>
 
         <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="{% url 'franchise_base' %}" class="navbar-link" data-nav-link>Home</a>
+          </li>
 
           <li class="navbar-item">
             <a href="{% url 'new_order' %}" class="navbar-link" data-nav-link>Place Order</a>
@@ -159,7 +197,6 @@
         <input type="text" id="searchInput" placeholder="Search...">
         <button onclick="searchTable()">Search</button>
       </div>
-
       <div class="date-search-container">
         <div class="date-input">
           <label for="startDate">Start Date:</label>
@@ -172,6 +209,10 @@
         </div>
 
         <button id="dateSearchBtn">Search</button>
+      </div>
+
+      <div class="col-auto my-3">
+        <button id="convertToExcelBtn" class="regbtn btn" onclick="convertToExcel()">Convert to Excel</button>
       </div>
     </div>
 
@@ -190,12 +231,11 @@
           <td class="fw-normal mb-1">{{ order.id }}</td>
           <td class="fw-normal mb-1">
             {% for kit in order.kits %}
-            {{ kit.kit_name }}
-            {% endfor %}
+            {{ kit.kit_name }} - Quantity: {{ kit.quantity }}<br> {% endfor %}
           </td>
           <td class="fw-normal mb-1">
             {% for item in order.items %}
-            {{ item.item_name }}
+            {{ item.item_name }} - Quantity: {{ item.quantity }}<br>
             {% endfor %}
           </td>
           <td class="fw-normal mb-1">{{ order.order_date }}</td>
@@ -245,6 +285,27 @@
         }).show();
       });
     });
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+  <script>
+    function convertToExcel() {
+      // Get the table element
+      var table = document.querySelector('.content-table');
+
+      // Create a new Workbook
+      var wb = XLSX.utils.book_new();
+
+      // Add a worksheet with the table data
+      var ws = XLSX.utils.table_to_sheet(table);
+
+      // Add the worksheet to the Workbook
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+      // Save the Workbook as an Excel file
+      XLSX.writeFile(wb, 'orderspending_data.xlsx');
+    }
   </script>
 
 

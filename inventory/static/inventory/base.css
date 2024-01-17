@@ -1,45 +1,77 @@
-/* New styles for search bar */
+.date-search-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
 
-  
+.date-input {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
 
-.search-container {
-    
-    position: relative;
-    margin-right: 10px; }
-  
-  .search-container input[type="text"] {
-    padding: 8px; /* Adjust padding as needed */
-    border-radius: 4px; /* Adjust border radius */
-    border: 1px solid #ccc; /* Adjust border color */
+.date-input label {
+    margin-right: 10px;
   }
-  
-  #searchInput {
+
+.date-search-container label {
+    margin-right: 10px;
+}
+
+.date-search-container input[type="date"],
+.date-search-container button {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.date-search-container button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.date-search-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Style for the search container */
+.search-container {
+    position: relative;
+    margin-right: 10px;
+}
+
+/* Style for the search input */
+#searchInput {
     width: 250px;
     padding: 8px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
     transition: border-color 0.3s ease-in-out;
-  }
-  .search-register-container {
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #009879;
+    /* Highlight when focused */
+}
+
+/* Placeholder style */
+#searchInput::placeholder {
+    color: #999;
+}
+
+
+.search-register-container {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px; /* Add margin to separate from the table */
-  }
-
-
-.tabcontainer {
-    padding-top: 60px;
-    width: 80%;
-    margin: 0 auto;
-    position: relative;
-  
-  }
-
-.content-table {
-    width: 70%;
-    margin-top: 50px; /* Adjust the top margin as needed */
-  }
+    margin-bottom: 20px;
+    /* Add margin to separate from the table */
+}
 
 .button-column {
     color: rgb(38, 38, 244);
@@ -53,55 +85,54 @@
     max-width: max-content;
     padding: 10px 20px;
     border-radius: 5px;
-  
+
 }
 
 .content-table {
-    width: 90%;
     border-collapse: collapse;
     margin: 25px 0;
-    font-size: 0.9em;
+    font-size: 1em;
     min-width: 400px;
     border-radius: 5px 5px 0 0;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .content-table thead tr {
+}
+
+.content-table thead tr {
     background-color: #009879;
     color: #ffffff;
     text-align: left;
     font-weight: bold;
-  }
-  
-  .content-table th,
-  .content-table td {
+}
+
+.content-table th,
+.content-table td {
     padding: 12px 15px;
-  }
-  
-  .content-table tbody tr {
+}
+
+.content-table tbody tr {
     border-bottom: 1px solid #dddddd;
-  }
-  
-  .content-table tbody tr:nth-of-type(even) {
+}
+
+.content-table tbody tr:nth-of-type(even) {
     background-color: #f3f3f3;
-  }
-  
-  .content-table tbody tr:last-of-type {
+}
+
+.content-table tbody tr:last-of-type {
     border-bottom: 2px solid #009879;
-  }
-  
-  .content-table tbody tr.active-row {
+}
+
+.content-table tbody tr.active-row {
     font-weight: bold;
     color: #009879;
-  }
+}
 
-.tabcontainer {
+.tablecontainer {
     padding-top: 60px;
     width: 80%;
     margin: 0 auto;
     position: relative;
-  }
+}
 
 li {
     list-style: none;
@@ -114,7 +145,6 @@ a {
 
 input,
 button {
-    background-color: #009879;
     background: none;
     border: none;
     font: inherit;
@@ -172,7 +202,6 @@ img {
     /* Adjust the width as needed */
     text-align: center;
     padding-inline: 15px;
-    margin-bottom: 30px;
 }
 
 .header .h1 {
@@ -219,7 +248,7 @@ img {
     background-color: #1ab79d;
     color: hsl(0, 0%, 100%);
     font-family: 'League Spartan', sans-serif;
-    
+
     display: flex;
     align-items: center;
     gap: 7px;
@@ -236,11 +265,11 @@ img {
     left: 0;
     width: 100%;
     background-color: hsl(0, 0%, 100%);
+    padding-block: 12px;
     box-shadow: 0 6px 15px 0 hsla(0, 0%, 0%, 0.05);
     z-index: 4;
-    font-size: 1.2rem;
-    line-height: 1.75;
-    padding-block: none;
+    font-size: 1.1rem;
+    line-height: 1.45;
 }
 
 .header.active {
@@ -767,7 +796,7 @@ img {
 
     .navbar-list {
         display: flex;
-        gap: 50px;
+        gap: 30px;
         padding: 0;
     }
 

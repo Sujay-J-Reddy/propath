@@ -1,160 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registered Vendors</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
 
-    <style>
-      .txt_color {
-        color: #7b7979; /* Light black color */
-        font-family: "Times New Roman", Times, serif;
-      }
-      .current_text {
-        font-family: "Your Desired Font", sans-serif; /* Use the desired font */
-        font-weight: 600; /* Adjust the font weight */
-        font-size: 14px; /* Modify the font size */
-        text-transform: uppercase;
-      }
-      a.btn {
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg bg-light">
-      <div class="container-fluid">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a
-              class="current_text nav-link active text-dark"
-              aria-current="page"
-              href="{% url 'academy_base' %}"
-              >Home</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'students_page' %}"
-              >Students</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'franchise_page' %}"
-            >
-              Franchises</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'students_page' %}"
-              >Schools</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'teachers_page' %}"
-              >Teachers</a
-            >
-            <a class="current_text nav-link text-dark" href="/inventory/"
-              >Stores</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'orders_page' %}"
-              >Orders</a
-            >
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'register_user' %}"
-              >Register user</a
-            >
-          </div>
-          <div class="logout ms-auto">
-            <a
-              class="current_text nav-link text-dark"
-              href="{% url 'logout_user' %}"
-              >Logout</a
-            >
-          </div>
-        </div>
-      </div>
-    </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supply</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'academy/academystudents.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <style>
+    .navbar-link {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      text-decoration: none;
+    }
 
-    <div class="container text-center pt-3">
-      <h1 class="txt_color border-bottom pb-2 mb-0">Registered Vendors</h1>
-    </div>
+    .date-search-container {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+    .search-register-container {
+      display: inline-flex;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 20px;
+      /* Add margin to separate from the table */
+    }
 
-    <div class="container my-4">
-      <div class="row mt-3">
-        <div class="col-auto">
-          <a href="{% url 'register_vendor' %}" class="btn btn-dark"
-            >Register Vendor</a
-          >
-        </div>
-      </div>
-    </div>
+    .date-input {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+    }
 
+    .date-input label {
+      margin-right: 10px;
+    }
+
+    .date-search-container label {
+      margin-right: 10px;
+    }
+
+    .date-search-container input[type="date"],
+    .date-search-container button {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    .date-search-container button {
+      background-color: #009879;
+      color: white;
+      cursor: pointer;
+      padding: 8px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      background-color: #009879;
+      color: white;
+      cursor: pointer;
+    }
+
+    .date-search-container button:hover {
+      background-color: #009879;
+    }
+
+    /* Style for select box */
+    .form-select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+      background-position: right 8px top 50%;
+      background-repeat: no-repeat;
+      background-size: 16px;
+    }
+
+    /* Hover and focus styles */
+    .form-select:hover,
+    .form-select:focus {
+      border-color: #009879;
+    }
+
+    /* Dropdown arrow color */
+    .form-select::-ms-expand {
+      color: #009879;
+    }
+
+    /* Reset default styles */
+    .form-select option {
+      color: initial;
+    }
+
+    #studentsTables {
+
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      /* Adjust the height as needed */
+    }
+
+    .content-table {
+      margin-top: 20px;
+      width: 80%;
+      max-width: 1000px;
+      margin: auto;
+      font-size: 1em;
+      /* Center the table */
+    }
+
+    .regbtn {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+      font-family: 'League Spartan', sans-serif;
+      max-width: max-content;
+      padding: 10px 20px;
+      border-radius: 5px;
+
+    }
+
+    .regbtn:active {
+      background-color: #009879;
+    }
+
+    .regbtn:hover {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+    }
+
+    .txt_color {
+      color: black;
+      /* Light black color */
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      text-align: center;
+      /* Center-align the text */
+      position: relative;
+    }
+
+    .txt_color::after {
+      content: '';
+      /* Add content for pseudo-element */
+      position: absolute;
+      /* Position the underline */
+      width: 50px;
+      /* Adjust the width of the underline */
+      height: 2px;
+      /* Adjust the height/thickness of the underline */
+      background-color: #009879;
+      /* Light underline color */
+      bottom: -5px;
+      /* Position the underline below the text */
+      left: 50%;
+      /* Center the underline relative to the text */
+      transform: translateX(-50%);
+      /* Center the underline */
+    }
+
+    .regbtn {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+      font-family: 'League Spartan', sans-serif;
+      max-width: max-content;
+      padding: 10px 20px;
+      border-radius: 5px;
+
+    }
+
+    .regbtn:hover {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+    }
+
+    .regbtn:hover:active {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header" data-header>
     <div class="container">
-      <table class="table table-striped my-3">
-        <thead class="bg-light">
-          <tr>
-            <th class="bg-light text-dark">Vendor ID</th>
-            <th class="bg-light text-dark">Name</th>
-            <th class="bg-light text-dark">Contact</th>
-            <th class="bg-light text-dark">Location</th>
-            <th class="bg-light text-dark">Edit</th>
-            <th class="bg-light text-dark">Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for vendor in vendors %}
-          <tr>
-            <td class="fw-normal mb-1">{{ vendor.id }}</td>
-            <td class="fw-normal mb-1">{{ vendor.name }}</td>
-            <td class="fw-normal mb-1">{{ vendor.contact }}</td>
-            <td class="fw-normal mb-1">{{ vendor.location }}</td>
 
-            <td class="button-column">
-              <a
-                class="btn btn-link btn-rounded btn-sm fw-bold"
-                data-mdb-ripple-color="dark"
-                href="{% url 'edit_vendor' vendor.id %}"
-                >Edit</a
-              >
-            </td>
-            <td class="button-column">
-              <a
-                class="btn btn-link btn-rounded btn-sm fw-bold"
-                data-mdb-ripple-color="dark"
-                href="{% url 'delete_vendor' vendor.id %}"
-                >Delete</a
-              >
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <a href="#" class="logo">
+        <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="wrapper">
+          <a href="#" class="logo">
+            <img src="{% static 'images/logo.svg' %}" width="162" height="50" alt="EduWeb logo">
+          </a>
+
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="/inventory/" class="navbar-link" data-nav-link>Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'vendors_page' %}" class="navbar-link" data-nav-link>Vendors</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'log_order' %}" class="navbar-link" data-nav-link>Log Order</a>
+          </li>
+
+        </ul>
+
+      </nav>
+
+      <div class="header-actions">
+
+
+        <a href="{% url 'logout_user' %}" class="btn has-before">
+          <span class="span">Logout</span>
+
+        </a>
+
+        <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
+          <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="overlay" data-nav-toggler data-overlay></div>
+
     </div>
+  </header>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+  <div class="container text-center pt-3" style="justify-content: center;">
+    <h1 class="txt_color  pb-2 mb-0">Vendors</h1>
+  </div>
+
+  <div class="tablecontainer">
+    <div class="search-register-container">
+      <div class="col-auto my-3">
+        <a href="{% url 'register_vendor' %}" class="regbtn btn ">Register Vendor</a>
+      </div>
+      <div class="col-auto my-3">
+        <button id="convertToExcelBtn" class="regbtn btn" onclick="convertToExcel()">Convert to Excel</button>
+      </div>
+    </div>
+    <table class="content-table">
+      <thead class="bg-light">
+        <tr>
+          <th>Vendor ID</th>
+          <th>Name</th>
+          <th>Contact</th>
+          <th>Location</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for vendor in vendors %}
+        <tr>
+          <td>{{ vendor.id }}</td>
+          <td>{{ vendor.name }}</td>
+          <td>{{ vendor.contact }}</td>
+          <td>{{ vendor.location }}</td>
+
+          <td class="button-column">
+            <a class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark"
+              href="{% url 'edit_vendor' vendor.id %}">Edit</a>
+          </td>
+          <td class="button-column">
+            <a class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark"
+              href="{% url 'delete_vendor' vendor.id %}">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+  <script>
+    function convertToExcel() {
+      // Get the table element
+      var table = document.querySelector('.content-table');
+
+      // Create a new Workbook
+      var wb = XLSX.utils.book_new();
+
+      // Add a worksheet with the table data
+      var ws = XLSX.utils.table_to_sheet(table);
+
+      // Add the worksheet to the Workbook
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+      // Save the Workbook as an Excel file
+      XLSX.writeFile(wb, 'vendors_data.xlsx');
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>

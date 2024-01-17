@@ -1,271 +1,299 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Log order</title>
-    {% load crispy_forms_tags %}
-    <!-- Include your JavaScript and CSS libraries here -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
-    />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-  </head>
-  <body>
-    <div class="container my-5">
-      <form method="post" id="table-form">
-        {% csrf_token %}
-        <!-- Vendor Select -->
-        <label for="vendor-select">Select Vendor:</label>
-        <select
-          id="vendor-select"
-          name="vendor"
-          class="select2 form-control my-2"
-        >
-          <option value="">Select a Vendor</option>
-          {% for vendor in vendors %}
-          <option value="{{ vendor.id }}">{{ vendor.name }}</option>
-          {% endfor %}
-        </select>
+<head>
+  <title>Log order</title>
+  {% load crispy_forms_tags %}
+  <!-- Include your JavaScript and CSS libraries here -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <style>
+    .regbtn {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+      font-family: 'League Spartan', sans-serif;
+      max-width: max-content;
+      padding: 10px 20px;
+      border-radius: 5px;
 
-        <!-- Date Picker -->
-        <label for="date-picker" class="my-2">Select Date:</label>
-        <input type="text" class="form-control" id="date-picker" name="date" />
+    }
+    .regbtn:hover {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+    }
 
-        <!-- Table -->
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Quantity</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="expandable-row">
-              <td>
-                <select
-                  class="item-select select2 form-control my-3"
-                  name="items[0][item]"
-                >
-                  {% for item in items %}
-                  <option value="{{ item.id }}">{{ item.name }}</option>
-                  {% endfor %}
-                </select>
-              </td>
-              <td>
-                <input
-                  type="number"
-                  class="quantity-input form-control my-3"
-                  name="items[0][quantity]"
-                  value="0"
-                />
-              </td>
-              <td>
-                <button
-                  type="button"
-                  id="add-row"
-                  class="btn btn-dark my-3 m-lg-2"
-                >
-                  Add Row
-                </button>
-                <button
-                  type="button"
-                  class="delete-row btn btn-dark my-3 m-lg-2"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    .regbtn:active {
+      background-color: #009879;
+      color: hsl(0, 0%, 100%);
+    }
 
-        <!-- Add a new row button -->
+    
+  </style>
+</head>
 
-        <button type="submit" class="btn btn-dark my-3 m-lg-2">Submit</button>
-      </form>
-    </div>
+<body>
+  <div class="container my-5">
+    <form method="post" id="table-form">
+      {% csrf_token %}
+      <!-- Vendor Select -->
+      <label for="vendor-select">Select Vendor:</label>
+      <select id="vendor-select" name="vendor" class="select2 form-control my-2">
+        <option value="">Select a Vendor</option>
+        {% for vendor in vendors %}
+        <option value="{{ vendor.id }}">{{ vendor.name }}</option>
+        {% endfor %}
+      </select>
 
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="confirmationModalLabel">Confirm Order</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>Are you sure you want to place this order?</p>
-            <h6>Your Order:</h6>
-            <!-- Display user's orders here -->
-            <ul id="userOrders"></ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" id="confirmOrderBtn" class="btn btn-primary">Confirm Order</button>
-          </div>
+      <!-- Date Picker -->
+      <label for="date-picker" class="my-2">Select Date:</label>
+      <input type="text" class="form-control" id="date-picker" name="date" />
+
+      <!-- Table -->
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="expandable-row">
+            <td>
+              <select class="item-select select2 form-control my-3" name="items[0][item]">
+                {% for item in items %}
+                <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td>
+              <input type="number" class="quantity-input form-control my-3" name="items[0][quantity]" value="0" />
+            </td>
+            <td>
+              <button type="button" id="add-row" class="regbtn btn my-3 m-lg-2">
+                Add Row
+              </button>
+              <button type="button" class="delete-row btn regbtn my-3 m-lg-2">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Add a new row button -->
+
+      <button type="submit" class="regbtn btn my-3 m-lg-2">Submit</button>
+    </form>
+  </div>
+
+  <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">Confirm Order</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to place this order?</p>
+          <h6>Your Order:</h6>
+          <!-- Display user's orders here -->
+          <ul id="userOrders"></ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" id="confirmOrderBtn" class="btn btn-primary">Confirm Order</button>
         </div>
       </div>
     </div>
+  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
 
 
-    <script>
-      const urlParams = new URLSearchParams(window.location.search);
-      const successMessage = urlParams.get("success_message");
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const successMessage = urlParams.get("success_message");
 
-      if (successMessage) {
-        // Display an alert with the success message
-        alert(successMessage);
+    if (successMessage) {
+      // Display an alert with the success message
+      alert(successMessage);
 
-        // Reload the page to clear the success message from the URL
-        window.location.href = window.location.pathname;
-      }
+      // Reload the page to clear the success message from the URL
+      window.location.href = window.location.pathname;
+    }
 
-      // Initialize the date picker
-      $(function () {
-        $("#date-picker").datepicker();
-      });
-
-      // Handle adding a new row
-      document.querySelector("#add-row").addEventListener("click", () => {
-        const newRow = document
-          .querySelector(".expandable-row")
-          .cloneNode(true);
-        newRow.querySelector(".item-select").value = "";
-        newRow.querySelector(".quantity-input").value = "0";
-
-        const tableBody = document.querySelector("tbody");
-        tableBody.appendChild(newRow);
-      });
-
-      // Handle deleting a row
-      document.querySelector("tbody").addEventListener("click", (event) => {
-        if (event.target.classList.contains("delete-row")) {
-          const row = event.target.parentElement.parentElement;
-          if (document.querySelectorAll(".expandable-row").length > 1) {
-            row.remove();
-          } else {
-            alert("Cannot delete the last row");
-          }
-        }
-      });
-
-      function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== "") {
-          const cookies = document.cookie.split(";");
-          for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-              cookieValue = decodeURIComponent(
-                cookie.substring(name.length + 1)
-              );
-              break;
-            }
-          }
-        }
-        console.log(cookieValue);
-        return cookieValue;
-      }
-
-      document.querySelector("#table-form").addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const tableData = [];
-
-    document.querySelectorAll(".expandable-row").forEach((row) => {
-      const itemSelect = row.querySelector(".item-select");
-      const quantityInput = row.querySelector(".quantity-input");
-      tableData.push({
-        item: itemSelect.value,
-        quantity: quantityInput.value,
-      });
+    // Initialize the date picker
+    $(function () {
+      $("#date-picker").datepicker();
     });
 
-    const rawDate = document.querySelector("#date-picker").value;
-    const parts = rawDate.split("/");
-    if (parts.length === 3) {
-      const formattedDate = `${parts[2]}-${parts[0].padStart(
-        2,
-        "0"
-      )}-${parts[1].padStart(2, "0")}`;
+    // Handle adding a new row
+    document.querySelector("#add-row").addEventListener("click", () => {
+      const newRow = document
+        .querySelector(".expandable-row")
+        .cloneNode(true);
+      newRow.querySelector(".item-select").value = "";
+      newRow.querySelector(".quantity-input").value = "0";
 
-      const vendorSelect = document.querySelector("#vendor-select");
-      const selectedOption =
-        vendorSelect.options[vendorSelect.selectedIndex];
-      const selectedVendor = selectedOption.textContent;
+      const tableBody = document.querySelector("tbody");
+      tableBody.appendChild(newRow);
+    });
 
-      const confirmationModal = new bootstrap.Modal(
-        document.getElementById("confirmationModal"),
-        {
-          backdrop: "static",
-          keyboard: false,
+    // Handle deleting a row
+    document.querySelector("tbody").addEventListener("click", (event) => {
+      if (event.target.classList.contains("delete-row")) {
+        const row = event.target.parentElement.parentElement;
+        if (document.querySelectorAll(".expandable-row").length > 1) {
+          row.remove();
+        } else {
+          alert("Cannot delete the last row");
         }
-      );
-
-      const modalBody = document.querySelector("#confirmationModal .modal-body");
-      if (tableData.length > 0) {
-        let orderList = "<h5>Your Order:</h5><ul>";
-        tableData.forEach((item) => {
-          orderList += `<li>${item.item} - Quantity: ${item.quantity}</li>`;
-        });
-        orderList += "</ul>";
-        modalBody.innerHTML = orderList;
-      } else {
-        modalBody.innerHTML = "<p>No items selected</p>";
       }
+    });
 
-      confirmationModal.show();
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === name + "=") {
+            cookieValue = decodeURIComponent(
+              cookie.substring(name.length + 1)
+            );
+            break;
+          }
+        }
+      }
+      console.log(cookieValue);
+      return cookieValue;
+    }
 
-      document.getElementById("confirmOrderBtn").addEventListener("click", () => {
-        fetch("save-log/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie("csrftoken"),
-          },
-          body: JSON.stringify({
-            vendor: selectedVendor,
-            date: formattedDate,
-            tableData: tableData,
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-          });
+    document.querySelector("#table-form").addEventListener("submit", (event) => {
+      event.preventDefault();
 
-        confirmationModal.hide();
+      const tableData = [];
+
+      document.querySelectorAll(".expandable-row").forEach((row) => {
+        const itemSelect = row.querySelector(".item-select");
+        const quantityInput = row.querySelector(".quantity-input");
+        tableData.push({
+          item: itemSelect.value,
+          quantity: quantityInput.value,
+        });
       });
 
-      document
-        .querySelector("#confirmationModal [data-bs-dismiss='modal']")
-        .addEventListener("click", () => {
-          // Optional: Handle cancellation of the order
+      const rawDate = document.querySelector("#date-picker").value;
+      const parts = rawDate.split("/");
+      if (parts.length === 3) {
+        const formattedDate = `${parts[2]}-${parts[0].padStart(
+          2,
+          "0"
+        )}-${parts[1].padStart(2, "0")}`;
+
+        const vendorSelect = document.querySelector("#vendor-select");
+        const selectedOption =
+          vendorSelect.options[vendorSelect.selectedIndex];
+        const selectedVendor = selectedOption.textContent;
+
+        const confirmationModal = new bootstrap.Modal(
+          document.getElementById("confirmationModal"),
+          {
+            backdrop: "static",
+            keyboard: false,
+          }
+        );
+
+        const modalBody = document.querySelector("#confirmationModal .modal-body");
+        if (tableData.length > 0) {
+          let orderList = "<h5>Your Order:</h5><ul>";
+          tableData.forEach((item) => {
+            orderList += `<li>${item.item} - Quantity: ${item.quantity}</li>`;
+          });
+          orderList += "</ul>";
+          modalBody.innerHTML = orderList;
+        } else {
+          modalBody.innerHTML = "<p>No items selected</p>";
+        }
+
+        confirmationModal.show();
+
+        document.getElementById("confirmOrderBtn").addEventListener("click", () => {
+          fetch("save-log/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify({
+              vendor: selectedVendor,
+              date: formattedDate,
+              tableData: tableData,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+            });
+
+          confirmationModal.hide();
         });
-    } else {
-      alert("Invalid date format. Please use MM/DD/YYYY format.");
-    }
-  }); 
-    </script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+
+        document
+          .querySelector("#confirmationModal [data-bs-dismiss='modal']")
+          .addEventListener("click", () => {
+            // Optional: Handle cancellation of the order
+          });
+      } else {
+        alert("Invalid date format. Please use MM/DD/YYYY format.");
+      }
+    }); 
+  </script>
+
+<script>
+  $(document).ready(function () {
+      // Initialize Select2 for kit select elements
+      $('.item-select').select2({
+          width: '100%', // Set width as needed
+          placeholder: 'Search for a kit or item...',
+          // Additional options as needed
+      });
+
+      // Event listener to focus the search box on clicking the select box
+      $('.item-select').on('select2:open', function (e) {
+          $(this).data('select2').$dropdown.find(':input.select2-search__field').attr('placeholder', 'Search for a kit or item...').focus();
+      });
+
+      // Trigger search while typing
+      $('.item-select').on('select2:opening', function (e) {
+          var $searchfield = $(this).data('select2').dropdown.$search || $(this).data('select2').selection.$search;
+          $searchfield.off('keyup').on('keyup', function (e) {
+              // Your logic to trigger search as user types
+              // Implement search based on user input here
+              var value = $searchfield.val(); // Retrieve the typed value
+              // Perform search or filtering based on 'value'
+              // Update the Select2 options with the filtered results if needed
+          });
+      });
+  });
+
+
+
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
