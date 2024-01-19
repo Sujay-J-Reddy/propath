@@ -2,12 +2,37 @@
 <html>
 
 <head>
-    <title>Announce Winners</title>
-    {% load crispy_forms_tags %}
-    <!-- Include your JavaScript and CSS libraries here -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 
+      - primary meta tag
+    -->
+    <title>Propath Academy</title>
+    <meta name="title" content="">
+    <meta name="description" content="">
+
+    <!-- 
+      - favicon
+    -->
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+    <!-- 
+      - custom css link
+    -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'franchise/pendingorder.css' %}">
+
+    <!-- 
+      - google font link
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
@@ -15,97 +40,588 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
+
+    <!-- 
+      - preload images
+    -->
+    <link rel="preload" as="image" href="./assets/images/hero-bg.svg">
+    <link rel="preload" as="image" href="./assets/images/hero-banner-1.jpg">
+    <link rel="preload" as="image" href="./assets/images/hero-banner-2.jpg">
+    <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
+    <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
+
+    <style>
+        .header {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: hsl(0, 0%, 100%);
+            box-shadow: 0 6px 15px 0 hsla(0, 0%, 0%, 0.05);
+            z-index: 4;
+            font-size: 1.2rem;
+            line-height: 1.75;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a.btn {
+            text-decoration: none;
+        }
+
+        .current_text {
+            font-family: "Your Desired Font", sans-serif;
+            /* Use the desired font */
+            font-weight: 600;
+            /* Adjust the font weight */
+            font-size: 14px;
+            /* Modify the font size */
+            text-transform: uppercase;
+        }
+
+        .txt_color {
+            color: #7b7979;
+            /* Light black color */
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        .tabcontainer {
+            padding-top: 60px;
+            width: 80%;
+            margin: 0 auto;
+            position: relative;
+
+        }
+
+        .content-table {
+            width: 70%;
+            margin-top: 50px;
+            /* Adjust the top margin as needed */
+        }
+
+        .button-column {
+            color: rgb(38, 38, 244);
+            font-weight: bold;
+        }
+
+        .regbtn {
+            background-color: #009879;
+            color: hsl(0, 0%, 100%);
+            font-family: 'League Spartan', sans-serif;
+            max-width: max-content;
+            padding: 10px 20px;
+            border-radius: 5px;
+
+        }
+
+        .regbtn:hover {
+            background-color: #009879;
+            color: hsl(0, 0%, 100%);
+        }
+
+        .content-table {
+            width: 90%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .content-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+
+        .tabcontainer {
+            padding-top: 60px;
+            width: 80%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .confirm-order-btn {
+            background-color: #009879;
+            color: hsl(0, 0%, 100%);
+            /* Add any other necessary styles */
+        }
+
+        .cancel-order-btn {
+            background-color: hsl(0, 0%, 100%);
+            color: #009879;
+        }
+    </style>
 </head>
 
-<body>
-    <div class="container my-5">
-        <form method="post" id="winners-form">
+<body data-user="{{ request.user.username }}">
+    <header class="header" style="padding-block: 0px;" data-header>
+        <div class="container">
+
+            <a href="#" class="logo">
+                <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
+            </a>
+
+            <nav class="navbar" data-navbar>
+
+                <div class="wrapper">
+                    <a href="#" class="logo">
+                        <img src="{% static 'images/logo.svg' %}" width="162" height="50" alt="EduWeb logo">
+                    </a>
+
+                    <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                        <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+                    </button>
+                </div>
+
+                <nav class="navbar" data-navbar>
+
+                    <div class="wrapper">
+                        <a href="#" class="logo">
+                            <img src="{% static 'images/logo.svg' %}" width="162" height="50" alt="EduWeb logo">
+                        </a>
+
+                        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+                        </button>
+                    </div>
+
+                    <ul class="navbar-list">
+
+                        <li class="navbar-item">
+                            <a href="{% url 'academy_base' %}" class="navbar-link" data-nav-link>Home</a>
+                        </li>
+
+                        <li class="navbar-item">
+                            <a href="{% url 'students_page' %}" class="navbar-link" data-nav-link>Students</a>
+                        </li>
+
+                        <li class="navbar-item">
+                            <a href="{% url 'franchise_page' %}" class="navbar-link" data-nav-link>Franchises</a>
+                        </li>
+
+                        <li class="navbar-item">
+                            <a href="{% url 'schools_page' %}" class="navbar-link" data-nav-link>Schools</a>
+                        </li>
+
+                        <li class="navbar-item">
+                            <a href="{% url 'competitions_base' %}" class="navbar-link" data-nav-link>Competitions</a>
+                        </li>
+
+                        <li class="navbar-item">
+                            <a class="navbar-link" href="{% url 'certificate_requests' %}">Certificates</a>
+                        </li>
+
+                        <li class="navbar-item">
+                            <a href="{% url 'teachers_page' %}" class="navbar-link" data-nav-link>Teachers</a>
+                        </li>
+
+                        <li class="navbar-item">
+                            <a href="/inventory/" class="navbar-link" data-nav-link>Stores</a>
+                        </li>
+
+                        <li class="navbar-item">
+                            <a href="{% url 'orders_page' %}" class="navbar-link" data-nav-link>Orders</a>
+                        </li>
+
+                        <li class="navbar-item">
+                            <a href="{% url 'register_user' %}" class="navbar-link" data-nav-link>Register user</a>
+                        </li>
+
+                        <li class="navbar-item">
+                            <a href="{% url 'events_page' %}" class="navbar-link" data-nav-link>Website Events</a>
+                        </li>
+
+                    </ul>
+
+                </nav>
+
+                <div class="header-actions">
+
+                    <a href="{% url 'logout_user' %}" class="btn has-before">
+                        <span class="span">Logout</span>
+
+                        <!-- <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon> -->
+                    </a>
+
+                    <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
+                        <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                </div>
+
+                <div class="overlay" data-nav-toggler data-overlay></div>
+        </div>
+
+    </header>
+
+    <div class="tabcontainer">
+        <form method="post" id="table-form">
             {% csrf_token %}
-            <!-- Competition Select -->
-            <label for="competition-select">Select Competition (Circular No):</label>
-            <select id="competition-select" name="competition" class="select2 form-control my-2">
-                <option value="">Select</option>
+
+            Competition Circular Number:
+            <select>
+                <option value="">None</option>
                 {% for comp in comps %}
-                <option value="{{ comp.circular_no }}">{{ comp.circular_no }}</option>
+                <option value="{{ comp.circular_no }}">{{ comp.circular_no }} </option>
                 {% endfor %}
             </select>
-
-            <!-- Table -->
-            <table>
+            <!-- Table for Kits -->
+            <table class="content-table">
                 <thead>
                     <tr>
                         <th>Rank</th>
-                        <th>Franchise</th>
                         <th>Student</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="expandable-row">
+                    <tr class="expandable-row kit-row">
                         <td>
-                            <input type="number" class="rank-input form-control my-3" name="winners[0][rank]"
-                                value="1" />
+                            <input type="number" class="quantity-input form-control my-2" name="kits[0][quantity]"
+                                value="0" />
                         </td>
                         <td>
-                            <select class="franchise-select select2 form-control my-3" name="winners[0][franchise]">
-                                {% for franchise in franchises %}
-                                <option value="{{ franchise.id }}">{{ franchise.name }}</option>
+                            <select class="item-select form-control my-2 select2" name="kits[0][item]"
+                                data-live-search="true">
+                                <option value="">None</option>
+                                {% for student in students %}
+                                {% if student.name != 'None' %}
+                                <option value="{{ student.id }}">{{ student.id }}-{{ student.name }} &nbsp;&nbsp;&nbsp;
+                                    ({{student.franchise}}) </option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </td>
+
+
                         <td>
-                            <select class="student-select select2 form-control my-3" name="winners[0][student]">
-                                <!-- Students for the selected franchise will be populated dynamically using JavaScript -->
-                            </select>
+                            <button type="button" class="regbtn btn  my-3 m-lg-2">Delete</button>
+                        </td>
+                        <td class="students-td">
+                            <!-- This will be dynamically populated based on the selected franchise -->
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <!-- Add a new row button -->
-            <button type="button" id="add-row" class="btn btn-dark my-3 m-lg-2">
-                Add Row
-            </button>
+            <!-- Add a new row button for Kits -->
+            <button type="button" id="add-kit-row" class="regbtn btn my-3 m-lg-2">Add Kit Row</button>
 
-            <button type="submit" class="btn btn-dark my-3 m-lg-2">Announce Winners</button>
+
+            </table>
+
+
+            <button type="submit" class="regbtn btn my-3 m-lg-2">Submit</button>
+
+
+
+
         </form>
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to place this order?</p>
+                    <h6>Your Order:</h6>
+                    <!-- Display user's orders here -->
+                    <ul id="userOrders"></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="cancel-order-btn btn " data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" id="confirmOrderBtn" class="regbtn btn confirm-order-btn">Confirm
+                        Order</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Include your modal for confirmation (similar to the order confirmation modal) -->
+
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get("success_message");
+
+        if (successMessage) {
+            // Display an alert with the success message
+            alert(successMessage);
+
+            // Reload the page to clear the success message from the URL
+            window.location.href = window.location.pathname;
+        }
+
+        document.querySelector("#add-kit-row").addEventListener("click", () => {
+            const newRow = document.querySelector(".kit-row").cloneNode(true);
+            const itemSelect = newRow.querySelector(".item-select");
+            const quantityInput = newRow.querySelector(".quantity-input");
+
+            itemSelect.value = "";
+            quantityInput.value = "0";
+
+            // Remove the existing select2 element
+            $(itemSelect).next(".select2-container").remove();
+
+            const tableBody = document.querySelector("#table-form .kit-row").parentNode;
+            tableBody.appendChild(newRow);
+
+            // Initialize Select2 after appending
+            $(newRow).find('.item-select').select2({
+                width: '100%',
+                placeholder: 'Search for a kit or item...',
+            });
+        });
+
+        // Add a new row for Items
+        document.querySelector("#add-item-row").addEventListener("click", () => {
+            const newRow = document.querySelector(".item-row").cloneNode(true);
+            const itemSelect = newRow.querySelector(".item-select");
+            const quantityInput = newRow.querySelector(".quantity-input");
+
+            itemSelect.value = "";
+            quantityInput.value = "0";
+
+            // Remove the existing select2 element
+            $(itemSelect).next(".select2-container").remove();
+
+            const tableBody = document.querySelector("#table-form .item-row").parentNode;
+            tableBody.appendChild(newRow);
+
+            // Initialize Select2 after appending
+            $(newRow).find('.item-select').select2({
+                width: '100%',
+                placeholder: 'Search for a kit or item...',
+            });
+        });
+
+
+        document.querySelector("#table-form").addEventListener("click", (event) => {
+            if (event.target.classList.contains("regbtn")) {
+                const row = event.target.closest(".expandable-row");
+                const tableBody = row.parentNode;
+
+                if (tableBody.querySelectorAll(".expandable-row").length > 1) {
+                    row.remove();
+                } else {
+                    alert("Cannot delete the last row");
+                }
+            }
+        });
+
+        var currentUser = document.body.getAttribute("data-user");
+        console.log(currentUser);
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === name + "=") {
+                        cookieValue = decodeURIComponent(
+                            cookie.substring(name.length + 1)
+                        );
+                        break;
+                    }
+                }
+            }
+            console.log(cookieValue);
+            return cookieValue;
+        }
+
+        // Store table data in a variable
+        let tableData = null;
+        let tableDataToSubmit = null;
+
+        document.querySelector("#table-form").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const kitsData = [];
+            const itemsData = [];
+
+            // Collect selected kits data
+            document.querySelectorAll(".expandable-row.kit-row").forEach((row) => {
+                const itemSelect = row.querySelector(".item-select");
+                const quantityInput = row.querySelector(".quantity-input");
+                if (itemSelect.value !== "") {
+                    kitsData.push({
+                        item: itemSelect.value,
+                        quantity: quantityInput.value,
+                    });
+                }
+            });
+
+            // Collect selected items data
+            document.querySelectorAll(".expandable-row.item-row").forEach((row) => {
+                const itemSelect = row.querySelector(".item-select");
+                const quantityInput = row.querySelector(".quantity-input");
+                if (itemSelect.value !== "") {
+                    itemsData.push({
+                        item: itemSelect.value,
+                        quantity: quantityInput.value,
+                    });
+                }
+            });
+
+            const tableData = {
+                kits: kitsData,
+                items: itemsData,
+                user: currentUser,
+            };
+
+            const userOrders = document.getElementById("userOrders");
+            userOrders.textContent = generateOrdersSummary(tableData);
+
+            // Show the confirmation modal
+            const confirmationModal = new bootstrap.Modal(document.getElementById("confirmationModal"));
+            confirmationModal.show();
+
+            // Store data for later submission
+            tableDataToSubmit = tableData;
+        });
+
+
+        // Confirm order button in the modal
+        document.getElementById("confirmOrderBtn").addEventListener("click", () => {
+            if (tableDataToSubmit) {
+                // Send the data to the server
+                fetch("/inventory/orders/log-pending/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCookie("csrftoken"), // Include CSRF token
+                    },
+                    body: JSON.stringify(tableDataToSubmit),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        // Handle the response from the server, if needed
+                        console.log("Data sent:", data);
+                        // You can add further logic here after the data is sent
+                    });
+
+                // Submit the form
+                const form = document.getElementById("table-form");
+                form.submit();
+
+                // Hide the modal manually (optional)
+                const confirmationModal = new bootstrap.Modal(document.getElementById("confirmationModal"));
+                confirmationModal.hide();
+            } else {
+                console.error("No data available to submit.");
+            }
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Initialize Select2 for kit select elements
+            $('.item-select').select2({
+                width: '100%', // Set width as needed
+                placeholder: 'Search for a kit or item...',
+                // Additional options as needed
+            });
+
+            // Event listener to focus the search box on clicking the select box
+            $('.item-select').on('select2:open', function (e) {
+                $(this).data('select2').$dropdown.find(':input.select2-search__field').attr('placeholder', 'Search for a kit or item...').focus();
+            });
+
+            // Trigger search while typing
+            $('.item-select').on('select2:opening', function (e) {
+                var $searchfield = $(this).data('select2').dropdown.$search || $(this).data('select2').selection.$search;
+                $searchfield.off('keyup').on('keyup', function (e) {
+                    // Your logic to trigger search as user types
+                    // Implement search based on user input here
+                    var value = $searchfield.val(); // Retrieve the typed value
+                    // Perform search or filtering based on 'value'
+                    // Update the Select2 options with the filtered results if needed
+                });
+            });
+        });
+
+
+
+    </script>
+
+
+
+
+
+    <script>
+
+        // Function to generate order summary
+        function generateOrdersSummary(data) {
+            let summary = "Orders Summary:\n";
+            if (data.kits.length > 0) {
+                summary += "Kits:\n";
+                data.kits.forEach((kit) => {
+                    summary += `- Kit ID: ${kit.item}, Quantity: ${kit.quantity}\n`;
+                });
+            }
+            if (data.items.length > 0) {
+                summary += "Items:\n";
+                data.items.forEach((item) => {
+                    summary += `- Item ID: ${item.item}, Quantity: ${item.quantity}\n`;
+                });
+            }
+            return summary;
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- Other scripts... -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 
+    <!-- Your script -->
     <script>
-        // Include your existing JavaScript logic for handling row addition and deletion
-
-        // Populate student dropdown based on selected franchise
-        document.querySelector("tbody").addEventListener("change", (event) => {
-            if (event.target.classList.contains("franchise-select")) {
-                const franchiseId = event.target.value;
-                const row = event.target.parentElement.parentElement;
-                const studentSelect = row.querySelector(".student-select");
-
-                // Fetch students for the selected franchise using AJAX or any suitable method
-                // Update the options of the student dropdown dynamically
-                // For example:
-                fetch(`/get-students/?franchise=${franchiseId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        studentSelect.innerHTML = ""; // Clear existing options
-                        data.forEach(student => {
-                            const option = document.createElement("option");
-                            option.value = student.id;
-                            option.textContent = student.name;
-                            studentSelect.appendChild(option);
-                        });
-                    })
-                    .catch(error => console.error('Error fetching students:', error));
-            }
-        });
-
-        // Include your existing JavaScript logic for handling form submission
+        // Your JavaScript code
+        // ...
     </script>
+
+
+
 </body>
+
 
 </html>
