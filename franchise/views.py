@@ -29,7 +29,24 @@ def new_order(request):
 
 @franchisee_required
 def orders(request):
-    return render(request, 'franchise/orders.html')
+    user_franchise = request.user
+    print(user_franchise)
+
+    orders = Orders.objects.filter(completed=False, franchise=user_franchise)
+
+    for order in orders:
+        try:
+            order.items = json.loads(order.items)
+        except (json.JSONDecodeError, TypeError) as e:
+            # Handle the JSON decoding error, e.g., log it or set a default value
+            order.items = []
+
+        try:
+            order.kits = json.loads(order.kits)
+        except (json.JSONDecodeError, TypeError) as e:
+            # Handle the JSON decoding error, e.g., log it or set a default value
+            order.kits = []
+    return render(request, 'franchise/orders.html', {'orders': orders})
 
 @franchisee_required
 def competitions(request):

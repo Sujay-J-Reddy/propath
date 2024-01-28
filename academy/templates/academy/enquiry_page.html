@@ -2,57 +2,268 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 
+      - primary meta tag
+    -->
     <title>Enquiries</title>
+    <meta name="title" content="">
+    <meta name="description" content="">
+
+    <!-- 
+      - favicon
+    -->
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- 
+      - custom css link
+    -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'academy/schools.css' %}">
+
+    <!-- 
+      - google font link
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- 
+      - preload images
+    -->
+    <link rel="preload" as="image" href="./assets/images/hero-bg.svg">
+    <link rel="preload" as="image" href="./assets/images/hero-banner-1.jpg">
+    <link rel="preload" as="image" href="./assets/images/hero-banner-2.jpg">
+    <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
+    <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
     <style>
-        table {
-            border-collapse: collapse;
+        .header {
+            font-size: 1.03rem;
+        }
+
+        .navbar-link {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+
+        .navbar-list {
+            display: flex;
+            gap: 28px;
+            padding: 0;
+        }
+
+        #studentsTables {
+
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* Adjust the height as needed */
+        }
+
+        .content-table {
+            margin-top: 20px;
             width: 100%;
+            max-width: 1000px;
+            margin: auto;
+            font-size: 1em;
+            border-collapse: collapse;
+            /* Center the table */
         }
 
-        th,
-        td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
+        .content-table th,
+        .content-table td {
+            text-align: center;
+            /* Adjust text alignment as needed */
         }
 
-        th {
-            background-color: #f2f2f2;
+        .content-table th,
+        .content-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            /* Add borders to cells */
         }
+
+        .current_text {
+            font-family: "Your Desired Font", sans-serif;
+            /* Use the desired font */
+            font-weight: 600;
+            /* Adjust the font weight */
+            font-size: 14px;
+            /* Modify the font size */
+            text-transform: uppercase;
+        }
+
+        .txt_color {
+            color: black;
+            /* Light black color */
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            text-align: center;
+            /* Center-align the text */
+            position: relative;
+        }
+
+        .regbtn {
+            background-color: #009879;
+            color: hsl(0, 0%, 100%);
+            font-family: 'League Spartan', sans-serif;
+            max-width: max-content;
+            padding: 10px 20px;
+            border-radius: 5px;
+
+        }
+
+        .regbtn:hover {
+            background-color: #009879;
+            color: hsl(0, 0%, 100%);
+        }
+
+        .regbtn:hover:active {
+            background-color: #009879;
+            color: hsl(0, 0%, 100%);
+        }
+
+        .txt_color::after {
+            content: '';
+            /* Add content for pseudo-element */
+            position: absolute;
+            /* Position the underline */
+            width: 50px;
+            /* Adjust the width of the underline */
+            height: 2px;
+            /* Adjust the height/thickness of the underline */
+            background-color: #009879;
+            /* Light underline color */
+            bottom: -5px;
+            /* Position the underline below the text */
+            left: 50%;
+            /* Center the underline relative to the text */
+            transform: translateX(-50%);
+            /* Center the underline */
+        }
+
     </style>
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-dark">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <header class="header" data-header>
+        <div class="container">
+
+            <a href="#" class="logo propath">
+                <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
+            </a>
+
+            <nav class="navbar" data-navbar>
+
+                <div class="wrapper">
+                    <a href="#" class="logo">
+                        <img src="{% static 'images/logo.svg' %}" width="162" height="50" alt="EduWeb logo">
+                    </a>
+
+                    <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                        <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+                    </button>
+                </div>
+
+                <ul class="navbar-list">
+
+                    <li class="navbar-item">
+                        <a href="{% url 'academy_base' %}" class="navbar-link" data-nav-link>Home</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a href="{% url 'students_page' %}" class="navbar-link" data-nav-link>Students</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a href="{% url 'franchise_page' %}" class="navbar-link" data-nav-link>Franchises</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a href="{% url 'schools_page' %}" class="navbar-link" data-nav-link>Schools</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a href="{% url 'competitions_base' %}" class="navbar-link" data-nav-link>Competitions</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a class="navbar-link" href="{% url 'certificate_requests' %}">Certificates</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a href="{% url 'teachers_page' %}" class="navbar-link" data-nav-link>Teachers</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a href="/inventory/" class="navbar-link" data-nav-link>Stores</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a href="{% url 'orders_page' %}" class="navbar-link" data-nav-link>Orders</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a href="{% url 'enquiry_page' %}" class="navbar-link" data-nav-link>enquiries</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a href="{% url 'register_user' %}" class="navbar-link" data-nav-link>Register user</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a href="{% url 'events_page' %}" class="navbar-link" data-nav-link>Website Events</a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <div class="header-actions">
+
+                <a href="{% url 'logout_user' %}" class="btn has-before">
+                    <span class="span">Logout</span>
+
+                    <!-- <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon> -->
+                </a>
+
+                <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
+                    <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+                </button>
+
+            </div>
+
+            <div class="overlay" data-nav-toggler data-overlay></div>
+
         </div>
-        </div>
-    </nav>
+    </header>
+
+    <div class="container text-center pt-3">
+        <h1 class="txt_color  pb-2 mb-0">Enquiries</h1>
+    </div>
 
 
-    <div class="container">
-        <table class="table table-hover my-5">
+    <div class="tablecontainer">
+        <table class="content-table">
             <thead>
                 <tr>
-                    <th class="bg-dark text-light">Name</th>
-                    <th class="bg-dark text-light">Mail</th>
-                    <th class="bg-dark text-light">Type</th>
-                    <th class="bg-dark text-light">Phone Code</th>
-                    <th class="bg-dark text-light">Phone Number</th>
-                    <th class="bg-dark text-light">City</th>
-                    <th class="bg-dark text-light">PIN</th>
-                    <th class="bg-dark text-light">State</th>
-                    <th class="bg-dark text-light">Country</th>
-                    <th class="bg-dark text-light">Date</th>
+                    <th>Name</th>
+                    <th>Mail</th>
+                    <th>Type</th>
+                    <th>Phone Code</th>
+                    <th>Phone Number</th>
+                    <th>City</th>
+                    <th>PIN</th>
+                    <th>State</th>
+                    <th>Country</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>

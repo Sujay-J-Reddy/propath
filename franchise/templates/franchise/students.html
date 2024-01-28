@@ -223,7 +223,7 @@
           <td>{{ student.course_start_date }}</td>
           <td>{{ student.dob }}</td>
           <td>{{ student.age }}</td>
-          <td>{{ student.contact }}</td>
+          <td>{{ student.contact_number }}</td>
           <td class="button-column">
             <a href="{% url 'update_level' student.id %}">Update Level</a>
           </td>
@@ -254,7 +254,7 @@
           <td>{{ student.course_start_date }}</td>
           <td>{{ student.dob }}</td>
           <td>{{ student.age }}</td>
-          <td>{{ student.contact }}</td>
+          <td>{{ student.contact_number }}</td>
           <td class="button-column">
             <a href="{% url 'update_level' student.id %}">Update Level</a>
           </td>
@@ -293,17 +293,21 @@
         const endDate = new Date($('#endDate').val());
 
         $('table.content-table tbody tr').hide().filter(function () {
-          const rowDate = new Date($(this).find('td:nth-child(6)').text()); // Assuming the date is in the 6th column, modify if needed
+          const courseStartDate = new Date($(this).find('td:nth-child(7)').text()); // Adjust column index if needed
+          const dob = new Date($(this).find('td:nth-child(8)').text()); // Adjust column index if needed
 
           // Filter rows based on conditions
-          return (startDate <= rowDate && rowDate <= endDate) || (startDate <= rowDate && !endDate);
+          const isCourseStartDateInRange = (startDate <= courseStartDate && courseStartDate <= endDate) || (startDate <= courseStartDate && !endDate);
+          const isDOBInRange = (startDate <= dob && dob <= endDate) || (startDate <= dob && !endDate);
+
+          return isCourseStartDateInRange || isDOBInRange;
         }).show();
       });
     });
 
+
   </script>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <script>
@@ -315,17 +319,19 @@
       let notificationMessage = '';
 
       $('table.content-table tbody tr').each(function () {
-        const rowDate = $(this).find('td:nth-child(7)').text(); // Assuming the DOB is in the 7th column
+        const dobElement = $(this).find('.dob'); // Assuming the class 'dob' is used for the date of birth
 
-        const dob = new Date(rowDate);
-        const dobMonth = dob.getMonth() + 1; // January is 0
-        const dobDate = dob.getDate();
+        if (dobElement.length > 0) {
+          const dob = new Date(dobElement.text());
+          const dobMonth = dob.getMonth() + 1; // January is 0
+          const dobDate = dob.getDate();
 
-        if (currentMonth === dobMonth && currentDate === dobDate) {
-          const studentName = $(this).find('td:nth-child(2)').text(); // Assuming the name is in the 2nd column
-          console.log(`Birthday found for ${studentName}`);
-          notificationMessage += `Today it's ${studentName}'s birthday! 🎉🎂<br>`;
-          console.log(notificationMessage);
+          if (currentMonth === dobMonth && currentDate === dobDate) {
+            const studentName = $(this).find('.name').text(); // Assuming the class 'name' is used for the name
+            console.log(`Birthday found for ${studentName}`);
+            notificationMessage += `Today it's ${studentName}'s birthday! 🎉🎂<br>`;
+            console.log(notificationMessage);
+          }
         }
       });
 
@@ -333,9 +339,8 @@
       $('.birthday-notification').html(notificationMessage); // Use .html() to render HTML content
       console.log("Script finished running...");
     });
-
-
   </script>
+
 
 
 

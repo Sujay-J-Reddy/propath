@@ -22,9 +22,8 @@
     <!-- 
       - custom css link
     -->
-    {% load crispy_forms_tags %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'academy/academystudents.css' %}">
+    <link rel="stylesheet" href="{% static 'academy/schools.css' %}">
 
     <!-- 
       - google font link
@@ -43,10 +42,65 @@
     <link rel="preload" as="image" href="./assets/images/hero-banner-2.jpg">
     <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
     <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <style>
+        .tagcontainer {
+            margin-top: 30px;
+        }
+        .navbar-list {
+            display: flex;
+            gap: 28px;
+            padding: 0;
+        }
+
+        .navbar-link {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+
+        }
+
+        .content,
+        .certif-content p {
+            color: blue;
+            font-size: 18px;
+            margin-top: 7px;
+            margin-bottom: 10px
+        }
+
+        .content,
+        .certif-content,
+        .enquiry-content {
+            margin-left: 50px;
+            margin-top: 30px;
+            width: 30%;
+
+        }
+
+        main {
+            display: flex;
+
+        }
+
+        .header {
+            font-size: 1.03rem;
+        }
+
+
+
+        #studentsTables {
+
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* Adjust the height as needed */
+        }
+
         .content-table {
-            margin-top: 60px;
+            margin-top: 30px;
             width: 80%;
             max-width: 1000px;
             margin: auto;
@@ -54,19 +108,52 @@
             /* Center the table */
         }
 
-        .navbar-link {
+        .btn-link {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .txt_color {
+            color: black;
+            /* Light black color */
             font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 18px;
+            font-weight: 300;
+            text-align: center;
+            /* Center-align the text */
+            position: relative;
+        }
+
+        .txt_color::after {
+            content: '';
+            /* Add content for pseudo-element */
+            position: absolute;
+            /* Position the underline */
+            width: 50px;
+            /* Adjust the width of the underline */
+            height: 2px;
+            /* Adjust the height/thickness of the underline */
+            background-color: #009879;
+            /* Light underline color */
+            bottom: -5px;
+            /* Position the underline below the text */
+            left: 50%;
+            /* Center the underline relative to the text */
+            transform: translateX(-50%);
+            /* Center the underline */
+        }
+        .tablecontainer {
+            padding-top: 30px;
         }
     </style>
+
 </head>
 
-<body>
+<body id="top">
+
     <header class="header" data-header>
         <div class="container">
 
-            <a href="#" class="logo">
+            <a href="#" class="logo propath">
                 <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
             </a>
 
@@ -101,7 +188,7 @@
                     </li>
 
                     <li class="navbar-item">
-                        <a href="{% url 'competitions_page' %}" class="navbar-link" data-nav-link>Competitions</a>
+                        <a href="{% url 'competitions_base' %}" class="navbar-link" data-nav-link>Competitions</a>
                     </li>
 
                     <li class="navbar-item">
@@ -121,7 +208,15 @@
                     </li>
 
                     <li class="navbar-item">
+                        <a href="{% url 'enquiry_page' %}" class="navbar-link" data-nav-link>enquiries</a>
+                    </li>
+
+                    <li class="navbar-item">
                         <a href="{% url 'register_user' %}" class="navbar-link" data-nav-link>Register user</a>
+                    </li>
+
+                    <li class="navbar-item">
+                        <a href="{% url 'events_page' %}" class="navbar-link" data-nav-link>Website Events</a>
                     </li>
 
                 </ul>
@@ -147,29 +242,32 @@
         </div>
     </header>
 
+    <div class="tagcontainer text-center pt-3" style="justify-content: center;">
+        <h1 class="txt_color pb-2 mb-0">All Students</h1>
+    </div>
 
-
-
-    <table class="content-table" style="margin-top: 70px;">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Level</th>
-                <th>DOB</th>
-                <th>Contact</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for student in students %}
-            <tr>
-                <td>{{ student.name }}</td>
-                <td>{{ student.level }}</td>
-                <td>{{ student.dob }}</td>
-                <td>{{ student.contact }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="tablecontainer">
+        <table class="content-table" style="margin-top: 70px;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>DOB</th>
+                    <th>Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.level }}</td>
+                    <td>{{ student.dob }}</td>
+                    <td>{{ student.contact }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

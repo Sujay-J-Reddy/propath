@@ -45,10 +45,21 @@
   <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
   <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
   <style>
+    .navbar-list {
+      display: flex;
+      gap: 28px;
+      padding: 0;
+    }
+
     .navbar-link {
       font-family: 'Poppins', sans-serif;
       font-weight: 400;
       text-decoration: none;
+    }
+
+    .header {
+      font-size: 1.03rem;
+      padding-block: 0px;
     }
 
     .date-search-container {
@@ -195,7 +206,7 @@
   <header class="header" data-header>
     <div class="container">
 
-      <a href="#" class="logo">
+      <a href="#" class="logo propath">
         <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
       </a>
 
@@ -226,7 +237,7 @@
           </li>
 
           <li class="navbar-item">
-            <a href="{% url 'students_page' %}" class="navbar-link" data-nav-link>Schools</a>
+            <a href="{% url 'schools_page' %}" class="navbar-link" data-nav-link>Schools</a>
           </li>
 
           <li class="navbar-item">
@@ -250,7 +261,15 @@
           </li>
 
           <li class="navbar-item">
+            <a href="{% url 'enquiry_page' %}" class="navbar-link" data-nav-link>enquiries</a>
+          </li>
+
+          <li class="navbar-item">
             <a href="{% url 'register_user' %}" class="navbar-link" data-nav-link>Register user</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'events_page' %}" class="navbar-link" data-nav-link>Website Events</a>
           </li>
 
         </ul>

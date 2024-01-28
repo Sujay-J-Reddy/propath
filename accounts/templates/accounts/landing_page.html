@@ -48,6 +48,23 @@
       font-weight: 400;
       font-size: 18px;
     }
+
+    .blog-card {
+      overflow: hidden;
+      /* Prevent content from overflowing outside the card container */
+    }
+
+    .blog-card .card-content {
+      padding: 20px;
+      /* Add padding to create separation between card content and headings */
+    }
+
+    .blog-card .card-photo {
+      max-width: 100%;
+      height: 200px;
+      /* Set a fixed height for the event photos */
+      object-fit: cover;
+    }
   </style>
 </head>
 
@@ -95,7 +112,7 @@
           </li>
 
           <li class="navbar-item">
-            <a href="#" class="navbar-link" data-nav-link>Contact</a>
+            <a href="#footer" class="navbar-link" data-nav-link>Contact</a>
           </li>
 
           <li class="navbar-item">
@@ -600,8 +617,8 @@
           <div class="video-card">
 
             <div class="video-banner img-holder has-after" style="--width: ; --height: ;">
-              <img src="{% static 'images/video-banner.jpg' %}" width="970" height="550" loading="lazy" alt="video banner"
-                class="img-cover">
+              <img src="{% static 'images/video-banner.jpg' %}" width="970" height="550" loading="lazy"
+                alt="video banner" class="img-cover">
 
               <button class="play-btn" aria-label="play video">
                 <ion-icon name="play" aria-hidden="true"></ion-icon>
@@ -677,6 +694,7 @@
         - #BLOG
       -->
 
+      {% block content %}
       <section class="section blog has-bg-image" id="blog" aria-label="blog"
         style="background-image: url('/media/landing/blog-bg.svg')">
         <div class="container">
@@ -687,148 +705,44 @@
 
           <ul class="grid-list">
 
+            {% for event in events %}
             <li>
               <div class="blog-card">
 
-                <figure class="card-banner img-holder has-after" style="--width: 370; --height: 370;">
-                  <img src="{{ MEDIA_URL }}landing/teach3.jpg" width="370" height="370" loading="lazy"
-                    alt="Become A Better Blogger: Content Planning" class="img-cover">
-                </figure>
-
                 <div class="card-content">
-
-                  <a href="#" class="card-btn" aria-label="read more">
-                    <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-                  </a>
-
                   <a href="#" class="card-subtitle">Online</a>
 
+                  <!-- Display event photo -->
+                  <img src="{{ event.photo.url }}" alt="{{ event.name }}" class="card-photo">
+
                   <h3 class="h3">
-                    <a href="#" class="card-title">Become A Better Blogger: Content Planning</a>
+                    <a href="#" class="card-title">{{ event.name }}</a>
                   </h3>
 
                   <ul class="card-meta-list">
-
                     <li class="card-meta-item">
                       <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">Oct 10, 2021</span>
+                      <span class="span">{{ event.date }}</span>
                     </li>
 
                     <li class="card-meta-item">
                       <ion-icon name="chatbubbles-outline" aria-hidden="true"></ion-icon>
-
                       <span class="span">Com 09</span>
                     </li>
-
                   </ul>
 
                   <p class="card-text">
-                    Lorem Ipsum Dolor Sit Amet Cons Tetur Adipisicing Sed.
+                    {{ event.details }}
                   </p>
-
                 </div>
 
               </div>
             </li>
+            {% endfor %}
 
-            <li>
-              <div class="blog-card">
 
-                <figure class="card-banner img-holder has-after" style="--width: 370; --height: 370;">
-                  <img src="{{ MEDIA_URL }}landing/teach3.jpg" width="370" height="370" loading="lazy"
-                    alt="Become A Better Blogger: Content Planning" class="img-cover">
-                </figure>
-
-                <div class="card-content">
-
-                  <a href="#" class="card-btn" aria-label="read more">
-                    <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-                  </a>
-
-                  <a href="#" class="card-subtitle">Online</a>
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">Become A Better Blogger: Content Planning</a>
-                  </h3>
-
-                  <ul class="card-meta-list">
-
-                    <li class="card-meta-item">
-                      <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">Oct 10, 2021</span>
-                    </li>
-
-                    <li class="card-meta-item">
-                      <ion-icon name="chatbubbles-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">Com 09</span>
-                    </li>
-
-                  </ul>
-
-                  <p class="card-text">
-                    Lorem Ipsum Dolor Sit Amet Cons Tetur Adipisicing Sed.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="blog-card">
-
-                <figure class="card-banner img-holder has-after" style="--width: 370; --height: 370;">
-                  <img src="{{ MEDIA_URL }}landing/teach3.jpg" width="370" height="370" loading="lazy"
-                    alt="Become A Better Blogger: Content Planning" class="img-cover">
-                </figure>
-
-                <div class="card-content">
-
-                  <a href="#" class="card-btn" aria-label="read more">
-                    <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-                  </a>
-
-                  <a href="#" class="card-subtitle">Online</a>
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">Become A Better Blogger: Content Planning</a>
-                  </h3>
-
-                  <ul class="card-meta-list">
-
-                    <li class="card-meta-item">
-                      <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">Oct 10, 2021</span>
-                    </li>
-
-                    <li class="card-meta-item">
-                      <ion-icon name="chatbubbles-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">Com 09</span>
-                    </li>
-
-                  </ul>
-
-                  <p class="card-text">
-                    Lorem Ipsum Dolor Sit Amet Cons Tetur Adipisicing Sed.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-          </ul>
-
-          <img src="{{ MEDIA_URL }}landing/blog-shape.png" width="186" height="186" loading="lazy" alt=""
-            class="shape blog-shape">
-
-        </div>
       </section>
+      {% endblock %}
 
     </article>
   </main>

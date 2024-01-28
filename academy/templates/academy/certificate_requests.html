@@ -42,10 +42,19 @@
   <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
   <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
   <style>
+    .navbar-list {
+      display: flex;
+      gap: 28px;
+      padding: 0;
+    }
+
     .navbar-link {
       font-family: 'Poppins', sans-serif;
       font-weight: 400;
-      font-size: 18px;
+    }
+
+    .header {
+      font-size: 1.03rem;
     }
 
     .date-search-container {
@@ -199,7 +208,7 @@
   <header class="header" data-header>
     <div class="container">
 
-      <a href="#" class="logo">
+      <a href="#" class="logo propath">
         <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
       </a>
 
@@ -234,7 +243,7 @@
           </li>
 
           <li class="navbar-item">
-            <a href="{% url 'competitions_page' %}" class="navbar-link" data-nav-link>Competitions</a>
+            <a href="{% url 'competitions_base' %}" class="navbar-link" data-nav-link>Competitions</a>
           </li>
 
           <li class="navbar-item">
@@ -254,7 +263,15 @@
           </li>
 
           <li class="navbar-item">
+            <a href="{% url 'enquiry_page' %}" class="navbar-link" data-nav-link>enquiries</a>
+          </li>
+
+          <li class="navbar-item">
             <a href="{% url 'register_user' %}" class="navbar-link" data-nav-link>Register user</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'events_page' %}" class="navbar-link" data-nav-link>Website Events</a>
           </li>
 
         </ul>
@@ -263,10 +280,10 @@
 
       <div class="header-actions">
 
-
         <a href="{% url 'logout_user' %}" class="btn has-before">
           <span class="span">Logout</span>
 
+          <!-- <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon> -->
         </a>
 
         <button class="header-action-btn" aria-label="open menu" data-nav-toggler>

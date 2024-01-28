@@ -50,6 +50,16 @@
             font-weight: 400;
         }
 
+        .header {
+            font-size: 1.03rem;
+        }
+
+        .navbar-list {
+            display: flex;
+            gap: 28px;
+            padding: 0;
+        }
+
         .date-search-container {
             margin-bottom: 20px;
             display: flex;
@@ -152,6 +162,11 @@
             font-size: 1em;
             /* Center the table */
         }
+
+        .btn-link {
+            color: blue;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -159,87 +174,95 @@
 
     <header class="header" data-header>
         <div class="container">
-
-            <a href="#" class="logo">
-                <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
-            </a>
-
-            <nav class="navbar" data-navbar>
-
-                <div class="wrapper">
-                    <a href="#" class="logo">
-                        <img src="{% static 'images/logo.svg' %}" width="162" height="50" alt="EduWeb logo">
-                    </a>
-
-                    <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-                        <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
-                    </button>
-                </div>
-
-                <ul class="navbar-list">
-
-                    <li class="navbar-item">
-                        <a href="{% url 'academy_base' %}" class="navbar-link" data-nav-link>Home</a>
-                    </li>
-
-                    <li class="navbar-item">
-                        <a href="{% url 'students_page' %}" class="navbar-link" data-nav-link>Students</a>
-                    </li>
-
-                    <li class="navbar-item">
-                        <a href="{% url 'franchise_page' %}" class="navbar-link" data-nav-link>Franchises</a>
-                    </li>
-
-                    <li class="navbar-item">
-                        <a href="{% url 'schools_page' %}" class="navbar-link" data-nav-link>Schools</a>
-                    </li>
-
-                    <li class="navbar-item">
-                        <a href="{% url 'competitions_base' %}" class="navbar-link" data-nav-link>Competitions</a>
-                    </li>
-
-                    <li class="navbar-item">
-                        <a class="navbar-link" href="{% url 'certificate_requests' %}">Certificates</a>
-                    </li>
-
-                    <li class="navbar-item">
-                        <a href="{% url 'teachers_page' %}" class="navbar-link" data-nav-link>Teachers</a>
-                    </li>
-
-                    <li class="navbar-item">
-                        <a href="/inventory/" class="navbar-link" data-nav-link>Stores</a>
-                    </li>
-
-                    <li class="navbar-item">
-                        <a href="{% url 'orders_page' %}" class="navbar-link" data-nav-link>Orders</a>
-                    </li>
-
-                    <li class="navbar-item">
-                        <a href="{% url 'register_user' %}" class="navbar-link" data-nav-link>Register user</a>
-                    </li>
-
-                </ul>
-
-            </nav>
-
-            <div class="header-actions">
-
-                <a href="{% url 'logout_user' %}" class="btn has-before">
-                    <span class="span">Logout</span>
-
-                    <!-- <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon> -->
-                </a>
-
-                <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
-                    <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
-                </button>
-
+    
+          <a href="#" class="logo propath">
+            <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
+          </a>
+    
+          <nav class="navbar" data-navbar>
+    
+            <div class="wrapper">
+              <a href="#" class="logo">
+                <img src="{% static 'images/logo.svg' %}" width="162" height="50" alt="EduWeb logo">
+              </a>
+    
+              <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+              </button>
             </div>
-
-            <div class="overlay" data-nav-toggler data-overlay></div>
-
+    
+            <ul class="navbar-list">
+    
+              <li class="navbar-item">
+                <a href="{% url 'academy_base' %}" class="navbar-link" data-nav-link>Home</a>
+              </li>
+    
+              <li class="navbar-item">
+                <a href="{% url 'students_page' %}" class="navbar-link" data-nav-link>Students</a>
+              </li>
+    
+              <li class="navbar-item">
+                <a href="{% url 'franchise_page' %}" class="navbar-link" data-nav-link>Franchises</a>
+              </li>
+    
+              <li class="navbar-item">
+                <a href="{% url 'schools_page' %}" class="navbar-link" data-nav-link>Schools</a>
+              </li>
+    
+              <li class="navbar-item">
+                <a href="{% url 'competitions_base' %}" class="navbar-link" data-nav-link>Competitions</a>
+              </li>
+    
+              <li class="navbar-item">
+                <a class="navbar-link" href="{% url 'certificate_requests' %}">Certificates</a>
+              </li>
+    
+              <li class="navbar-item">
+                <a href="{% url 'teachers_page' %}" class="navbar-link" data-nav-link>Teachers</a>
+              </li>
+    
+              <li class="navbar-item">
+                <a href="/inventory/" class="navbar-link" data-nav-link>Stores</a>
+              </li>
+    
+              <li class="navbar-item">
+                <a href="{% url 'orders_page' %}" class="navbar-link" data-nav-link>Orders</a>
+              </li>
+    
+              <li class="navbar-item">
+                <a href="{% url 'enquiry_page' %}" class="navbar-link" data-nav-link>enquiries</a>
+              </li>
+    
+              <li class="navbar-item">
+                <a href="{% url 'register_user' %}" class="navbar-link" data-nav-link>Register user</a>
+              </li>
+    
+              <li class="navbar-item">
+                <a href="{% url 'events_page' %}" class="navbar-link" data-nav-link>Website Events</a>
+              </li>
+    
+            </ul>
+    
+          </nav>
+    
+          <div class="header-actions">
+    
+            <a href="{% url 'logout_user' %}" class="btn has-before">
+              <span class="span">Logout</span>
+    
+              <!-- <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon> -->
+            </a>
+    
+            <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
+              <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+            </button>
+    
+          </div>
+    
+          <div class="overlay" data-nav-toggler data-overlay></div>
+    
         </div>
-    </header>
+      </header>
 
     <div class="tablecontainer">
         <div class="search-register-container">
@@ -275,10 +298,10 @@
                     <td>{{ school.mail }}</td>
                     <td>{{ school.location }}</td>
                     <td>
-                        <a href="{% url 'school_students' school.id %}" class="regbtn btn">Students</a>
+                        <a href="{% url 'school_students' school.id %}" class="btn-link btn">Students</a>
                     </td>
                     <td>
-                        <a href="{% url 'edit_school' school.id %}" class="regbtn btn">Edit</a>
+                        <a href="{% url 'edit_school' school.id %}" class="btn-link btn">Edit</a>
                     </td>
                 </tr>
                 {% endfor %}

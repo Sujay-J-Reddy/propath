@@ -43,105 +43,44 @@
   <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
   <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
   <style>
-    .navbar-link {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 400;
-      font-size: 18px;
-    }
+        .navbar-link {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
 
-    .date-search-container {
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
+        .header {
+            font-size: 1.03rem;
+        }
 
-    .date-input {
-      display: flex;
-      align-items: center;
-      margin-right: 20px;
-    }
+        .navbar-list {
+            display: flex;
+            gap: 28px;
+            padding: 0;
+        }
 
-    .date-input label {
-      margin-right: 10px;
-    }
 
-    .date-search-container label {
-      margin-right: 10px;
-    }
-
-    .date-search-container input[type="date"],
-    .date-search-container button {
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-right: 10px;
-    }
-
-    .date-search-container button {
-      background-color: #009879;
-      color: white;
-      cursor: pointer;
-      padding: 8px 15px;
-      font-size: 14px;
-      border: none;
-      border-radius: 4px;
-      background-color: #009879;
-      color: white;
-      cursor: pointer;
-    }
-
-    .date-search-container button:hover {
-      background-color: #009879;
-    }
-
-    /* Style for select box */
-    .form-select {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-      background-position: right 8px top 50%;
-      background-repeat: no-repeat;
-      background-size: 16px;
-    }
-
-    /* Hover and focus styles */
-    .form-select:hover,
-    .form-select:focus {
-      border-color: #009879;
-    }
-
-    /* Dropdown arrow color */
-    .form-select::-ms-expand {
-      color: #009879;
-    }
-
-    /* Reset default styles */
-    .form-select option {
-      color: initial;
-    }
-
-    #studentsTables {
-
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      /* Adjust the height as needed */
-    }
 
     .content-table {
       margin-top: 20px;
-      width: 80%;
+      width: 100%;
       max-width: 1000px;
       margin: auto;
       font-size: 1em;
+      border-collapse: collapse;
       /* Center the table */
+    }
+
+    .content-table th,
+    .content-table td {
+      text-align: center;
+      /* Adjust text alignment as needed */
+    }
+
+    .content-table th,
+    .content-table td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      /* Add borders to cells */
     }
 
     .current_text {
@@ -217,7 +156,7 @@
   <header class="header" data-header>
     <div class="container">
 
-      <a href="#" class="logo">
+      <a href="#" class="logo propath">
         <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
       </a>
 
@@ -252,7 +191,11 @@
           </li>
 
           <li class="navbar-item">
-            <a href="{% url 'competitions_page' %}" class="navbar-link" data-nav-link>Competitions</a>
+            <a href="{% url 'competitions_base' %}" class="navbar-link" data-nav-link>Competitions</a>
+          </li>
+
+          <li class="navbar-item">
+            <a class="navbar-link" href="{% url 'certificate_requests' %}">Certificates</a>
           </li>
 
           <li class="navbar-item">
@@ -268,7 +211,15 @@
           </li>
 
           <li class="navbar-item">
+            <a href="{% url 'enquiry_page' %}" class="navbar-link" data-nav-link>enquiries</a>
+          </li>
+
+          <li class="navbar-item">
             <a href="{% url 'register_user' %}" class="navbar-link" data-nav-link>Register user</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="{% url 'events_page' %}" class="navbar-link" data-nav-link>Website Events</a>
           </li>
 
         </ul>
@@ -277,10 +228,10 @@
 
       <div class="header-actions">
 
-
         <a href="{% url 'logout_user' %}" class="btn has-before">
           <span class="span">Logout</span>
 
+          <!-- <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon> -->
         </a>
 
         <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
@@ -317,7 +268,9 @@
             <th>DC no.</th>
             <th>Franchise</th>
             <th>Kits</th>
+            <th>quantity</th>
             <th>Items</th>
+            <th>quantity</th>
             <th>Date</th>
             <th>Mark as Delivered</th>
           </tr>
@@ -329,12 +282,22 @@
             <td>{{ order.franchise }}</td>
             <td>
               {% for kit in order.kits %}
-              {{ kit.kit_name }} - Quantity: {{ kit.quantity }}<br>
+              {{ kit.kit_name }}<br>
+              {% endfor %}
+            </td>
+            <td>
+              {% for kit in order.kits %}
+              {{ kit.quantity }}<br>
               {% endfor %}
             </td>
             <td>
               {% for item in order.items %}
-              {{ item.item_name }} - Quantity: {{ item.quantity }}<br>
+              {{ item.item_name }}<br>
+              {% endfor %}
+            </td>
+            <td>
+              {% for item in order.items %}
+              Quantity: {{ item.quantity }}<br>
               {% endfor %}
             </td>
             <td>{{ order.order_date }}</td>

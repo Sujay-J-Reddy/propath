@@ -10,6 +10,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 
+    <!-- Add these lines to include Bootstrap CSS and JavaScript -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <style>
         .navbar-link {
             font-family: 'Poppins', sans-serif;
@@ -44,6 +50,16 @@
             padding: 10px 20px;
             border-radius: 5px;
 
+        }
+
+        .regbtn:hover {
+            background-color: #009879;
+            color: hsl(0, 0%, 100%);
+        }
+
+        .regbtn:hover:active {
+            background-color: #009879;
+            color: hsl(0, 0%, 100%);
         }
 
         .content-table {
@@ -152,7 +168,7 @@
 <body data-user="{{ request.user.username }}">
     <div class="tabcontainer">
         <form method="post" id="table-form">
-
+            {% csrf_token %}
 
             <!-- Table -->
             <table class="content-table">
@@ -171,118 +187,148 @@
                                 {% endfor %}
                             </select>
                         </td>
-                        <td><button type="button" class="regbtn delete-row">Delete</button></td>
+                        <td><button type="button" class="btn regbtn delete-row">Delete</button></td>
                     </tr>
                 </tbody>
             </table>
 
             <!-- Add a new row button -->
-            <button type="button" id="add-row" class="regbtn">Add Row</button>
+            <button type="button" id="add-row" class="btn regbtn">Add Row</button>
 
-            <button type="submit" class="regbtn">Submit</button>
+            <button type="submit" class="btn regbtn">Submit</button>
         </form>
     </div>
 
+    <!-- Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Selected Students</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <p id="selectedStudents"></p>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn" style="color: #009879;" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn regbtn" id="modal-submit">Submit</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const successMessage = urlParams.get("success_message");
-
-        if (successMessage) {
-            // Display an alert with the success message
-            alert(successMessage);
-
-            // Reload the page to clear the success message from the URL
-            window.location.href = window.location.pathname;
-        }
-
-
-
-        // Handle adding a new row
-        document.querySelector("#add-row").addEventListener("click", () => {
-            const newRow = document
-                .querySelector(".expandable-row")
-                .cloneNode(true);
-            newRow.querySelector(".item-select").value = "";
-
-            const tableBody = document.querySelector("tbody");
-            tableBody.appendChild(newRow);
-        });
-
-        // Handle deleting a row
-        document.querySelector("tbody").addEventListener("click", (event) => {
-            if (event.target.classList.contains("delete-row")) {
-                const row = event.target.parentElement.parentElement;
-                if (document.querySelectorAll(".expandable-row").length > 1) {
-                    row.remove();
-                } else {
-                    alert("Cannot delete the last row");
-                }
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const successMessage = urlParams.get("success_message");
+    
+            const currentUser = document.body.getAttribute("data-user");
+    
+            if (successMessage) {
+                alert(successMessage);
+                window.location.href = window.location.pathname;
             }
-        });
-
-        var currentUser = document.body.getAttribute("data-user");
-
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== "") {
-                const cookies = document.cookie.split(";");
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) === name + "=") {
-                        cookieValue = decodeURIComponent(
-                            cookie.substring(name.length + 1)
-                        );
-                        break;
-                    }
-                }
-            }
-            console.log(cookieValue);
-            return cookieValue;
-        }
-
-        document
-            .querySelector("#table-form")
-            .addEventListener("submit", (event) => {
+    
+            document.querySelector("#table-form").addEventListener("submit", function (event) {
                 event.preventDefault();
-
+    
                 const tableData = [];
-
-                document.querySelectorAll(".expandable-row").forEach((row) => {
+                const selectedStudentNames = [];
+    
+                document.querySelectorAll(".expandable-row").forEach(function (row) {
                     const itemSelect = row.querySelector(".item-select");
+                    const studentName = itemSelect.options[itemSelect.selectedIndex].text;
                     tableData.push({
                         item: itemSelect.value,
                     });
+                    selectedStudentNames.push(studentName);
                 });
-
-                console.log(tableData)
-
-
-                const compId = "{{ comp_id }}";
-                const url = window.location.href;
-
-                // Send the data to the server
-                fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRFToken": getCookie("csrftoken"), // Include CSRF token
-                    },
-                    body: JSON.stringify({
-                        franchise: currentUser,
-                        tableData: tableData,
-                    }),
-                })
-
-
-                    .then((response) => response.json())
-                    .then((data) => {
-                        // Handle the response from the server, if needed
-                        console.log(data);
-                    });
-
+    
+                $('#myModal').modal('show');
+                document.getElementById('selectedStudents').innerText = selectedStudentNames.join(', ');
+    
+                document.querySelector("#modal-submit").addEventListener("click", function () {
+                    // Handle the modal submit button click
+                    $('#myModal').modal('hide'); // Close the modal
+    
+                    // Continue with the rest of your submission logic here
+                    const compId = "{{ comp_id }}";
+                    const url = window.location.href;
+    
+                    fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": getCookie("csrftoken"),
+                        },
+                        body: JSON.stringify({
+                            franchise: currentUser,
+                            tableData: tableData,
+                        }),
+                    })
+                        .then(function (response) {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            // Handle the response from the server, if needed
+                            console.log(data);
+    
+                            // Additional actions after successful submission, if any
+                        })
+                        .catch(function (error) {
+                            console.error('Error:', error);
+                        });
+                });
             });
+    
+            document.querySelector("#add-row").addEventListener("click", function () {
+                const newRow = document.querySelector(".expandable-row").cloneNode(true);
+                newRow.querySelector(".item-select").value = "";
+    
+                const tableBody = document.querySelector("tbody");
+                tableBody.appendChild(newRow);
+            });
+    
+            document.querySelector("tbody").addEventListener("click", function (event) {
+                if (event.target.classList.contains("delete-row")) {
+                    const row = event.target.parentElement.parentElement;
+                    if (document.querySelectorAll(".expandable-row").length > 1) {
+                        row.remove();
+                    } else {
+                        alert("Cannot delete the last row");
+                    }
+                }
+            });
+    
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== "") {
+                    const cookies = document.cookie.split(";");
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === name + "=") {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        });
     </script>
+
 </body>
 
 </html>

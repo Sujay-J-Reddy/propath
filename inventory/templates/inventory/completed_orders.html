@@ -21,8 +21,9 @@
   <!-- 
     - custom css link
   -->
+  {% load crispy_forms_tags %}
   {% load static %}
-  <link rel="stylesheet" href="{% static 'academy/academystudents.css' %}">
+  <link rel="stylesheet" href="{% static 'academy/schools.css' %}">
 
   <!-- 
     - google font link
@@ -30,8 +31,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap"
-    rel="stylesheet">
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet">
 
   <!-- 
     - preload images
@@ -41,108 +42,146 @@
   <link rel="preload" as="image" href="./assets/images/hero-banner-2.jpg">
   <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
   <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <style>
-    .navbar-link {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 400;
-    }
+      .navbar-link {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+      }
 
-    .date-search-container {
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
+      .header {
+          font-size: 1.03rem;
+      }
 
-    .date-input {
-      display: flex;
-      align-items: center;
-      margin-right: 20px;
-    }
+      .navbar-list {
+          display: flex;
+          gap: 28px;
+          padding: 0;
+      }
 
-    .date-input label {
-      margin-right: 10px;
-    }
+      .date-search-container {
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          gap: 11px;
+      }
 
-    .date-search-container label {
-      margin-right: 10px;
-    }
+      .date-input {
+          display: flex;
+          align-items: center;
+          margin-right: 20px;
+      }
 
-    .date-search-container input[type="date"],
-    .date-search-container button {
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-right: 10px;
-    }
+      .date-input label {
+          margin-right: 10px;
+      }
 
-    .date-search-container button {
-      background-color: #009879;
-      color: white;
-      cursor: pointer;
-      padding: 8px 15px;
-      font-size: 14px;
-      border: none;
-      border-radius: 4px;
-      background-color: #009879;
-      color: white;
-      cursor: pointer;
-    }
+      .date-search-container label {
+          margin-right: 10px;
+      }
 
-    .date-search-container button:hover {
-      background-color: #009879;
-    }
+      .date-search-container input[type="date"],
+      .date-search-container button {
+          padding: 8px;
+          font-size: 14px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          margin-right: 10px;
+      }
 
-    /* Style for select box */
-    .form-select {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-      background-position: right 8px top 50%;
-      background-repeat: no-repeat;
-      background-size: 16px;
-    }
+      .date-search-container button {
+          background-color: #009879;
+          color: white;
+          cursor: pointer;
+          padding: 8px 15px;
+          font-size: 14px;
+          border: none;
+          border-radius: 4px;
+          background-color: #009879;
+          color: white;
+          cursor: pointer;
+      }
 
-    /* Hover and focus styles */
-    .form-select:hover,
-    .form-select:focus {
-      border-color: #009879;
-    }
+      .date-search-container button:hover {
+          background-color: #009879;
+      }
 
-    /* Dropdown arrow color */
-    .form-select::-ms-expand {
-      color: #009879;
-    }
+      /* Style for select box */
+      .form-select {
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          padding: 8px;
+          font-size: 14px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+          background-position: right 8px top 50%;
+          background-repeat: no-repeat;
+          background-size: 16px;
+      }
 
-    /* Reset default styles */
-    .form-select option {
-      color: initial;
-    }
+      /* Hover and focus styles */
+      .form-select:hover,
+      .form-select:focus {
+          border-color: #009879;
+      }
 
-    #studentsTables {
+      /* Dropdown arrow color */
+      .form-select::-ms-expand {
+          color: #009879;
+      }
 
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      /* Adjust the height as needed */
-    }
+      /* Reset default styles */
+      .form-select option {
+          color: initial;
+      }
 
-    .content-table {
+      #studentsTables {
+
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          /* Adjust the height as needed */
+      }
+
+      .search-register-container {
+          display: flex;
+          gap: 30px;
+          align-items: center;
+          margin-bottom: 30px;
+          /* Add margin to separate from the table */
+      }
+
+      .content-table {
       margin-top: 20px;
-      width: 80%;
+      width: 100%;
       max-width: 1000px;
       margin: auto;
       font-size: 1em;
+      border-collapse: collapse;
       /* Center the table */
     }
 
-    .txt_color {
+    .content-table th,
+    .content-table td {
+      text-align: center;
+      /* Adjust text alignment as needed */
+    }
+
+    .content-table th,
+    .content-table td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      /* Add borders to cells */
+    }
+
+      .btn-link {
+          color: blue;
+          font-weight: bold;
+      }
+      .txt_color {
       color: black;
       /* Light black color */
       font-family: 'Poppins', sans-serif;
@@ -173,9 +212,102 @@
   </style>
 </head>
 
-<div class="container text-center pt-3" style="justify-content: center; margin-top: 30px;">
-  <h1 class="txt_color  pb-2 mb-0">Completed Orders</h1>
-</div>
+<body>
+
+  <header class="header" data-header>
+      <div class="container">
+  
+        <a href="#" class="logo propath">
+          <img src="{% static 'images/Propath1.svg' %}" width="162" height="50" alt="EduWeb logo">
+        </a>
+  
+        <nav class="navbar" data-navbar>
+  
+          <div class="wrapper">
+            <a href="#" class="logo">
+              <img src="{% static 'images/logo.svg' %}" width="162" height="50" alt="EduWeb logo">
+            </a>
+  
+            <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+              <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+            </button>
+          </div>
+  
+          <ul class="navbar-list">
+  
+            <li class="navbar-item">
+              <a href="{% url 'academy_base' %}" class="navbar-link" data-nav-link>Home</a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="{% url 'students_page' %}" class="navbar-link" data-nav-link>Students</a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="{% url 'franchise_page' %}" class="navbar-link" data-nav-link>Franchises</a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="{% url 'schools_page' %}" class="navbar-link" data-nav-link>Schools</a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="{% url 'competitions_base' %}" class="navbar-link" data-nav-link>Competitions</a>
+            </li>
+  
+            <li class="navbar-item">
+              <a class="navbar-link" href="{% url 'certificate_requests' %}">Certificates</a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="{% url 'teachers_page' %}" class="navbar-link" data-nav-link>Teachers</a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="/inventory/" class="navbar-link" data-nav-link>Stores</a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="{% url 'orders_page' %}" class="navbar-link" data-nav-link>Orders</a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="{% url 'enquiry_page' %}" class="navbar-link" data-nav-link>enquiries</a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="{% url 'register_user' %}" class="navbar-link" data-nav-link>Register user</a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="{% url 'events_page' %}" class="navbar-link" data-nav-link>Website Events</a>
+            </li>
+  
+          </ul>
+  
+        </nav>
+  
+        <div class="header-actions">
+  
+          <a href="{% url 'logout_user' %}" class="btn has-before">
+            <span class="span">Logout</span>
+  
+            <!-- <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon> -->
+          </a>
+  
+          <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
+            <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+          </button>
+  
+        </div>
+  
+        <div class="overlay" data-nav-toggler data-overlay></div>
+  
+      </div>
+    </header>
+    <div class="tagcontainer text-center pt-3" style="justify-content: center;">
+      <h1 class="txt_color pb-2 mb-0">completed orders</h1>
+  </div>
 
 <body>
 

@@ -15,6 +15,9 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import json
 from inventory.models import *
+from franchise.models import *
+from typing import List
+from django.shortcuts import render
 
 @admin_required
 def academy_base(request):
@@ -39,7 +42,23 @@ def academy_base(request):
         # Save the modified order back to the database
         order.save()
 
-    return render(request, 'academy/base.html', {'orders': orders})
+    # Assuming Students is a queryset of Students objects
+    students = Students.objects.all()
+
+    for student in students:
+        # Extracting only the 'franchise' attribute for Students
+        student.franchise_only = student.franchise
+
+        # Handle other logic for the Students model here
+        # If there is no 'items' field in the Students model, you can skip the related logic
+
+        # Save the modified student back to the database
+        student.save()
+
+    enquiries = list(Enquiry.objects.all())
+
+
+    return render(request, 'academy/base.html', {'orders': orders, 'students': students})
 
 
 

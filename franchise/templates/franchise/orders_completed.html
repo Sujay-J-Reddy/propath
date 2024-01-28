@@ -119,6 +119,35 @@
       background-color: #009879;
       color: hsl(0, 0%, 100%);
     }
+
+    .txt_color {
+      color: black;
+      /* Light black color */
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      text-align: center;
+      /* Center-align the text */
+      position: relative;
+    }
+
+    .txt_color::after {
+      content: '';
+      /* Add content for pseudo-element */
+      position: absolute;
+      /* Position the underline */
+      width: 50px;
+      /* Adjust the width of the underline */
+      height: 2px;
+      /* Adjust the height/thickness of the underline */
+      background-color: #009879;
+      /* Light underline color */
+      bottom: -5px;
+      /* Position the underline below the text */
+      left: 50%;
+      /* Center the underline relative to the text */
+      transform: translateX(-50%);
+      /* Center the underline */
+    }
   </style>
 
 </head>
@@ -153,10 +182,6 @@
           </li>
 
           <li class="navbar-item">
-            <a href="{% url 'orders_pending' %}" class="navbar-link" data-nav-link>Pending Orders</a>
-          </li>
-
-          <li class="navbar-item">
             <a href="{% url 'orders_completed' %}" class="navbar-link" data-nav-link>Orders Delivered</a>
           </li>
 
@@ -183,14 +208,15 @@
 
   </header>
 
-
+  <div class="container text-center pt-3" style="justify-content: center;">
+    <h1 class="txt_color pb-2 mb-0">Delivered Orders</h1>
+  </div>
 
 
   <div class="tabcontainer">
     <div class="search-register-container">
       <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search...">
-        <button onclick="searchTable()">Search</button>
       </div>
       <div class="date-search-container">
         <div class="date-input">
@@ -216,6 +242,7 @@
           <th class="bg-light text-dark">Kits</th>
           <th class="bg-light text-dark">Items</th>
           <th class="bg-light text-dark">Shipped on</th>
+          <th class="bg-light text-dark">Ordered on</th>
         </tr>
       </thead>
       <tbody>
@@ -233,6 +260,7 @@
             {% endfor %}
           </td>
           <td class="fw-normal mb-1">{{ order.delivery_date }}</td>
+          <td class="fw-normal mb-1">{{ order.order_date }}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -256,13 +284,15 @@
         const endDate = new Date($('#endDate').val());
 
         $('table.content-table tbody tr').hide().filter(function () {
-          const rowDate = new Date($(this).find('td:nth-child(6)').text()); // Assuming the date is in the 6th column, modify if needed
+          const rowDateText = $(this).find('td:nth-child(4)').text(); // Assuming the date is in the 4th column, modify if needed
+          const rowDate = new Date(rowDateText.replace(/-/g, '/')); // Convert the date string to a Date object
 
           // Filter rows based on conditions
           return (startDate <= rowDate && rowDate <= endDate) || (startDate <= rowDate && !endDate);
         }).show();
       });
     });
+
 
   </script>
 
