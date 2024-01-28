@@ -265,7 +265,13 @@ def competition_entries(request):
 
 @admin_required
 def competition_winners(request):
-    return render(request, 'academy/competition_winners')
+    comps = Competition.objects.all()
+    franchises = CustomUser.objects.filter(account_type='franchisee')
+    students = Students.objects.all()
+
+    
+    return render(request, 'academy/competition_winners.html', { 'comps': comps, 'franchises': franchises, 'students':students})
+
 
 
 def check_birthdays(request):

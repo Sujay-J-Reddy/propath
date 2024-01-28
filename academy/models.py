@@ -46,10 +46,9 @@ class Competition(models.Model):
     pdf_file = models.FileField(upload_to='competition_pdfs/')
 
 class CompetitionResults(models.Model):
+    circular_no = models.CharField(max_length=100)
     name =  models.CharField(max_length=100)
     franchisee = models.CharField(max_length=100)
-    score = models.PositiveIntegerField()
-    max_score = models.PositiveIntegerField()
     rank = models.PositiveIntegerField()
 
 class TrainingDate(models.Model):
